@@ -1,0 +1,34 @@
+name: Denní data šupu
+on:
+  schedule:
+    - cron: '10 4 * * *'   # každý den 6:10 letního času (5:10 zimního)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: denni-data
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Načíst historii cen z větve live
+        run: |
+          mkdir -p out
+          if git fetch --depth=1 origin live 2>/dev/null; then git show origin/live:state.json > out/state.json || true; else echo "Zatím bez historie."; fi
+      - name: Stáhnout feedy a sestavit katalog
+        env:
+          SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
+        run: python scripts/build_catalog.py
+      - name: Zveřejnit data do větve live (web a appka si je načtou samy)
+        run: |
+          cd out
+          git init -q -b live
+          git config user.name "šup bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add latest.json state.json
+          git commit -qm "Data $(date +%F)"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" live
