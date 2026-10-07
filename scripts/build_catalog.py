@@ -63,7 +63,8 @@ SKIP = ['detsk', 'kojen', 'junior', 'ponozk', 'punchoch', 'puncoch', 'spodni pra
         'prehazovac', 'lahev', 'lahve', 'kosik na lahev', 'cocky', 'stoupaci pas', 'vnitrni boticky', 'kalhotky', 'podprsenk',
         'polobotk', 'kotnikove boty', 'sitova karta', 'access point', 'switch ', 'router', 'toner', 'inkoust',
         'sklo', 'ochrana objektivu', 'klicenk', 'poutko', 'jmenovk', 'mys ', 'mouse', 'klavesnic', 'keyboard', 'flash disk',
-        'usb ', 'presenter', 'replacement', 'hrot', 'chladic', 'zdroj', 'pametova karta', 'disk ']
+        'usb ', 'presenter', 'replacement', 'hrot', 'chladic', 'zdroj', 'pametova karta', 'disk ',
+        'glass', 'sklem', 'obal ', 'brasn', 'sleeve', 'cpu ', 'zakladni desk', 'graficka karta', 'operacni pamet']
 RULES = [  # (kategorie, klíčová slova v úrovni stromu)
     ('mobily',   ['mobilni telefony', 'chytre telefony']),
     ('gadgety',  ['chytre hodinky', 'chytre naramky', 'wearables', 'drony', 'akcni kamery', 'fotoaparaty', 'stabilizator', 'gimbal', 'chytra domacnost']),
@@ -87,6 +88,7 @@ NAME_RULES = [  # když obchod kategorii nemá (iStyle), podle názvu
     ('pokoj',    ['lampa', 'lamp ', 'svetelny pasek', 'led pasek']),
     ('tenisky',  ['tenisky', 'sneakers']),
 ]
+LEAF_ONLY = {'mobily', 'gadgety', 'audio', 'gaming', 'pocitace', 'pokoj'}
 KIDS = re.compile(r'-J[BG]?\b|\bjunior\b|\bkids?\b|\bdetsk|\d+\s*-\s*\d+\s*let\b', re.I)
 
 def categorize(path, name):
@@ -99,9 +101,10 @@ def categorize(path, name):
             or KIDS.search(name or '') or ' tah ' in n or (' pasek ' in n and 'hodink' not in full):
         return None
     if ' monitor' in n: return 'pocitace'
-    for seg in reversed(segs):
+    for i, seg in enumerate(reversed(segs)):
         seg = ' ' + seg + ' '
         for cat, keys in RULES:
+            if i > 0 and cat in LEAF_ONLY: continue   # elektronika jen podle nejhlubší úrovně
             if any(k in seg for k in keys): return cat
     if segs: return None          # obchod kategorii má, ale není pro šup
     for cat, keys in NAME_RULES:
