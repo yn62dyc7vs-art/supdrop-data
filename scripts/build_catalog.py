@@ -198,6 +198,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
     today = day_no(now.date())
     stamp = now.strftime('%Y-%m-%dT%H:%M')
     hist = state.get('h', {})
+    last, new_last = state.get('last', {}), {}
     products, report = [], []
     for sh in shops:
         name = sh['shop']; url = feeds.get(name)
@@ -239,18 +240,21 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             now_p = cheapest['price']
             if now_p < MIN_PRICE: continue
             key = slug(name) + ':' + str(gk)
-            h = [x for x in hist.get(key, []) if x[0] >= today - HISTORY_DAYS]
-            if not h or h[-1][1] != now_p or h[-1][0] != today:
-                h = [x for x in h if x[0] != today] + [[today, now_p]]
+            # historie: [den, nejnižší, nejvyšší cena toho dne] (starší záznamy měly jen [den, cena])
+            h = [x if len(x) == 3 else [x[0], x[1], x[1]] for x in hist.get(key, []) if x[0] >= today - HISTORY_DAYS]
+            if h and h[-1][0] == today: h[-1] = [today, min(h[-1][1], now_p), max(h[-1][2], now_p)]
+            else: h.append([today, now_p, now_p])
             hist[key] = h
+            prev = last.get(key); new_last[key] = now_p
+            low = min(x[1] for x in h)
             if cheapest.get('orig'):
                 was = cheapest['orig']; basis = 'obchod'
             else:
-                was = max(x[1] for x in h); basis = 'historie'
+                was = max(x[2] for x in h); basis = 'historie'
             was = max(was, now_p)
             disc = round((1 - now_p / was) * 100) if was else 0
             days = today - min(x[0] for x in h)
-            at_min = days >= 7 and now_p <= min(x[1] for x in h)
+            at_min = days >= 7 and now_p <= low
             hy = hype_of(brand)
             sc = score(disc, hy, sh.get('trust', 7), at_min)
             stock = bool(avail)
@@ -260,14 +264,15 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
                 'shop': name, 'url': aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')),
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': f['img'] or cheapest['img'],
-                'imgby': name, 'days': days})
+                'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
+                'prev': prev if prev and prev != now_p else None})
             kept += 1
         report.append(f'{name}: {n} položek ve feedu, {len(groups)} produktů, do šupu {kept} ({time.time() - t0:.0f} s)')
         log(report[-1])
     # historie: zahodit produkty, které 45 dní nikdo neviděl
     hist = {k: v for k, v in hist.items() if v and v[-1][0] >= today - 45}
     products.sort(key=lambda d: -d['score']['total'])
-    return products, {'h': hist, 'updated': stamp}, report
+    return products, {'h': hist, 'last': new_last, 'updated': stamp, 'prevAt': state.get('updated')}, report
 
 def pick_top(products, n=12):
     """Pestrý výběr pro web: nejlepší skóre, max. 3 z kategorie, 4 z obchodu, bez barevných variant téhož."""
@@ -299,7 +304,7 @@ def main():
     out = {'batch': now.strftime('%Y-%m-%d'), 'checkedAt': now.strftime('%Y-%m-%dT%H:%M'),
            'source': 'Produktové feedy partnerských obchodů (eHUB)', 'affiliate': True,
            'shops': [s['shop'] for s in shops], 'note': ' · '.join(report),
-           'top': pick_top(products), 'deals': products}
+           'prevAt': state.get('prevAt'), 'top': pick_top(products), 'deals': products}
     with open('out/latest.json', 'w', encoding='utf-8') as f: json.dump(out, f, ensure_ascii=False, separators=(',', ':'))
     with open('out/state.json', 'w', encoding='utf-8') as f: json.dump(state, f, ensure_ascii=False, separators=(',', ':'))
     by = {}
