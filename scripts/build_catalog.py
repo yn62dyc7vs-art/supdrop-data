@@ -61,7 +61,9 @@ SKIP = ['detsk', 'kojen', 'junior', 'ponozk', 'punchoch', 'puncoch', 'spodni pra
         'reminek', 'redukce', 'stylus', 'cistic', 'darkova krabice', 'poukaz', 'servis', 'pujcovna', 'tkanick',
         'impregnac', 'naplne', 'naradi', 'pumpick', 'duse', 'plaste', 'brzd', 'retez', 'pedal', 'sedlo', 'riditk',
         'prehazovac', 'lahev', 'lahve', 'kosik na lahev', 'cocky', 'stoupaci pas', 'vnitrni boticky', 'kalhotky', 'podprsenk',
-        'polobotk', 'kotnikove boty', 'sitova karta', 'access point', 'switch ', 'router', 'toner', 'inkoust']
+        'polobotk', 'kotnikove boty', 'sitova karta', 'access point', 'switch ', 'router', 'toner', 'inkoust',
+        'sklo', 'ochrana objektivu', 'klicenk', 'poutko', 'jmenovk', 'mys ', 'mouse', 'klavesnic', 'keyboard', 'flash disk',
+        'usb ', 'presenter', 'replacement', 'hrot', 'chladic', 'zdroj', 'pametova karta', 'disk ']
 RULES = [  # (kategorie, klíčová slova v úrovni stromu)
     ('mobily',   ['mobilni telefony', 'chytre telefony']),
     ('gadgety',  ['chytre hodinky', 'chytre naramky', 'wearables', 'drony', 'akcni kamery', 'fotoaparaty', 'stabilizator', 'gimbal', 'chytra domacnost']),
@@ -85,7 +87,7 @@ NAME_RULES = [  # když obchod kategorii nemá (iStyle), podle názvu
     ('pokoj',    ['lampa', 'lamp ', 'svetelny pasek', 'led pasek']),
     ('tenisky',  ['tenisky', 'sneakers']),
 ]
-KIDS = re.compile(r'-J[BG]?\b|\bjunior\b|\bkids?\b|\bdetsk', re.I)
+KIDS = re.compile(r'-J[BG]?\b|\bjunior\b|\bkids?\b|\bdetsk|\d+\s*-\s*\d+\s*let\b', re.I)
 
 def categorize(path, name):
     segs = [norm(x) for x in re.split(r'\s*[|>]\s*', path or '') if x.strip()]
@@ -96,6 +98,7 @@ def categorize(path, name):
     if any(' ' + k in full for k in ('detsk', 'kojen', 'junior')) or any(' ' + k in leaf or ' ' + k in n for k in SKIP) \
             or KIDS.search(name or '') or ' tah ' in n or (' pasek ' in n and 'hodink' not in full):
         return None
+    if ' monitor' in n: return 'pocitace'
     for seg in reversed(segs):
         seg = ' ' + seg + ' '
         for cat, keys in RULES:
