@@ -1,7 +1,7 @@
 name: Denní data šupu
 on:
   schedule:
-    - cron: '10 4 * * *'   # každý den 6:10 letního času (5:10 zimního)
+    - cron: '10 4-22/3 * * *'   # každé 3 hodiny: 6:10, 9:10, 12:10 … 0:10 letního času (v zimě o hodinu dřív)
   workflow_dispatch: {}
 permissions:
   contents: write
