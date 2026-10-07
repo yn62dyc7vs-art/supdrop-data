@@ -51,43 +51,62 @@ def aff(url, bid):
             '&desturl=' + urllib.parse.quote(url, safe=''))
 
 # ---------------------------------------------------------------- kategorie
-# pořadí je důležité: první shoda vyhrává
-SKIP = ['nahradni dil', 'nahradni dily', 'komponent', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'ochranne sklo',
-        'ochranna folie', 'kabel ', 'kabely', 'nabijec', 'adapter', 'drzak', 'reminek', 'naramek pro', 'redukce', 'stylus',
-        'cistic', 'darkova krabice', 'darkovy poukaz', 'poukaz', 'servis', 'pujcovna', 'detsk', 'kojen',
-        'tkanick', 'vlozk', 'impregnac', 'kartus', 'naplne', 'naradi', 'pumpick', 'duse', 'plast na kolo', 'plaste',
-        'brzd', 'retez', 'pedal', 'sedlo', 'riditk', 'naboj', 'kazeta', 'prehazovac', 'lahev', 'lahve', 'kontaktni cocky', 'cocky']
-RULES = [
-    ('mobily',   ['mobilni telefony', 'smartphone', 'chytre telefony'], ['mobilni telefon', 'iphone', 'galaxy s', 'galaxy a', 'redmi', 'poco', 'pixel']),
-    ('audio',    ['sluchatk', 'reproduktor', 'soundbar', 'audio'], ['sluchatk', 'airpods', 'reproduktor', 'buds']),
-    ('gaming',   ['herni konzol', 'gaming', 'herni ovladac', 'videohry', 'playstation', 'xbox', 'nintendo'], ['playstation', 'xbox', 'nintendo switch', 'herni konzole', 'ovladac dualsense']),
-    ('pocitace', ['notebook', 'tablet', 'ctecky elektronickych knih', 'pocitace'], ['macbook', 'ipad', 'notebook', 'tablet', 'kindle']),
-    ('gadgety',  ['chytre hodinky', 'fitness naramk', 'dron', 'kamery', 'akcni kamer', 'gimbal', 'stabilizator', 'chytra domacnost', 'diktafon'], ['apple watch', 'chytre hodinky', 'smartwatch', 'gimbal', 'osmo', 'dron', 'gopro', 'instax']),
-    ('pokoj',    ['lamp', 'svitid', 'osvetleni', 'dekorace', 'led pasky'], ['lampa', 'lamp', 'led pasek', 'svetlo']),
-    ('tenisky',  ['tenisk', 'sneaker', 'bezecka obuv', 'bezecke boty', 'sportovni obuv', 'volnocasova obuv', 'vychazkova obuv', 'skate obuv', 'obuv'], ['tenisky', 'sneaker']),
-    ('fitness',  ['fitness', 'posilovani', 'vyziva', 'protein', 'fitness obleceni'], ['protein', 'kreatin', 'cinka']),
-    ('doplnky',  ['batoh', 'tasky', 'kabelk', 'penezenk', 'cepic', 'ksiltovk', 'satky', 'saly', 'rukavic', 'slunecni bryle', 'opasky', 'hodinky', 'ponozky', 'doplnky'], ['batoh', 'cepice', 'ksiltovka', 'kabelka', 'penezenka', 'bryle', 'ponozky']),
-    ('obleceni', ['obleceni', 'mikiny', 'tricka', 'bundy', 'kalhoty', 'sortky', 'vesty', 'svetry', 'kosile', 'saty', 'leginy', 'teplaky', 'kraťasy'], ['mikina', 'tricko', 'bunda', 'kalhoty', 'sortky', 'vesta', 'svetr', 'kosile', 'leginy', 'mikina', 'hoodie']),
-    ('sport',    ['cyklistika', 'jizdni kola', 'kola ', 'lyze', 'lyzovani', 'skialp', 'turistika', 'outdoor', 'kempovani', 'stany', 'spacaky', 'kolobezk', 'skateboard', 'beh'], ['kolo ', 'lyze', 'stan ', 'spacak', 'kolobezka', 'skateboard']),
-    ('kosmetika',['kosmetika', 'parfem', 'drogerie', 'pece o plet', 'vlasova kosmetika'], ['parfem', 'toaletni voda', 'serum']),
+# Kategorie podle stromu Heureky / Google (úrovně od nejhlubší), pak podle názvu.
+# Vyřazené: dětské věci, ponožky a prádlo, pantofle a sandály, příslušenství, náhradní díly…
+SKIP = ['detsk', 'kojen', 'junior', 'ponozk', 'punchoch', 'puncoch', 'spodni pradlo', 'pantofl', 'zabk', 'sandal', 'holink',
+        'snehul', 'backor', 'domaci obuv', 'lodick', 'kozack', 'balerin', 'capack', 'vlozk', 'kompres', 'zdravotn', 'bandaz',
+        'ortez', 'penal', 'skolni', 'kufr', 'destnik', 'plastenk', 'prislusenstvi', 'komponent', 'nahradni', 'tiskarn',
+        'sitove prvky', 'kancelar', 'baterie', 'powerbank', 'kuchyn', 'uklidov', 'stavba', 'elektromaterial', 'pece o telo',
+        'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'ochranne sklo', 'kabel ', 'kabely', 'nabijec', 'adapter', 'drzak',
+        'reminek', 'redukce', 'stylus', 'cistic', 'darkova krabice', 'poukaz', 'servis', 'pujcovna', 'tkanick',
+        'impregnac', 'naplne', 'naradi', 'pumpick', 'duse', 'plaste', 'brzd', 'retez', 'pedal', 'sedlo', 'riditk',
+        'prehazovac', 'lahev', 'lahve', 'kosik na lahev', 'cocky', 'stoupaci pas', 'vnitrni boticky', 'kalhotky', 'podprsenk',
+        'polobotk', 'kotnikove boty', 'sitova karta', 'access point', 'switch ', 'router', 'toner', 'inkoust']
+RULES = [  # (kategorie, klíčová slova v úrovni stromu)
+    ('mobily',   ['mobilni telefony', 'chytre telefony']),
+    ('gadgety',  ['chytre hodinky', 'chytre naramky', 'wearables', 'drony', 'akcni kamery', 'fotoaparaty', 'stabilizator', 'gimbal', 'chytra domacnost']),
+    ('audio',    ['sluchatka', 'reproduktory', 'soundbar', 'gramofon']),
+    ('gaming',   ['herni konzole', 'herni ovladace', 'hry na playstation', 'hry na xbox', 'hry na nintendo', 'hry na pc', 'herni sluchatka']),
+    ('pocitace', ['notebooky', 'tablety', 'ctecky', 'stolni pocitace', 'monitory']),
+    ('pokoj',    ['svitidla', 'osvetleni', 'lampy', 'projektory', 'projekcni', 'dekorace']),
+    ('tenisky',  ['tenisky', 'sneakers', 'bezecke boty', 'sportovni obuv', 'volnocasova obuv']),
+    ('sport',    ['skialp', 'turistick', 'obleceni na behani', 'cyklistick', 'jizdni kola', 'lyze', 'lyzarsk', 'trekov', 'outdoor', 'kolobezk', 'skateboard', 'stany', 'spacak']),
+    ('fitness',  ['fitness', 'posilov', 'sportovni vyziva', 'proteiny']),
+    ('doplnky',  ['batoh', 'kabelk', 'penezenk', 'tasky', 'cepice', 'ksiltovk', 'rukavice', 'saly', 'satky', 'opasky', 'slunecni bryle', 'hodinky', 'na hlavu a krk']),
+    ('obleceni', ['mikin', 'svetr', 'bundy', 'bunda', 'kabat', 'vesty', 'kalhoty', 'teplaky', 'leginy', 'tricka', 'kosile', 'saty', 'sukne', 'sortky', 'kratasy', 'volnocasove obleceni', 'svrchni obleceni', 'obleceni']),
+    ('kosmetika',['parfem', 'kosmetik', 'pece o plet']),
 ]
-KIND = {'tenisky': 'shoe', 'obleceni': 'hoodie', 'doplnky': 'cap', 'mobily': 'phone', 'audio': 'headphones', 'gaming': 'controller',
-        'pocitace': 'laptop', 'gadgety': 'camera', 'pokoj': 'lamp', 'sport': 'scooter', 'fitness': 'dumbbell', 'kosmetika': 'bottle'}
+NAME_RULES = [  # když obchod kategorii nemá (iStyle), podle názvu
+    ('mobily',   ['iphone', 'galaxy s', 'galaxy a', 'galaxy z', 'redmi note', 'redmi ', 'poco ', 'pixel ']),
+    ('pocitace', ['macbook', 'ipad', 'imac', 'mac mini', 'notebook', 'tablet', 'kindle', 'monitor']),
+    ('audio',    ['airpods', 'sluchatka', 'reproduktor', 'beats', 'sonos', 'buds', 'soundbar', 'homepod']),
+    ('gadgety',  ['apple watch', 'chytre hodinky', 'smartwatch', 'osmo', 'gopro', 'insta360', 'dron', 'instax', 'airtag']),
+    ('gaming',   ['playstation', 'xbox', 'nintendo switch', 'dualsense']),
+    ('pokoj',    ['lampa', 'lamp ', 'svetelny pasek', 'led pasek']),
+    ('tenisky',  ['tenisky', 'sneakers']),
+]
+KIDS = re.compile(r'-J[BG]?\b|\bjunior\b|\bkids?\b|\bdetsk', re.I)
 
 def categorize(path, name):
-    """Kategorie podle nejhlubší úrovně cesty (Heureka: "A | B | C", Google: "A > B > C"), pak podle názvu."""
-    segs = [norm(x) for x in re.split(r'\s*[|>/]\s*', path or '') if x.strip()]
+    segs = [norm(x) for x in re.split(r'\s*[|>]\s*', path or '') if x.strip()]
     segs = [x for x in segs if x not in ('heureka cz', 'heureka sk', 'zbozi cz')]
     n = ' ' + norm(name) + ' '
     full = ' ' + ' '.join(segs) + ' '
-    if any(' ' + k in full or ' ' + k in n for k in SKIP): return None
+    leaf = ' ' + (segs[-1] if segs else '') + ' '
+    if any(' ' + k in full for k in ('detsk', 'kojen', 'junior')) or any(' ' + k in leaf or ' ' + k in n for k in SKIP) \
+            or KIDS.search(name or '') or ' tah ' in n or (' pasek ' in n and 'hodink' not in full):
+        return None
     for seg in reversed(segs):
         seg = ' ' + seg + ' '
-        for cat, pk, nk in RULES:
-            if any(k in seg for k in pk): return cat
-    for cat, pk, nk in RULES:
-        if any(' ' + k in n for k in nk): return cat
+        for cat, keys in RULES:
+            if any(k in seg for k in keys): return cat
+    if segs: return None          # obchod kategorii má, ale není pro šup
+    for cat, keys in NAME_RULES:
+        if any(' ' + k in n for k in keys): return cat
     return None
+
+KIND = {'tenisky': 'shoe', 'obleceni': 'hoodie', 'doplnky': 'cap', 'mobily': 'phone', 'audio': 'headphones', 'gaming': 'controller',
+        'pocitace': 'laptop', 'gadgety': 'camera', 'pokoj': 'lamp', 'sport': 'scooter', 'fitness': 'dumbbell', 'kosmetika': 'bottle'}
 
 HYPE = {'nike': 8, 'jordan': 9, 'adidas': 8, 'new balance': 8, 'asics': 7, 'salomon': 7, 'on': 7, 'hoka': 7, 'vans': 6,
         'converse': 6, 'puma': 6, 'reebok': 5, 'the north face': 7, 'carhartt': 7, 'carhartt wip': 7, 'stussy': 8, 'columbia': 5,
@@ -106,7 +125,14 @@ SIZE_KEYS = {'velikost', 'size', 'velikost obuvi', 'velikost eu', 'eu velikost'}
 def clean_name(name, size=None):
     n = re.sub(r'\s+', ' ', name or '').strip()
     n = re.split(r'\s+(?:Barva|Velikost|Šířka|Délka|Rozměr|Varianta|Color|Size)\s*:', n)[0]
-    n = re.sub(r'\s\d{8,}$', '', n)                      # koncové EAN/kódy
+    for _ in range(3):                                   # koncové kódy (EAN, objednací čísla)
+        m = re.search(r'\s(\(?[A-Za-z0-9/\-]+\)?)$', n)
+        if not m: break
+        t = m.group(1).strip('()')
+        code = len(t) >= 5 and sum(c.isdigit() for c in t) >= 2 and not any(c.islower() for c in t) \
+            and not re.fullmatch(r'[\d/]+(GB|TB|MB|W|MAH|MM)(/[\d]+(GB|TB))?', t.upper())
+        if not code: break
+        n = n[:m.start()]
     if size:
         n = re.sub(r'\s' + re.escape(size) + r'(?=\s|$)', '', n).strip()
     return n.strip(' ,-–')
@@ -238,17 +264,21 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
     return products, {'h': hist, 'updated': stamp}, report
 
 def pick_top(products, n=12):
-    """Pestrý výběr pro web: nejlepší skóre, ale max. 3 z jedné kategorie a 4 z jednoho obchodu."""
-    out, per_cat, per_shop = [], {}, {}
-    for d in products:
-        if not (d['pass'] and d['img'] and d['disc'] > 0): continue
-        if per_cat.get(d['cat'], 0) >= 3 or per_shop.get(d['shop'], 0) >= 4: continue
-        out.append(d['id']); per_cat[d['cat']] = per_cat.get(d['cat'], 0) + 1; per_shop[d['shop']] = per_shop.get(d['shop'], 0) + 1
-        if len(out) >= n: break
-    if len(out) < n:
+    """Pestrý výběr pro web: nejlepší skóre, max. 3 z kategorie, 4 z obchodu, bez barevných variant téhož."""
+    out, seen, per_cat, per_shop = [], set(), {}, {}
+    def base(d): return norm(d['brand'] + ' ' + d['name']).split(' ')[:4]
+    def take(cond, cat_lim, shop_lim):
         for d in products:
-            if d['pass'] and d['img'] and d['id'] not in out: out.append(d['id'])
-            if len(out) >= n: break
+            if len(out) >= n: return
+            if d['id'] in out or not (d['pass'] and d['img']) or not cond(d): continue
+            b = ' '.join(base(d))
+            if b in seen or per_cat.get(d['cat'], 0) >= cat_lim or per_shop.get(d['shop'], 0) >= shop_lim: continue
+            out.append(d['id']); seen.add(b)
+            per_cat[d['cat']] = per_cat.get(d['cat'], 0) + 1; per_shop[d['shop']] = per_shop.get(d['shop'], 0) + 1
+    take(lambda d: d['disc'] > 0, 3, 4)
+    take(lambda d: d['hype'] >= 7, 3, 4)
+    take(lambda d: True, 3, 4)
+    take(lambda d: True, 99, 99)
     return out
 
 def main():
