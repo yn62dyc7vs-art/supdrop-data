@@ -240,6 +240,21 @@ HYPE = {'nike': 8, 'jordan': 9, 'adidas': 8, 'new balance': 8, 'asics': 7, 'salo
 
 def hype_of(brand): return HYPE.get(norm(brand), 5)
 
+# značky, které obchody vedou pod mateřskou firmou (Beats je ve feedech jako „Apple“)
+SUBBRANDS = {'beats': 'Beats', 'jordan': 'Jordan', 'harman kardon': 'Harman Kardon'}
+def fix_brand(brand, name):
+    n = norm(name)
+    for k, v in SUBBRANDS.items():
+        if (n + ' ').startswith(k + ' ') and norm(brand) != k: return v
+    return brand
+
+# obrázky z domén s ochranou proti botům (v cizí stránce se nenačtou) bereme ze sesterské domény obchodu
+IMG_HOSTS = {'https://8a.pl/': 'https://8a.cz/'}
+def fix_img(url):
+    for a, b in IMG_HOSTS.items():
+        if url and url.startswith(a): return b + url[len(a):]
+    return url
+
 def score(disc, hype, trust, at_min):
     s = {'sleva': round(min(40, max(0, disc) * 40 / 25)), 'poptavka': hype * 3, 'minimum': 10 if at_min else 0, 'obchod': trust, 'zaklad': 5}
     s['total'] = sum(s.values()); return s
@@ -380,7 +395,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
                     if all(w == col[0] for w in col): common.append(col[0])
                     else: break
                 if len(common) >= 2: nm = ' '.join(common).strip(' ,-–')
-            brand = (f['brand'] or '').strip()
+            brand = fix_brand((f['brand'] or '').strip(), nm)
             res = categorize(f['path'], nm)
             if not res and not (f['path'] or '').strip() and sh.get('defaultCat'):
                 dc = LEGACY.get(sh['defaultCat'], (sh['defaultCat'], None)); res = (dc[0], dc[1], False)
@@ -415,7 +430,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
                 'variant': ('Skladem: ' + ', '.join(sizes[:12])) if sizes else None,
                 'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
-                'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': f['img'] or cheapest['img'],
+                'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': fix_img(f['img'] or cheapest['img']),
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
                 'prev': prev if prev and prev != now_p else None})
             kept += 1
