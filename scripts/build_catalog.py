@@ -60,9 +60,9 @@ SKIP = ['kojen', 'backor', 'domaci obuv', 'vlozk', 'kompres', 'zdravotn', 'banda
         'naplne', 'naradi', 'pumpick', 'duse', 'plaste', 'brzd', 'retez', 'pedal', 'sedlo', 'riditk', 'prehazovac',
         'kosik na lahev', 'cocky', 'stoupaci pas', 'vnitrni boticky', 'sitova karta', 'access point', 'switch ', 'router',
         'toner', 'inkoust', 'klicenk', 'poutko', 'jmenovk', 'flash disk', 'usb ', 'presenter', 'replacement', 'hrot', 'chladic',
-        'zdroj', 'pametova karta', 'disk ', 'sluzba', 'pojisteni', 'prodlouzena zaruka', 'cpu ', 'zakladni desk', 'graficka karta', 'operacni pamet', 'brasn', 'sleeve']
+        'zdroj', 'pametova karta', 'disk ', 'disky', 'ip kamery', 'webkamery', 'kamery do auta', 'sluzba', 'pojisteni', 'prodlouzena zaruka', 'cpu ', 'zakladni desk', 'graficka karta', 'operacni pamet', 'brasn', 'sleeve']
 # příslušenství k elektronice: jen do podkategorie Příslušenství, do „celé kategorie“ ne
-ACC = ['prislusenstvi', 'ochranny film', 'ochranna folie', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'ochranne sklo', 'sklo', 'glass', 'sklem', 'obal ', 'kabel',
+ACC = ['prislusenstvi', 'ochranny film', 'ochranna folie', 'ochranne', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'sklo', 'skla', 'glass', 'remink', 'sklem', 'obal ', 'kabel',
        'nabijec', 'adapter', 'drzak', 'reminek', 'powerbank', 'magsafe', 'redukce', 'stylus', 'ochrana cocek',
        'ochrana objektivu', 'ochrana fotoaparatu', 'stojanek', 'grip', 'case', 'cover', 'pasek pro', 'naramek pro']
 ELEC_CTX = ['mobil', 'telefon', 'tablet', 'apple', 'iphone', 'ipad', 'elektronik', 'gsm', 'notebook', 'chytre hodink',
@@ -77,7 +77,8 @@ EXC = [  # sportovní vybavení, které by jinak spadlo do bot / doplňků
     ('sport', 'skate', ['chranice', 'helmy na skate'], False),
 ]
 ELEC = [
-    ('gaming', 'konzole', ['herni konzole', 'konzole'], True),
+    ('gaming', 'ovladace', ['dokovaci stanice', 'herni prislusenstvi', 'prislusenstvi k hernim'], True),
+    ('gaming', 'konzole', ['herni konzole', 'konzole', 'virtualni realita', 'vr bryle'], True),
     ('gaming', 'hry', ['hry na playstation', 'hry na xbox', 'hry na nintendo', 'hry na pc', 'pc hry', 'videohry', 'hry pro'], True),
     ('gaming', 'ovladace', ['herni ovladace', 'gamepad', 'ovladace', 'herni sluchatka', 'headsety', 'herni headset'], True),
     ('gaming', 'periferie', ['herni mysi', 'herni klavesnice', 'herni podlozky', 'herni zidle'], True),
@@ -87,7 +88,7 @@ ELEC = [
     ('elektronika', 'hodinky', ['chytre hodinky', 'chytre naramky', 'wearables', 'fitness naramky', 'sporttestery', 'sportovni hodinky'], True),
     ('elektronika', 'sluchatka', ['sluchatka', 'true wireless', 'headphones'], True),
     ('elektronika', 'repro', ['reproduktory', 'soundbar', 'zesilovac', 'audio systemy', 'hifi'], True),
-    ('elektronika', 'foto', ['drony', 'akcni kamery', 'fotoaparaty', 'stabilizator', 'gimbal', 'kamery', 'objektivy', 'instantni'], True),
+    ('elektronika', 'foto', ['drony', 'akcni kamery', 'sportovni kamery', 'fotoaparaty', 'stabilizator', 'gimbal', 'objektivy', 'instantni'], True),
     ('elektronika', 'smarthome', ['chytra domacnost', 'smart home', 'chytre osvetleni', 'lokalizator'], True),
     ('pokoj', 'svetla', ['svitidla', 'osvetleni', 'lampy', 'lampicky', 'led pasky', 'svetla'], True),
     ('pokoj', 'dekorace', ['dekorace', 'plakaty', 'obrazy', 'svicky', 'difuzer', 'bytove doplnky'], True),
@@ -105,7 +106,7 @@ SHOES = [
 CLOTH = [
     ('obleceni', 'pradlo', ['spodni pradlo', 'ponozk', 'puncoch', 'punchoch', 'boxerk', 'trenyrk', 'slipy', 'kalhotky', 'podprsenk',
                             'termopradlo', 'funkcni pradlo', 'pyzam'], False),
-    ('obleceni', 'plavky', ['plavky', 'plavecke'], False),
+    ('obleceni', 'plavky', ['plavky', 'plavecke', 'plazove', 'bikin'], False),
     ('obleceni', 'mikiny', ['mikin', 'svetr', 'fleece', 'rolak', 'cardigan'], False),
     ('obleceni', 'bundy', ['bundy', 'bunda', 'kabat', 'vesty', 'vesta', 'parka', 'softshell', 'svrchni obleceni'], False),
     ('obleceni', 'kratasy', ['kratasy', 'sortky', 'kratke kalhoty'], False),
@@ -166,6 +167,9 @@ NAME_RULES = [  # když obchod kategorii nemá (iStyle, JBL), podle názvu
 ]
 LEGACY = {'mobily': ('elektronika', 'mobily'), 'audio': ('elektronika', None), 'gadgety': ('elektronika', None),
           'pocitace': ('elektronika', 'notebooky'), 'fitness': ('sport', 'fitness')}
+KIDS_PATH = ('detsk', 'kojen', 'junior', 'hracky pro holky', 'hracky pro kluky', 'mala paradnice', 'baby born', 'panenky',
+             'plysov', 'dzieci', 'dzieciec', 'chlopi', 'dziewcz')
+MAIN_NAME = ('apple watch', 'iphone 1', 'iphone air', 'ipad', 'macbook', 'airpods', 'galaxy watch', 'pixel watch')
 KIDS = re.compile(r'-J[BG]?\b|\bjunior\b|\bkids?\b|\bdetsk|\d+\s*-\s*\d+\s*let\b', re.I)
 
 def _match(text, rules, leaf_ok=True):
@@ -181,14 +185,16 @@ def categorize(path, name):
     n = ' ' + norm(name) + ' '
     full = ' ' + ' '.join(segs) + ' '
     leaf = ' ' + (segs[-1] if segs else '') + ' '
-    if any(' ' + k in full for k in ('detsk', 'kojen', 'junior')) or KIDS.search(name or ''): return None
+    if any(' ' + k in full for k in KIDS_PATH) or KIDS.search(name or ''): return None
     ln = leaf + n
+    if any(' ' + k in ln for k in SKIP) or ' tah ' in n or (' pasek ' in n and 'hodink' not in full): return None
     if any(k in ln for k in PERIPH):
         return ('gaming', 'periferie', False) if any(g in full + n for g in GAMER) else None
-    if any(k in ln for k in ACC) and not any(' ' + k in ln for k in ('kryt na kolo', 'obal na kolo')):
+    # příslušenství: podle kategorie obchodu; bez kategorie podle názvu (ale „Apple Watch … pouzdro“ je hodinky)
+    acc_txt = leaf if segs else (n if not any(n.startswith(' ' + m) for m in MAIN_NAME) else '')
+    if any(k in acc_txt for k in ACC) and not any(k in ln for k in ('kryt na kolo', 'obal na kolo')):
         if any(c in full + n for c in ELEC_CTX): return ('elektronika', 'prislusenstvi', True)
         if not any(k in ln for k in ('bryle', 'hodinky', 'batoh', 'taska')): return None
-    if any(' ' + k in ln for k in SKIP) or ' tah ' in n or (' pasek ' in n and 'hodink' not in full): return None
     if ' monitor' in n: return ('elektronika', 'notebooky', False)
     for cat, sub, keys in PRIORITY:
         if any(k in full for k in keys): return (cat, sub, False)
@@ -208,7 +214,9 @@ def categorize(path, name):
             alt = _match(n, CLOTH[:-1])
             if alt: sub = alt[1]
         return (cat, sub, False)
-    if segs: return None          # obchod kategorii má, ale není pro šup
+    if segs:  # strom obchodu nepomohl (např. 8a.cz má polské kategorie) – zkusíme český název oblečení, bot, doplňků a sportu
+        alt = _match(n, EXC + SHOES[:-1] + CLOTH[:-1] + ACCES + SPORT[:-1])
+        return (alt[0], alt[1], False) if alt else None
     for cat, sub, keys in NAME_RULES:
         if any((k if k.startswith(' ') else ' ' + k) in n for k in keys):
             return (cat, sub, False)
@@ -216,7 +224,7 @@ def categorize(path, name):
 
 KIND = {'hudba': 'vinyl', 'sberatelske': 'figure', 'tenisky': 'shoe', 'obleceni': 'hoodie', 'doplnky': 'cap', 'elektronika': 'phone',
         'gaming': 'controller', 'pokoj': 'lamp', 'sport': 'scooter', 'kosmetika': 'bottle', 'knihy': 'book'}
-SUBKIND = {'sluchatka': 'headphones', 'repro': 'headphones', 'notebooky': 'laptop', 'tablety': 'laptop', 'hodinky': 'watch',
+SUBKIND = {'sluchatka': 'headphones', 'repro': 'speaker', 'notebooky': 'laptop', 'tablety': 'tablet', 'hodinky': 'watch',
            'foto': 'camera', 'smarthome': 'camera', 'fitness': 'dumbbell', 'vyziva': 'cup', 'batohy': 'bag', 'bryle': 'glasses',
            'lahve': 'cup', 'tricka': 'tee', 'kalhoty': 'pants', 'bundy': 'jacket', 'skate': 'board', 'karty': 'cards', 'lego': 'brick'}
 def kind_of(cat, sub): return SUBKIND.get(sub) or KIND.get(cat, 'spark')
@@ -325,7 +333,7 @@ def legacy_cat(d):
     if c == 'sport' and sb in ('fitness', 'vyziva'): return 'fitness'
     return c
 
-PATHS = {}  # (obchod, cesta kategorie) -> [počet, zařazení, ukázkový název]; pro kontrolu zařazování
+PATHS = {}  # (obchod, cesta kategorie, zařazení) -> [počet, ukázkový název]; pro kontrolu zařazování
 
 def build(shops, feeds, state, now, open_fn=open_feed, log=print):
     today = day_no(now.date())
@@ -372,9 +380,10 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             res = categorize(f['path'], nm)
             if not res and not (f['path'] or '').strip() and sh.get('defaultCat'):
                 dc = LEGACY.get(sh['defaultCat'], (sh['defaultCat'], None)); res = (dc[0], dc[1], False)
-            pk = (name, f['path'] or '(bez kategorie)'); pr = PATHS.setdefault(pk, [0, None, nm]); pr[0] += 1
+            lab = (res[0] + ('/' + res[1] if res[1] else '') + ('*' if res[2] else '')) if res else None
+            pr = PATHS.setdefault((name, f['path'] or '(bez kategorie)', lab), [0, nm]); pr[0] += 1
             if not res: continue
-            cat, sub, acc = res; pr[1] = cat + ('/' + sub if sub else '') + ('*' if acc else '')
+            cat, sub, acc = res
             if cat in sh.get('skipCats', []): continue
             now_p = cheapest['price']
             if now_p < MIN_PRICE: continue
@@ -450,7 +459,7 @@ def main():
     with open('out/latest.json', 'w', encoding='utf-8') as f: json.dump(old, f, ensure_ascii=False, separators=(',', ':'))
     with open('out/state.json', 'w', encoding='utf-8') as f: json.dump(state, f, ensure_ascii=False, separators=(',', ':'))
     with open('out/paths.json', 'w', encoding='utf-8') as f:  # přehled zařazení cest kategorií (kontrola)
-        json.dump(sorted([[k[0], k[1], v[0], v[1], v[2]] for k, v in PATHS.items()], key=lambda r: (r[0], -r[2])), f, ensure_ascii=False, separators=(',', ':'))
+        json.dump(sorted([[k[0], k[1], v[0], k[2], v[1]] for k, v in PATHS.items()], key=lambda r: (r[0], -r[2])), f, ensure_ascii=False, separators=(',', ':'))
     by = {}
     for d in products: by[d['cat']] = by.get(d['cat'], 0) + 1
     print('Celkem', len(products), 'produktů:', by)
