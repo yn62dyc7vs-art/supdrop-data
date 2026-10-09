@@ -68,16 +68,20 @@ SKIP = ['detsk', 'kojen', 'junior', 'ponozk', 'punchoch', 'puncoch', 'spodni pra
 RULES = [  # (kategorie, klíčová slova v úrovni stromu)
     ('mobily',   ['mobilni telefony', 'chytre telefony']),
     ('gadgety',  ['chytre hodinky', 'chytre naramky', 'wearables', 'drony', 'akcni kamery', 'fotoaparaty', 'stabilizator', 'gimbal', 'chytra domacnost']),
-    ('audio',    ['sluchatka', 'reproduktory', 'soundbar', 'gramofon']),
+    ('audio',    ['sluchatka', 'reproduktory', 'soundbar', 'zesilovac', 'audio systemy']),
     ('gaming',   ['herni konzole', 'herni ovladace', 'hry na playstation', 'hry na xbox', 'hry na nintendo', 'hry na pc', 'herni sluchatka']),
     ('pocitace', ['notebooky', 'tablety', 'ctecky', 'stolni pocitace', 'monitory']),
     ('pokoj',    ['svitidla', 'osvetleni', 'lampy', 'projektory', 'projekcni', 'dekorace']),
     ('tenisky',  ['tenisky', 'sneakers', 'bezecke boty', 'sportovni obuv', 'volnocasova obuv']),
     ('sport',    ['skialp', 'turistick', 'obleceni na behani', 'cyklistick', 'jizdni kola', 'lyze', 'lyzarsk', 'trekov', 'outdoor', 'kolobezk', 'skateboard', 'stany', 'spacak']),
     ('fitness',  ['fitness', 'posilov', 'sportovni vyziva', 'proteiny']),
-    ('doplnky',  ['batoh', 'kabelk', 'penezenk', 'tasky', 'cepice', 'ksiltovk', 'rukavice', 'saly', 'satky', 'opasky', 'slunecni bryle', 'hodinky', 'na hlavu a krk']),
+    ('doplnky',  ['batoh', 'kabelk', 'penezenk', 'tasky', 'cepice', 'ksiltovk', 'rukavice', 'saly', 'satky', 'opasky', 'slunecni bryle', 'hodinky', 'na hlavu a krk', 'klobouk', 'tasky a zavazadla']),
     ('obleceni', ['mikin', 'svetr', 'bundy', 'bunda', 'kabat', 'vesty', 'kalhoty', 'teplaky', 'leginy', 'tricka', 'kosile', 'saty', 'sukne', 'sortky', 'kratasy', 'volnocasove obleceni', 'svrchni obleceni', 'obleceni']),
     ('kosmetika',['parfem', 'kosmetik', 'pece o plet']),
+]
+PRIORITY = [
+    ('sberatelske', [' lego', ' sberatelsk', ' funko', ' pokemon', ' figurky']),
+    ('hudba',       [' vinyl', ' gramofon', ' merchandise kapel', ' fan merchandise']),
 ]
 NAME_RULES = [  # když obchod kategorii nemá (iStyle), podle názvu
     ('mobily',   ['iphone', 'galaxy s', 'galaxy a', 'galaxy z', 'redmi note', 'redmi ', 'poco ', 'pixel ']),
@@ -101,6 +105,8 @@ def categorize(path, name):
             or KIDS.search(name or '') or ' tah ' in n or (' pasek ' in n and 'hodink' not in full):
         return None
     if ' monitor' in n: return 'pocitace'
+    for cat, keys in PRIORITY:      # celé větve, kde rozhoduje rodič (merch kapel, vinyly, LEGO)
+        if any(k in full for k in keys): return cat
     for i, seg in enumerate(reversed(segs)):
         seg = ' ' + seg + ' '
         for cat, keys in RULES:
@@ -111,7 +117,7 @@ def categorize(path, name):
         if any(' ' + k in n for k in keys): return cat
     return None
 
-KIND = {'tenisky': 'shoe', 'obleceni': 'hoodie', 'doplnky': 'cap', 'mobily': 'phone', 'audio': 'headphones', 'gaming': 'controller',
+KIND = {'hudba': 'vinyl', 'sberatelske': 'figure', 'tenisky': 'shoe', 'obleceni': 'hoodie', 'doplnky': 'cap', 'mobily': 'phone', 'audio': 'headphones', 'gaming': 'controller',
         'pocitace': 'laptop', 'gadgety': 'camera', 'pokoj': 'lamp', 'sport': 'scooter', 'fitness': 'dumbbell', 'kosmetika': 'bottle'}
 
 HYPE = {'nike': 8, 'jordan': 9, 'adidas': 8, 'new balance': 8, 'asics': 7, 'salomon': 7, 'on': 7, 'hoka': 7, 'vans': 6,
@@ -172,6 +178,22 @@ def heureka_items(src):
                'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': stock, 'size': size, 'ean': txt(el, 'EAN')}
         el.clear()
 
+def ehub_items(src):
+    """eHUB formát (datadepo): URL už je partnerský odkaz, cena PRICE_VAT, sklad STORE_STATE."""
+    for ev, el in ET.iterparse(src, events=('end',)):
+        if el.tag != 'SHOPITEM': continue
+        params = {}
+        for p in el.findall('PARAM'):
+            k, v = norm(txt(p, 'PARAM_NAME')), txt(p, 'VAL')
+            if k and v: params[k] = v
+        st = norm(txt(el, 'STORE_STATE'))
+        yield {'id': txt(el, 'ITEM_ID'), 'group': txt(el, 'ITEMGROUP_ID') or txt(el, 'ITEM_ID'),
+               'name': txt(el, 'NAME') or txt(el, 'PRODUCTNAME'), 'brand': txt(el, 'MANUFACTURER') or params.get('skupina', ''),
+               'path': txt(el, 'CATEGORY_FULL') or txt(el, 'CATEGORYTEXT'), 'url': txt(el, 'URL'), 'img': txt(el, 'IMAGE_MAIN') or txt(el, 'IMGURL'),
+               'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': st in ('store', 'skladem', 'in stock', ''),
+               'size': params.get('velikost') or None, 'ean': txt(el, 'EAN'), 'tracked': True}
+        el.clear()
+
 def google_items(src):
     for ev, el in ET.iterparse(src, events=('end',)):
         if el.tag not in ('item', 'entry'): continue
@@ -206,7 +228,8 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
         t0 = time.time(); groups = {}; n = 0
         try:
             src = open_fn(url)
-            it = google_items(src) if sh.get('format') == 'google' else heureka_items(src)
+            fmt = sh.get('format')
+            it = google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else heureka_items(src)
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
@@ -235,7 +258,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
                     else: break
                 if len(common) >= 2: nm = ' '.join(common).strip(' ,-–')
             brand = (f['brand'] or '').strip()
-            cat = categorize(f['path'], nm)
+            cat = categorize(f['path'], nm) or (sh.get('defaultCat') if not (f['path'] or '').strip() else None)
             if not cat or cat in sh.get('skipCats', []): continue
             now_p = cheapest['price']
             if now_p < MIN_PRICE: continue
@@ -261,7 +284,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             products.append({
                 'id': key.replace(':', '-'), 'cat': cat, 'kind': KIND.get(cat, 'spark'), 'brand': brand or name, 'name': nm,
                 'variant': ('Skladem: ' + ', '.join(sizes[:12])) if sizes else None,
-                'shop': name, 'url': aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')),
+                'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': f['img'] or cheapest['img'],
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
