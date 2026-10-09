@@ -60,7 +60,8 @@ SKIP = ['kojen', 'backor', 'domaci obuv', 'vlozk', 'kompres', 'zdravotn', 'banda
         'naplne', 'naradi', 'pumpick', 'duse', 'plaste', 'brzd', 'retez', 'pedal', 'sedlo', 'riditk', 'prehazovac',
         'kosik na lahev', 'cocky', 'stoupaci pas', 'vnitrni boticky', 'sitova karta', 'access point', 'switch ', 'router',
         'klicenk', 'poutko', 'jmenovk', 'flash disk', 'presenter', 'replacement', 'hrot',
-        'pametova karta', 'ip kamery', 'webkamery', 'kamery do auta', 'sluzba', 'pojisteni', 'prodlouzena zaruka', 'brasn']
+        'pametova karta', 'ip kamery', 'webkamery', 'kamery do auta', 'sluzba', 'pojisteni', 'prodlouzena zaruka', 'brasn',
+        'plavecke pomucky', 'nafukovac', 'vodni radovanky', 'svetla na kolo', 'zamky na kolo', 'nosice kol']
 # slova, která rozhodují jen v kategorii obchodu (v názvu by vyřadila i „inkoustové“ hodinky nebo MacBook s „CPU“)
 SKIP_PATH = ['toner', 'inkoust', 'naplne a tonery', 'cpu', 'procesory', 'zdroj', 'zakladni desk', 'graficka karta', 'operacni pamet',
              'pameti', 'chladic', 'disk', 'usb ', 'kabely a konektory', 'servis', 'sleeve', 'switche', 'tiskarny']
@@ -76,7 +77,7 @@ GAMER = ['herni', 'gaming', 'razer', 'steelseries', 'hyperx', 'logitech g', 'cor
 EXC = [  # sportovní vybavení, které by jinak spadlo do bot / doplňků
     ('sport', 'lyze', ['lyzarske boty', 'lyzaky', 'snowboardove boty', 'skialpove boty', 'bezkarske boty', 'lyzarske bryle',
                        'lyzarske helmy', 'lyzarske hulky', 'hulky'], False),
-    ('sport', 'kola', ['cyklisticke tretry', 'tretry', 'cyklisticke helmy', 'cyklisticke bryle', 'prilby na kolo', 'helmy na kolo'], False),
+    ('sport', None, ['cyklisticke lahve', 'bezecke lahve', 'cyklisticke tretry', 'tretry', 'cyklisticke helmy', 'cyklisticke bryle', 'prilby na kolo', 'helmy na kolo'], False),
     ('sport', 'skate', ['chranice', 'helmy na skate'], False),
 ]
 ELEC = [
@@ -109,7 +110,7 @@ SHOES = [
 CLOTH = [
     ('obleceni', 'pradlo', ['spodni pradlo', 'ponozk', 'puncoch', 'punchoch', 'boxerk', 'trenyrk', 'slipy', 'kalhotky', 'podprsenk',
                             'termopradlo', 'funkcni pradlo', 'pyzam'], False),
-    ('obleceni', 'plavky', ['plavky', 'plavecke', 'plazove', 'bikin'], False),
+    ('obleceni', 'plavky', ['plavky', 'plazove', 'bikin'], False),
     ('obleceni', 'mikiny', ['mikin', 'svetr', 'fleece', 'rolak', 'cardigan'], False),
     ('obleceni', 'bundy', ['bundy', 'bunda', 'kabat', 'vesty', 'vesta', 'parka', 'softshell', 'svrchni obleceni'], False),
     ('obleceni', 'kratasy', ['kratasy', 'sortky', 'kratke kalhoty'], False),
@@ -129,14 +130,14 @@ ACCES = [
 ]
 SPORT = [
     ('sport', 'vyziva', ['sportovni vyziva', 'proteiny', 'protein', 'kreatin', 'vyziva', 'gainery', 'aminokyseliny'], False),
-    ('sport', 'kola', [' kola ', 'kolo ', 'elektrokol', 'kolobezk', 'cyklistik', 'cyklo', 'bmx'], False),
+    ('sport', 'kola', [' kola ', ' kolo ', 'elektrokol', 'kolobezk', 'bmx'], False),  # jen kola a koloběžky, ne cyklo doplňky
     ('sport', 'skate', ['skateboard', 'longboard', 'pennyboard', 'brusle', 'inline', 'skate', 'waveboard'], False),
     ('sport', 'lyze', ['lyze', 'lyzar', 'snowboard', 'skialp', 'bezk', 'zimni sporty', 'sjezd'], False),
     ('sport', 'outdoor', ['stany', 'stan ', 'spacak', 'karimatk', 'kemp', 'turistik', 'outdoor', 'horolez', 'treking', 'trekov',
                           'celovk', 'vybaveni na hory', 'nadobi do prirody', 'vareni v prirode'], False),
     ('sport', 'fitness', ['fitness', 'posilov', 'cinky', 'joga', 'crossfit', 'hyrox', 'trenink', 'expander'], False),
     ('sport', 'micove', ['basketbal', 'fotbal', 'volejbal', 'tenis', 'padel', 'florbal', 'hokej', 'micove', 'badminton', 'squash', 'golf', 'mice'], False),
-    ('sport', None, ['sport', ' beh', 'plavani', 'vodni sporty', 'atletika'], False),
+    ('sport', None, ['sport', ' beh', 'plavani', 'vodni sporty', 'atletika', 'cyklistik', 'cyklo'], False),
 ]
 COSM = [
     ('kosmetika', 'parfemy', ['parfem', 'toaletni voda', 'parfemovana voda', 'kolinsk'], False),
