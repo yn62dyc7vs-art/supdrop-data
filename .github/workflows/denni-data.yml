@@ -23,12 +23,14 @@ jobs:
         env:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
         run: python scripts/build_catalog.py
+      - name: Rozdělit data na malé soubory (rychlý start webu a appky)
+        run: python scripts/split_catalog.py
       - name: Zveřejnit data do větve live (web a appka si je načtou samy)
         run: |
           cd out
           git init -q -b live
           git config user.name "šup bot"
           git config user.email "actions@users.noreply.github.com"
-          git add latest.json state.json
+          git add -A
           git commit -qm "Data $(date +%F)"
           git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" live
