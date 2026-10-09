@@ -59,10 +59,13 @@ SKIP = ['kojen', 'backor', 'domaci obuv', 'vlozk', 'kompres', 'zdravotn', 'banda
         'elektromaterial', 'pece o telo', 'cistic', 'darkova krabice', 'poukaz', 'servis', 'pujcovna', 'tkanick', 'impregnac',
         'naplne', 'naradi', 'pumpick', 'duse', 'plaste', 'brzd', 'retez', 'pedal', 'sedlo', 'riditk', 'prehazovac',
         'kosik na lahev', 'cocky', 'stoupaci pas', 'vnitrni boticky', 'sitova karta', 'access point', 'switch ', 'router',
-        'toner', 'inkoust', 'klicenk', 'poutko', 'jmenovk', 'flash disk', 'usb ', 'presenter', 'replacement', 'hrot', 'chladic',
-        'zdroj', 'pametova karta', 'disk ', 'disky', 'ip kamery', 'webkamery', 'kamery do auta', 'sluzba', 'pojisteni', 'prodlouzena zaruka', 'cpu ', 'zakladni desk', 'graficka karta', 'operacni pamet', 'brasn', 'sleeve']
+        'klicenk', 'poutko', 'jmenovk', 'flash disk', 'presenter', 'replacement', 'hrot',
+        'pametova karta', 'ip kamery', 'webkamery', 'kamery do auta', 'sluzba', 'pojisteni', 'prodlouzena zaruka', 'brasn']
+# slova, která rozhodují jen v kategorii obchodu (v názvu by vyřadila i „inkoustové“ hodinky nebo MacBook s „CPU“)
+SKIP_PATH = ['toner', 'inkoust', 'naplne a tonery', 'cpu', 'procesory', 'zdroj', 'zakladni desk', 'graficka karta', 'operacni pamet',
+             'pameti', 'chladic', 'disk', 'usb ', 'kabely a konektory', 'servis', 'sleeve', 'switche', 'tiskarny']
 # příslušenství k elektronice: jen do podkategorie Příslušenství, do „celé kategorie“ ne
-ACC = ['prislusenstvi', 'ochranny film', 'ochranna folie', 'ochranne', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'sklo', 'skla', 'glass', 'remink', 'sklem', 'obal ', 'kabel',
+ACC = ['prislusenstvi', 'ochranny film', 'ochranna folie', 'ochranne', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'sklo', 'skla', 'glass', 'remink', 'sklem', 'obal ', 'kabel ', 'kabely',
        'nabijec', 'adapter', 'drzak', 'reminek', 'powerbank', 'magsafe', 'redukce', 'stylus', 'ochrana cocek',
        'ochrana objektivu', 'ochrana fotoaparatu', 'stojanek', 'grip', 'case', 'cover', 'pasek pro', 'naramek pro']
 ELEC_CTX = ['mobil', 'telefon', 'tablet', 'apple', 'iphone', 'ipad', 'elektronik', 'gsm', 'notebook', 'chytre hodink',
@@ -112,7 +115,7 @@ CLOTH = [
     ('obleceni', 'kratasy', ['kratasy', 'sortky', 'kratke kalhoty'], False),
     ('obleceni', 'kalhoty', ['kalhoty', 'teplaky', 'leginy', 'dziny', 'jeans', 'joggers'], False),
     ('obleceni', 'saty', ['saty', 'sukne', 'overal'], False),
-    ('obleceni', 'tricka', ['tricka', 'tricko', 'topy', 'tilka', 'tilko', 'kosile', 'polokosile', 'dresy', 'dres ', 'body ', 'trika'], False),
+    ('obleceni', 'tricka', ['tricka', 'tricko', 'triko', 'topy', 'tilka', 'tilko', 'kosile', 'polokosile', 'dresy', 'dres ', 'body ', 'trika'], False),
     ('obleceni', None, ['volnocasove obleceni', 'obleceni', 'komplety', 'soupravy', 'odevy'], False),
 ]
 ACCES = [
@@ -122,7 +125,7 @@ ACCES = [
     ('doplnky', 'sperky', ['sperky', 'nahrdelnik', 'naramk', 'nausnic', 'prsten', 'retizk'], False),
     ('doplnky', 'bryle', ['slunecni bryle', 'bryle'], False),
     ('doplnky', 'penezenky', ['penezenk'], False),
-    ('doplnky', 'saly', ['saly', 'satky', 'sal ', 'rukavice', 'nakrcnik', 'opasky', 'opasek'], False),
+    ('doplnky', 'saly', ['saly', 'satky', 'satek', 'sal ', 'rukavice', 'nakrcnik', 'opasky', 'opasek'], False),
 ]
 SPORT = [
     ('sport', 'vyziva', ['sportovni vyziva', 'proteiny', 'protein', 'kreatin', 'vyziva', 'gainery', 'aminokyseliny'], False),
@@ -187,8 +190,8 @@ def categorize(path, name):
     leaf = ' ' + (segs[-1] if segs else '') + ' '
     if any(' ' + k in full for k in KIDS_PATH) or KIDS.search(name or ''): return None
     ln = leaf + n
-    if any(' ' + k in ln for k in SKIP) or ' tah ' in n or (' pasek ' in n and 'hodink' not in full): return None
-    if any(k in ln for k in PERIPH):
+    if any(' ' + k in ln for k in SKIP) or any(' ' + k in full for k in SKIP_PATH) or ' tah ' in n or (' pasek ' in n and 'hodink' not in full): return None
+    if any(k in (leaf if segs else n) for k in PERIPH):
         return ('gaming', 'periferie', False) if any(g in full + n for g in GAMER) else None
     # příslušenství: podle kategorie obchodu; bez kategorie podle názvu (ale „Apple Watch … pouzdro“ je hodinky)
     acc_txt = leaf if segs else (n if not any(n.startswith(' ' + m) for m in MAIN_NAME) else '')
@@ -215,7 +218,7 @@ def categorize(path, name):
             if alt: sub = alt[1]
         return (cat, sub, False)
     if segs:  # strom obchodu nepomohl (např. 8a.cz má polské kategorie) – zkusíme český název oblečení, bot, doplňků a sportu
-        alt = _match(n, EXC + SHOES[:-1] + CLOTH[:-1] + ACCES + SPORT[:-1])
+        alt = _match(n, EXC + SHOES[:-1] + CLOTH[:-1] + ACCES + SPORT[:-1] + [('pokoj', 'lahve', ['termohrn', 'hrnek', 'lahev', 'termosk'], False)])
         return (alt[0], alt[1], False) if alt else None
     for cat, sub, keys in NAME_RULES:
         if any((k if k.startswith(' ') else ' ' + k) in n for k in keys):
