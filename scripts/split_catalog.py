@@ -1,7 +1,8 @@
 """Rozdělí out/full.json (z build_catalog.py) na malé soubory, aby web a appka startovaly okamžitě.
 
 out/v2/drops.json          start appky a webu: nejlepší nabídky z každé kategorie + top 12 (~40 kB po kompresi)
-out/v2/c/<kat>.json        lehký index celé kategorie (filtry značek, cen, podkategorií)
+out/v2/c/<kat>.json        lehký index celé kategorie (filtry cen); c/<kat>~<podkat>.json a c/<kat>@<značka>.json menší kousky
+out/v2/c/<kat>~brands.json seznam značek v kategorii
 out/v2/p/<kat>-<n>.json    plné záznamy po 100 kusech ve stejném pořadí jako index
 out/v2/s/<abc>.json        vyhledávání podle prvních 3 písmen slova (lehké záznamy + číslo stránky)
 out/v2/s/_n.json           počet produktů v každém vyhledávacím souboru (appka si vybere ten nejmenší)
@@ -25,6 +26,8 @@ def norm(s):
     s = unicodedata.normalize('NFD', str(s or '').lower())
     s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
     return re.sub(r'[^a-z0-9]+', ' ', s).strip()
+
+def slug(s): return norm(s).replace(' ', '-')[:40]
 
 def common_prefix(xs):
     if not xs: return ''
@@ -92,7 +95,19 @@ def main():
         for n in range(0, len(items), PAGE):
             dump(f'{OUT}/p/{c}-{n // PAGE}.json', dict(meta, items=items[n:n + PAGE]))
         for j, r in enumerate(items): where[r['i']] = j // PAGE
-        dump(f'{OUT}/c/{c}.json', [[r['i'], r['b'], r['n'], r.get('v') or '', r['p'], r['d'], r['t'], r.get('x', 0), r['s'], r['sb'], r.get('ac', 0)] for r in items])
+        rows = [[r['i'], r['b'], r['n'], r.get('v') or '', r['p'], r['d'], r['t'], r.get('x', 0), r['s'], r['sb'], r.get('ac', 0), j // PAGE] for j, r in enumerate(items)]
+        dump(f'{OUT}/c/{c}.json', rows)
+        # menší indexy: podle podkategorie a podle značky (hlídač „Oblečení · Mikiny“ nebo „Nike“ stáhne jen svůj kousek)
+        bysub, bybrand = {}, {}
+        for row in rows:
+            if row[9]: bysub.setdefault(row[9], []).append(row)
+            if row[1]: bybrand.setdefault(slug(row[1]), []).append(row)
+        for sb, rs in bysub.items(): dump(f'{OUT}/c/{c}~{sb}.json', rs)
+        for bs, rs in bybrand.items(): dump(f'{OUT}/c/{c}@{bs}.json', rs)
+        names = {}
+        for row in rows:
+            if row[1] and not row[10]: names.setdefault(slug(row[1]), [row[1], 0])[1] += 1
+        dump(f'{OUT}/c/{c}~brands.json', sorted(names.values(), key=lambda x: -x[1]))
 
     pick, seen = [], set()
     def add(rs):
