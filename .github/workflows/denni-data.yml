@@ -1,7 +1,7 @@
 name: Denní data šupu
 on:
   schedule:
-    - cron: '10 4-22/3 * * *'   # každé 3 hodiny: 6:10, 9:10, 12:10 … 0:10 letního času (v zimě o hodinu dřív)
+    - cron: '23 * * * *'   # každou hodinu (GitHub plánované běhy občas vynechá, takže data jsou vždy čerstvá do 3 hodin)
   workflow_dispatch: {}
 permissions:
   contents: write
