@@ -3,5 +3,10 @@
  {"shop": "Sachasport", "format": "google",  "bid": "995b7290", "trust": 8},
  {"shop": "Kilpi",      "format": "heureka", "bid": "246e9378", "trust": 8},
  {"shop": "iStyle",     "format": "heureka", "bid": "92ecd9a4", "trust": 9},
- {"shop": "XM.cz",      "format": "heureka", "bid": "0ff74973", "trust": 7}
+ {"shop": "XM.cz",      "format": "heureka", "bid": "0ff74973", "trust": 7},
+ {"shop": "Urbanmaster", "format": "google",  "bid": "40d84254", "trust": 8},
+ {"shop": "JBL",        "format": "google",  "bid": "c4f80d1f", "trust": 9, "defaultCat": "audio"},
+ {"shop": "8a.cz",      "format": "google",  "bid": "d2eba940", "trust": 8},
+ {"shop": "Sparkys",    "format": "heureka", "bid": "508c468c", "trust": 8},
+ {"shop": "EMP",        "format": "ehub",    "bid": "18d11772", "trust": 7}
 ]
