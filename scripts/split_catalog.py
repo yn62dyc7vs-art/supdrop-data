@@ -7,7 +7,7 @@ out/v2/p/<kat>-<n>.json    plné záznamy po 100 kusech ve stejném pořadí jak
 out/v2/s/<abc>.json        vyhledávání podle prvních 3 písmen slova (lehké záznamy + číslo stránky)
 out/v2/s/_n.json           počet produktů v každém vyhledávacím souboru (appka si vybere ten nejmenší)
 
-Plný záznam: i id, c kategorie, sb podkategorie, ac příslušenství, k druh, b značka, n název, s obchod, u odkaz, g obrázek, p cena, d sleva,
+Plný záznam: i id, c kategorie, sb podkategorie, ac příslušenství, gd pro koho (m/f/u), cn stav (z = zánovní), k druh, b značka, n název, s obchod, u odkaz, g obrázek, p cena, d sleva,
 h hype, t skóre, e hotový partnerský odkaz, kb jiný kód partnera, w původní cena, v varianta, bs základ slevy, l nejnižší cena,
 ld počet dní historie, pv předchozí cena, dy dny ve slevě, r důvod, x neprošlo kontrolou.
 """
@@ -81,6 +81,8 @@ def main():
         if x.get('reason'): r['r'] = x['reason']
         if not x.get('pass'): r['x'] = 1
         if x.get('acc'): r['ac'] = 1
+        if x.get('gender'): r['gd'] = x['gender']
+        if x.get('cond'): r['cn'] = x['cond']  # 'z' = zánovní
         return r
 
     C = [comp(x) for x in deals]
@@ -95,7 +97,7 @@ def main():
         for n in range(0, len(items), PAGE):
             dump(f'{OUT}/p/{c}-{n // PAGE}.json', dict(meta, items=items[n:n + PAGE]))
         for j, r in enumerate(items): where[r['i']] = j // PAGE
-        rows = [[r['i'], r['b'], r['n'], r.get('v') or '', r['p'], r['d'], r['t'], r.get('x', 0), r['s'], r['sb'], r.get('ac', 0), j // PAGE] for j, r in enumerate(items)]
+        rows = [[r['i'], r['b'], r['n'], r.get('v') or '', r['p'], r['d'], r['t'], r.get('x', 0), r['s'], r['sb'], r.get('ac', 0), j // PAGE, r.get('gd', '')] for j, r in enumerate(items)]
         dump(f'{OUT}/c/{c}.json', rows)
         # menší indexy: podle podkategorie a podle značky (hlídač „Oblečení · Mikiny“ nebo „Nike“ stáhne jen svůj kousek)
         bysub, bybrand = {}, {}
@@ -121,6 +123,13 @@ def main():
         for sb, rs in bysub.items():
             if sb: add(rs[:PER_SUB])
         subc[c] = {sb: len(rs) for sb, rs in bysub.items() if sb}
+        # u módy i nejlepší kusy pro kluky a pro holky (hlídač „Mikiny · holky“ se pak ukáže hned)
+        if any(r.get('gd') for r in items):
+            for g in ('m', 'f'):
+                gi = [r for r in items if r.get('gd', '') in (g, 'u', '') and not r.get('ac')]
+                add(gi[:PER_CAT])
+                for sb in bysub:
+                    if sb: add([r for r in gi if r['sb'] == sb][:PER_SUB])
     add(sorted([r for r in C if r.get('h', 5) >= 8 and not r.get('x') and not r.get('ac')], key=lambda r: r['t'], reverse=True)[:TREND])
     top_ids = d.get('top') or []
     add([r for r in C if r['i'] in set(top_ids)])
@@ -138,7 +147,7 @@ def main():
     sh = {}
     for r in C:
         toks = {t for t in norm(r['b'] + ' ' + r['n'] + ' ' + str(r.get('v') or '')).split() if len(t) >= 3 and t not in STOP}
-        light = [r['i'], r['c'], where[r['i']], r['b'], r['n'], r.get('v') or '', r['p'], r['d'], r['s'], r['t'], r.get('x', 0), r['sb'], r.get('ac', 0)]
+        light = [r['i'], r['c'], where[r['i']], r['b'], r['n'], r.get('v') or '', r['p'], r['d'], r['s'], r['t'], r.get('x', 0), r['sb'], r.get('ac', 0), r.get('gd', '')]
         for p in {t[:3] for t in toks}: sh.setdefault(p, []).append(light)
     for p, items in sh.items(): dump(f'{OUT}/s/{p}.json', items)
     dump(f'{OUT}/s/_n.json', {p: len(v) for p, v in sh.items()})

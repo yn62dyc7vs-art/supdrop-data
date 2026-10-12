@@ -64,7 +64,8 @@ SKIP = ['kojen', 'backor', 'domaci obuv', 'vlozk', 'kompres', 'zdravotn', 'banda
         'plavecke pomucky', 'nafukovac', 'vodni radovanky', 'svetla na kolo', 'zamky na kolo', 'nosice kol']
 # slova, která rozhodují jen v kategorii obchodu (v názvu by vyřadila i „inkoustové“ hodinky nebo MacBook s „CPU“)
 SKIP_PATH = ['toner', 'inkoust', 'naplne a tonery', 'cpu', 'procesory', 'zdroj', 'zakladni desk', 'graficka karta', 'operacni pamet',
-             'pameti', 'chladic', 'disk', 'usb ', 'kabely a konektory', 'servis', 'sleeve', 'switche', 'tiskarny']
+             'pameti', 'chladic', 'disk', 'usb ', 'kabely a konektory', 'servis', 'sleeve', 'switche', 'tiskarny',
+             'komponenty na kol', 'nahradni dily']
 # příslušenství k elektronice: jen do podkategorie Příslušenství, do „celé kategorie“ ne
 ACC = ['prislusenstvi', 'ochranny film', 'ochranna folie', 'ochranne', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'sklo', 'skla', 'glass', 'remink', 'sklem', 'obal ', 'kabel ', 'kabely',
        'nabijec', 'adapter', 'drzak', 'reminek', 'powerbank', 'magsafe', 'redukce', 'stylus', 'ochrana cocek',
@@ -208,6 +209,9 @@ def categorize(path, name):
         if hit: break
     if hit:
         cat, sub = hit
+        # „Kola a koloběžky“ jen samotná kola, ne doplňky a díly „na kolo“ (košíky, blatníky, helmy…)
+        if sub == 'kola' and any(w in full + n for w in (' na kolo', ' na kola', 'doplnky', 'prislusenstvi', 'helm', 'prilb', 'bidon', 'kosik')):
+            sub = None
         if cat == 'sport':  # sportovní oblečení a boty patří do Oblečení / Bot
             alt = _match(n, EXC) or _match(n, SHOES[:-1] + CLOTH[:-1])
             if alt and alt[0] != 'sport': cat, sub = alt
@@ -220,6 +224,7 @@ def categorize(path, name):
         return (cat, sub, False)
     if segs:  # strom obchodu nepomohl (např. 8a.cz má polské kategorie) – zkusíme český název oblečení, bot, doplňků a sportu
         alt = _match(n, EXC + SHOES[:-1] + CLOTH[:-1] + ACCES + SPORT[:-1] + [('pokoj', 'lahve', ['termohrn', 'hrnek', 'lahev', 'termosk'], False)])
+        if alt and alt[1] == 'kola' and any(w in n for w in (' na kolo', 'helm', 'prilb', 'bidon', 'kosik')): alt = ('sport', None)
         return (alt[0], alt[1], False) if alt else None
     for cat, sub, keys in NAME_RULES:
         if any((k if k.startswith(' ') else ' ' + k) in n for k in keys):
@@ -232,6 +237,32 @@ SUBKIND = {'sluchatka': 'headphones', 'repro': 'speaker', 'notebooky': 'laptop',
            'foto': 'camera', 'smarthome': 'camera', 'fitness': 'dumbbell', 'vyziva': 'cup', 'batohy': 'bag', 'bryle': 'glasses',
            'lahve': 'cup', 'tricka': 'tee', 'kalhoty': 'pants', 'bundy': 'jacket', 'skate': 'board', 'karty': 'cards', 'lego': 'brick'}
 def kind_of(cat, sub): return SUBKIND.get(sub) or KIND.get(cat, 'spark')
+
+# pro koho: 'm' kluci, 'f' holky, 'u' pro všechny; prázdné = nevíme (appka ukáže všem)
+G_F = re.compile(r'\b(damsk\w*|zensk\w*|women\w*|womens|female|damskie|kobiet\w*|holcic\w*)\b')
+G_M = re.compile(r'\b(pansk\w*|muzsk\w*|men|mens|male|meskie|meski|chlapeck\w*)\b')
+GENDER_CATS = {'obleceni', 'tenisky', 'doplnky'}
+
+# stav zboží: bereme jen nové a zánovní (rozbalené, vystavené, „jako nové“); použité, bazarové a repasované vyřadíme
+COND_OK = re.compile(r'\b(zanovn\w*|rozbal\w*|vystaven\w*|jako nov\w*|open box)\b')
+COND_USED = re.compile(r'\b(pouzit\w*|bazar\w*|second ?hand|repas\w*|refurb\w*|renewed|obnoven\w*|grade [a-d]|stav [a-d]|trida [a-d])\b')
+def condition_of(x):
+    """'' = nové, 'z' = zánovní, None = vyřadit (použité)."""
+    t = norm((x.get('name') or '') + ' ' + (x.get('path') or ''))
+    tag = norm(x.get('cond') or '')
+    if COND_OK.search(t): return 'z'
+    if COND_USED.search(t) or tag in ('used', 'bazar', 'refurbished', 'pouzite', 'repasovane'): return None
+    return ''
+def gender_of(cat, path, name, param=''):
+    if cat not in GENDER_CATS: return ''
+    t = norm(' '.join((param or '', path or '', name or '')))
+    if re.search(r'\bunisex\b', t): return 'u'
+    f, m = bool(G_F.search(t)), bool(G_M.search(t))
+    if f and m: return 'u'
+    if f: return 'f'
+    if m: return 'm'
+    k = re.search(r'-(M|W|U)\b', name or '')          # Kilpi: TIRANO-M, NALAU-W, NOVA-U
+    return {'M': 'm', 'W': 'f', 'U': 'u'}[k.group(1)] if k else ''
 
 HYPE = {'nike': 8, 'jordan': 9, 'adidas': 8, 'new balance': 8, 'asics': 7, 'salomon': 7, 'on': 7, 'hoka': 7, 'vans': 6,
         'converse': 6, 'puma': 6, 'reebok': 5, 'the north face': 7, 'carhartt': 7, 'carhartt wip': 7, 'stussy': 8, 'columbia': 5,
@@ -303,7 +334,9 @@ def heureka_items(src):
         yield {'id': txt(el, 'ITEM_ID'), 'group': txt(el, 'ITEMGROUP_ID') or txt(el, 'ITEM_ID'),
                'name': txt(el, 'PRODUCT') or txt(el, 'PRODUCTNAME'), 'brand': txt(el, 'MANUFACTURER'),
                'path': txt(el, 'CATEGORYTEXT'), 'url': txt(el, 'URL'), 'img': txt(el, 'IMGURL'),
-               'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': stock, 'size': size, 'ean': txt(el, 'EAN')}
+               'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': stock, 'size': size, 'ean': txt(el, 'EAN'),
+               'gender': params.get('pohlavi') or params.get('gender') or params.get('urceni') or '',
+               'cond': txt(el, 'ITEM_TYPE') or params.get('stav') or ''}
         el.clear()
 
 def ehub_items(src):
@@ -319,7 +352,8 @@ def ehub_items(src):
                'name': txt(el, 'NAME') or txt(el, 'PRODUCTNAME'), 'brand': txt(el, 'MANUFACTURER') or params.get('skupina', ''),
                'path': txt(el, 'CATEGORY_FULL') or txt(el, 'CATEGORYTEXT'), 'url': txt(el, 'URL'), 'img': txt(el, 'IMAGE_MAIN') or txt(el, 'IMGURL'),
                'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': st in ('store', 'skladem', 'in stock', ''),
-               'size': params.get('velikost') or None, 'ean': txt(el, 'EAN'), 'tracked': True}
+               'size': params.get('velikost') or None, 'ean': txt(el, 'EAN'), 'tracked': True,
+               'gender': params.get('pohlavi') or params.get('gender') or '', 'cond': txt(el, 'ITEM_TYPE') or params.get('stav') or ''}
         el.clear()
 
 def google_items(src):
@@ -334,7 +368,7 @@ def google_items(src):
                'brand': g('brand'), 'path': g('product_type') or g('google_product_category'), 'url': link,
                'img': g('image_link'), 'price': now, 'orig': orig,
                'stock': g('availability').lower().replace('_', ' ') in ('in stock', 'preorder', 'backorder', ''),
-               'size': g('size') or None, 'ean': g('gtin')}
+               'size': g('size') or None, 'ean': g('gtin'), 'gender': g('gender'), 'cond': g('condition')}
         el.clear()
 
 # ---------------------------------------------------------------- hlavní běh
@@ -371,6 +405,9 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
+                cd = condition_of(x)
+                if cd is None: continue
+                x['cond'] = cd
                 gk = x['group'] or x['id']
                 g = groups.get(gk)
                 if g is None: g = groups[gk] = {'v': [], 'first': x}
@@ -426,9 +463,9 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             sc = score(disc, hy, sh.get('trust', 7), at_min)
             stock = bool(avail)
             products.append({
-                'id': key.replace(':', '-'), 'cat': cat, 'sub': sub, 'acc': acc or None, 'kind': kind_of(cat, sub), 'brand': brand or name, 'name': nm,
+                'id': key.replace(':', '-'), 'cat': cat, 'sub': sub, 'acc': acc or None, 'gender': gender_of(cat, f['path'], nm, f.get('gender')) or None, 'kind': kind_of(cat, sub), 'brand': brand or name, 'name': nm,
                 'variant': ('Skladem: ' + ', '.join(sizes[:12])) if sizes else None,
-                'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
+                'cond': cheapest.get('cond') or None, 'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': fix_img(f['img'] or cheapest['img']),
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
