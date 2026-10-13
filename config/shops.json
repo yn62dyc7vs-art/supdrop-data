@@ -1,12 +1,148 @@
 [
- {"shop": "CoolBoty",   "format": "heureka", "bid": "55927a45", "trust": 8},
- {"shop": "Sachasport", "format": "google",  "bid": "995b7290", "trust": 8},
- {"shop": "Kilpi",      "format": "heureka", "bid": "246e9378", "trust": 8},
- {"shop": "iStyle",     "format": "heureka", "bid": "92ecd9a4", "trust": 9},
- {"shop": "XM.cz",      "format": "heureka", "bid": "0ff74973", "trust": 7},
- {"shop": "Urbanmaster", "format": "google",  "bid": "40d84254", "trust": 8},
- {"shop": "JBL",        "format": "google",  "bid": "c4f80d1f", "trust": 9, "defaultCat": "audio"},
- {"shop": "8a.cz",      "format": "google",  "bid": "d2eba940", "trust": 8},
- {"shop": "Sparkys",    "format": "heureka", "bid": "508c468c", "trust": 8},
- {"shop": "EMP",        "format": "ehub",    "bid": "18d11772", "trust": 7}
+{
+"shop": "CoolBoty",
+"format": "heureka",
+"bid": "55927a45",
+"trust": 8
+},
+{
+"shop": "Sachasport",
+"format": "google",
+"bid": "995b7290",
+"trust": 8
+},
+{
+"shop": "Kilpi",
+"format": "heureka",
+"bid": "246e9378",
+"trust": 8
+},
+{
+"shop": "iStyle",
+"format": "heureka",
+"bid": "92ecd9a4",
+"trust": 9
+},
+{
+"shop": "XM.cz",
+"format": "heureka",
+"bid": "0ff74973",
+"trust": 7
+},
+{
+"shop": "Urbanmaster",
+"format": "google",
+"bid": "40d84254",
+"trust": 8
+},
+{
+"shop": "JBL",
+"format": "google",
+"bid": "c4f80d1f",
+"trust": 9,
+"defaultCat": "audio"
+},
+{
+"shop": "8a.cz",
+"format": "google",
+"bid": "d2eba940",
+"trust": 8
+},
+{
+"shop": "Sparkys",
+"format": "heureka",
+"bid": "508c468c",
+"trust": 8
+},
+{
+"shop": "EMP",
+"format": "ehub",
+"bid": "18d11772",
+"trust": 7
+},
+{
+"shop": "FYFT.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Fanda-NHL.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Hairplanet.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Shopcom.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Netestováno.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "TrailStore.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Sluchátka-náušníky.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Bagmaster.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Obujtese.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Eleven-sportswear.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Honzovy-longboardy.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Jabkolevně.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "iPhoneMarket.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "DronPro.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Drátek.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Počítače24.cz",
+"format": "auto",
+"trust": 8
+},
+{
+"shop": "Smarty.cz",
+"format": "auto",
+"trust": 8
+}
 ]
