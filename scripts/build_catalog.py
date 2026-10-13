@@ -200,6 +200,9 @@ NAME_RULES = [  # když obchod kategorii nemá (iStyle, JBL), podle názvu
     ('gaming', 'ovladace', ['dualsense', 'ovladac', 'controller']),
     ('pokoj', 'svetla', ['lampa', 'lamp ', 'svetelny pasek', 'led pasek']),
     ('tenisky', 'tenisky', ['tenisky', 'sneakers']),
+    ('sberatelske', 'lego', ['lego ']),
+    ('sberatelske', 'figurky', ['funko pop', 'labubu', 'pop mart']),
+    ('sberatelske', 'karty', ['pokemon tcg', 'booster', 'elite trainer']),
 ]
 LEGACY = {'mobily': ('elektronika', 'mobily'), 'audio': ('elektronika', None), 'gadgety': ('elektronika', None),
           'pocitace': ('elektronika', 'notebooky'), 'fitness': ('sport', 'fitness')}
@@ -223,7 +226,8 @@ def categorize(path, name):
     leaf = ' ' + (segs[-1] if segs else '') + ' '
     if any(' ' + k in full for k in KIDS_PATH) or KIDS.search(name or ''): return None
     ln = leaf + n
-    if any(' ' + k in ln for k in SKIP) or any(' ' + k in full for k in SKIP_PATH) or ' tah ' in n or (' pasek ' in n and 'hodink' not in full): return None
+    lns = re.sub(r'nintendo switch|switch (2|oled|lite)', 'nintendo-sw', ln)  # „switch“ = síťový prvek, ne Nintendo
+    if any(' ' + k in lns for k in SKIP) or any(' ' + k in full for k in SKIP_PATH) or ' tah ' in n or (' pasek ' in n and 'hodink' not in full): return None
     if any(k in (leaf if segs else n) for k in PERIPH):
         return ('gaming', 'periferie', False) if any(g in full + n for g in GAMER) else None
     # příslušenství: podle kategorie obchodu; bez kategorie podle názvu (ale „Apple Watch … pouzdro“ je hodinky)
@@ -381,7 +385,8 @@ def heureka_items(src):
         stock = True
         if dd and not re.fullmatch(r'\d+', dd): stock = False if norm(dd) in ('vyprodano', 'nedostupne', 'out of stock') else True
         elif dd and int(dd) > 14: stock = False
-        yield {'id': txt(el, 'ITEM_ID'), 'group': txt(el, 'ITEMGROUP_ID') or txt(el, 'ITEM_ID'),
+        iid = txt(el, 'ITEM_ID') or txt(el, 'PRODUCTNO') or txt(el, 'EAN') or txt(el, 'URL')
+        yield {'id': iid, 'group': txt(el, 'ITEMGROUP_ID') or iid,
                'name': txt(el, 'PRODUCT') or txt(el, 'PRODUCTNAME'), 'brand': txt(el, 'MANUFACTURER'),
                'path': txt(el, 'CATEGORYTEXT'), 'url': txt(el, 'URL'), 'img': txt(el, 'IMGURL'),
                'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': stock, 'size': size, 'ean': txt(el, 'EAN'),
@@ -398,7 +403,8 @@ def ehub_items(src):
             k, v = norm(txt(p, 'PARAM_NAME')), txt(p, 'VAL')
             if k and v: params[k] = v
         st = norm(txt(el, 'STORE_STATE'))
-        yield {'id': txt(el, 'ITEM_ID'), 'group': txt(el, 'ITEMGROUP_ID') or txt(el, 'ITEM_ID'),
+        iid = txt(el, 'ITEM_ID') or txt(el, 'PRODUCTNO') or txt(el, 'EAN') or txt(el, 'URL')
+        yield {'id': iid, 'group': txt(el, 'ITEMGROUP_ID') or iid,
                'name': txt(el, 'NAME') or txt(el, 'PRODUCTNAME'), 'brand': txt(el, 'MANUFACTURER') or params.get('skupina', ''),
                'path': txt(el, 'CATEGORY_FULL') or txt(el, 'CATEGORYTEXT'), 'url': txt(el, 'URL'), 'img': txt(el, 'IMAGE_MAIN') or txt(el, 'IMGURL'),
                'price': num(txt(el, 'PRICE_VAT')), 'orig': None, 'stock': st in ('store', 'skladem', 'in stock', ''),
