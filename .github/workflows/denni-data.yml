@@ -1,7 +1,7 @@
 name: Denní data šupu
 on:
   schedule:
-    - cron: '23 * * * *'   # každou hodinu (GitHub plánované běhy občas vynechá, takže data jsou vždy čerstvá do 3 hodin)
+    - cron: '10 4 * * *'   # každý den 6:10 letního času (5:10 zimního)
   workflow_dispatch: {}
 permissions:
   contents: write
@@ -22,15 +22,14 @@ jobs:
       - name: Stáhnout feedy a sestavit katalog
         env:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
+          SHOP_FEEDS_DOGNET: ${{ secrets.SHOP_FEEDS_DOGNET }}
         run: python scripts/build_catalog.py
-      - name: Rozdělit data na malé soubory (rychlý start webu a appky)
-        run: python scripts/split_catalog.py
       - name: Zveřejnit data do větve live (web a appka si je načtou samy)
         run: |
           cd out
           git init -q -b live
           git config user.name "šup bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A
+          git add latest.json state.json
           git commit -qm "Data $(date +%F)"
           git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" live
