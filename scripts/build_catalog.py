@@ -76,7 +76,9 @@ def dedupe_ean(products):
         out.append(best)
     return out
 
-def aff(url, bid):
+DOGNET_CH = 's8IEiPDU'  # reklamní kanál „šup – supdrop.cz“ v Dognetu (univerzální deeplink)
+def aff(url, bid, net=None):
+    if net == 'dognet': return 'https://go.dognet.com/?chid=' + DOGNET_CH + '&url=' + urllib.parse.quote(url, safe='')
     if not bid: return with_utm(url)
     return ('https://ehub.cz/system/scripts/click.php?a_aid=' + EHUB_AID + '&a_bid=' + bid +
             '&desturl=' + urllib.parse.quote(url, safe=''))
@@ -524,7 +526,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             products.append({
                 'id': key.replace(':', '-'), 'cat': cat, 'sub': sub, 'acc': acc or None, 'gender': gender_of(cat, f['path'], nm, f.get('gender')) or None, 'kind': kind_of(cat, sub), 'brand': brand or name, 'name': nm,
                 'variant': ('Skladem: ' + ', '.join(sizes[:12])) if sizes else None,
-                'cond': cheapest.get('cond') or None, 'ean': norm_ean(cheapest.get('ean')), 'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
+                'cond': cheapest.get('cond') or None, 'ean': norm_ean(cheapest.get('ean')), 'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid'), sh.get('net')), 'aff': bool(sh.get('bid')) or sh.get('net') == 'dognet' or bool(cheapest.get('tracked')),
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': fix_img(f['img'] or cheapest['img']),
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
@@ -560,6 +562,7 @@ def main():
     now = datetime.now(TZ)
     shops = load('config/shops.json', [])
     feeds = json.loads(os.environ.get('SHOP_FEEDS') or '{}') or load('config/feeds.local.json', {})
+    feeds.update(json.loads(os.environ.get('SHOP_FEEDS_DOGNET') or '{}'))  # feedy z Dognetu (samostatná tajná proměnná)
     os.makedirs('out', exist_ok=True)
     state = load('out/state.json', {})
     products, state, report = build(shops, feeds, state, now)

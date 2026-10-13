@@ -140,5 +140,65 @@
     "shop": "Smarty.cz",
     "format": "auto",
     "trust": 8
+  },
+  {
+    "shop": "KKboty.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "Sportby.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "Sport365.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "MasterSport.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "GymBeam.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "eyerim.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "Carneo.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "Electronic-star.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "Klarstein.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
+  },
+  {
+    "shop": "TonerPartner.cz",
+    "format": "auto",
+    "trust": 8,
+    "net": "dognet"
   }
 ]
