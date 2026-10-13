@@ -68,7 +68,8 @@
   {
     "shop": "Fanda-NHL.cz",
     "format": "auto",
-    "trust": 8
+    "trust": 8,
+    "low": true
   },
   {
     "shop": "Hairplanet.cz",
