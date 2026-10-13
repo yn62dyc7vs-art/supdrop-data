@@ -7,7 +7,7 @@ out/v2/p/<kat>-<n>.json    plné záznamy po 100 kusech ve stejném pořadí jak
 out/v2/s/<abc>.json        vyhledávání podle prvních 3 písmen slova (lehké záznamy + číslo stránky)
 out/v2/s/_n.json           počet produktů v každém vyhledávacím souboru (appka si vybere ten nejmenší)
 
-Plný záznam: i id, c kategorie, sb podkategorie, ac příslušenství, gd pro koho (m/f/u), cn stav (z = zánovní), k druh, b značka, n název, s obchod, u odkaz, g obrázek, p cena, d sleva,
+Plný záznam: i id, c kategorie, sb podkategorie, ac příslušenství, gd pro koho (m/f/u), cn stav (z = zánovní), o počet obchodů se stejným EAN, nx druhá nejlepší nabídka, k druh, b značka, n název, s obchod, u odkaz, g obrázek, p cena, d sleva,
 h hype, t skóre, e hotový partnerský odkaz, kb jiný kód partnera, w původní cena, v varianta, bs základ slevy, l nejnižší cena,
 ld počet dní historie, pv předchozí cena, dy dny ve slevě, r důvod, x neprošlo kontrolou.
 """
@@ -83,6 +83,8 @@ def main():
         if x.get('acc'): r['ac'] = 1
         if x.get('gender'): r['gd'] = x['gender']
         if x.get('cond'): r['cn'] = x['cond']  # 'z' = zánovní
+        if (x.get('offers') or 1) > 1: r['o'] = x['offers']  # stejný výrobek ve více obchodech
+        if x.get('next'): r['nx'] = x['next']  # [obchod, cena] druhé nejlepší nabídky
         return r
 
     C = [comp(x) for x in deals]

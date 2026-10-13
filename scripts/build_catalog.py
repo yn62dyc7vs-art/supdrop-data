@@ -45,8 +45,39 @@ def day_no(d): return (d - EPOCH).days
 
 def slug(s): return norm(s).replace(' ', '-')[:40]
 
+UTM = 'utm_source=supdrop&utm_medium=referral&utm_campaign=sup'
+def with_utm(url):
+    # obchod bez provize uvidí v Google Analytics, kolik zákazníků od nás přišlo
+    if not url or 'utm_source=' in url: return url
+    base, _, frag = url.partition('#')
+    return base + ('&' if '?' in base else '?') + UTM + ('#' + frag if frag else '')
+
+def norm_ean(e):
+    e = re.sub(r'\D', '', str(e or ''))
+    return e.lstrip('0').zfill(13) if 8 <= len(e) <= 14 and e.strip('0') else None
+
+def dedupe_ean(products):
+    """Stejný výrobek (stejný EAN) z více obchodů: v šupu jen nejlevnější nabídka skladem,
+    k ní počet obchodů a druhá nejlepší cena (appka napíše „nejlevnější z N obchodů“)."""
+    groups, out = {}, []
+    for d in products:
+        if d.get('ean'): groups.setdefault(d['ean'], []).append(d)
+        else: out.append(d)
+    for ean, ds in groups.items():
+        shops = {}
+        for d in ds:  # jeden obchod se může opakovat (varianty), bereme jeho nejlevnější
+            if d['shop'] not in shops or (d['stock'], -d['now']) > (shops[d['shop']]['stock'], -shops[d['shop']]['now']): shops[d['shop']] = d
+        ds2 = sorted(shops.values(), key=lambda d: (not d['stock'], d['now'], not d.get('aff')))  # při stejné ceně přednost obchodu s provizí
+        best = ds2[0]
+        if len(ds2) > 1:
+            best['offers'] = len([d for d in ds2 if d['stock']]) or 1
+            nxt = [d for d in ds2[1:] if d['stock']]
+            if nxt: best['next'] = [nxt[0]['shop'], nxt[0]['now']]
+        out.append(best)
+    return out
+
 def aff(url, bid):
-    if not bid: return url
+    if not bid: return with_utm(url)
     return ('https://ehub.cz/system/scripts/click.php?a_aid=' + EHUB_AID + '&a_bid=' + bid +
             '&desturl=' + urllib.parse.quote(url, safe=''))
 
@@ -308,6 +339,25 @@ def clean_name(name, size=None):
         n = re.sub(r'\s' + re.escape(size) + r'(?=\s|$)', '', n).strip()
     return n.strip(' ,-–')
 
+class _Peeked:
+    """Proud, ze kterého jsme už přečetli začátek (kvůli rozpoznání formátu) – vrátí ho znovu."""
+    def __init__(self, head, rest): self.head, self.rest = head, rest
+    def read(self, n=-1):
+        if self.head:
+            if n is None or n < 0: b, self.head = self.head + self.rest.read(), b''; return b
+            b, self.head = self.head[:n], self.head[n:]
+            return b if len(b) == n else b + self.rest.read(n - len(b))
+        return self.rest.read(n)
+
+def sniff_format(src):
+    """Heureka (SHOPITEM), Google (item/entry s g:), nebo eHUB (SHOPITEM s IMAGE_MAIN / STORE_STATE)."""
+    head = src.read(65536)
+    t = head.decode('utf-8', 'ignore')
+    if '<SHOPITEM' in t: fmt = 'ehub' if ('<IMAGE_MAIN' in t or '<STORE_STATE' in t) else 'heureka'
+    elif 'base.google.com' in t or '<g:' in t: fmt = 'google'
+    else: fmt = 'heureka'
+    return _Peeked(head, src), fmt
+
 def open_feed(url, timeout=180):
     req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept-Encoding': 'gzip'})
     r = urllib.request.urlopen(req, timeout=timeout)
@@ -396,11 +446,14 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
     products, report = [], []
     for sh in shops:
         name = sh['shop']; url = feeds.get(name)
+        if isinstance(url, dict):  # SHOP_FEEDS může nést i kód partnera a formát: {"url": …, "bid": …, "format": …}
+            sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
         if not url: report.append(f'{name}: chybí adresa feedu'); continue
         t0 = time.time(); groups = {}; n = 0
         try:
             src = open_fn(url)
             fmt = sh.get('format')
+            if fmt in (None, '', 'auto'): src, fmt = sniff_format(src)
             it = google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else heureka_items(src)
             for x in it:
                 n += 1
@@ -465,7 +518,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             products.append({
                 'id': key.replace(':', '-'), 'cat': cat, 'sub': sub, 'acc': acc or None, 'gender': gender_of(cat, f['path'], nm, f.get('gender')) or None, 'kind': kind_of(cat, sub), 'brand': brand or name, 'name': nm,
                 'variant': ('Skladem: ' + ', '.join(sizes[:12])) if sizes else None,
-                'cond': cheapest.get('cond') or None, 'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
+                'cond': cheapest.get('cond') or None, 'ean': norm_ean(cheapest.get('ean')), 'shop': name, 'url': cheapest['url'] if cheapest.get('tracked') else aff(cheapest['url'], sh.get('bid')), 'aff': bool(sh.get('bid')) or bool(cheapest.get('tracked')),
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': fix_img(f['img'] or cheapest['img']),
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
@@ -475,6 +528,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
         log(report[-1])
     # historie: zahodit produkty, které 45 dní nikdo neviděl
     hist = {k: v for k, v in hist.items() if v and v[-1][0] >= today - 45}
+    products = dedupe_ean(products)
     products.sort(key=lambda d: -d['score']['total'])
     return products, {'h': hist, 'last': new_last, 'updated': stamp, 'prevAt': state.get('updated')}, report
 
