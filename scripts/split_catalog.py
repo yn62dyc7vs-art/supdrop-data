@@ -85,13 +85,14 @@ def main():
         if x.get('cond'): r['cn'] = x['cond']  # 'z' = zánovní
         if (x.get('offers') or 1) > 1: r['o'] = x['offers']  # stejný výrobek ve více obchodech
         if x.get('next'): r['nx'] = x['next']  # [obchod, cena] druhé nejlepší nabídky
+        if x.get('lp'): r['lp'] = 1  # obchod s nižší prioritou (např. fan merch) – v přehledech až za ostatními
         return r
 
     C = [comp(x) for x in deals]
     meta = {'v': 2, 'batch': d.get('batch'), 'checkedAt': d.get('checkedAt'), 'aid': aid, 'bids': bids, 'pre': pre, 'kinds': kinds}
     shutil.rmtree(OUT, ignore_errors=True)
 
-    prio = lambda r: (0 if r.get('x') else 1, r['d'] * 1000 + r['t'])
+    prio = lambda r: (0 if r.get('x') else 1, 0 if r.get('lp') else 1, r['d'] * 1000 + r['t'])
     bycat, where = {}, {}
     for r in C: bycat.setdefault(r['c'], []).append(r)
     for c in bycat:
@@ -132,7 +133,7 @@ def main():
                 add(gi[:PER_CAT])
                 for sb in bysub:
                     if sb: add([r for r in gi if r['sb'] == sb][:PER_SUB])
-    add(sorted([r for r in C if r.get('h', 5) >= 8 and not r.get('x') and not r.get('ac')], key=lambda r: r['t'], reverse=True)[:TREND])
+    add(sorted([r for r in C if r.get('h', 5) >= 8 and not r.get('x') and not r.get('ac')], key=lambda r: (0 if r.get('lp') else 1, r['t']), reverse=True)[:TREND])
     top_ids = d.get('top') or []
     add([r for r in C if r['i'] in set(top_ids)])
     byid = {x['id']: x for x in deals}

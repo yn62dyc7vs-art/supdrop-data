@@ -528,7 +528,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': fix_img(f['img'] or cheapest['img']),
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
-                'prev': prev if prev and prev != now_p else None})
+                'prev': prev if prev and prev != now_p else None, 'lp': True if sh.get('low') else None})  # lp = nižší priorita obchodu
             kept += 1
         report.append(f'{name}: {n} položek ve feedu, {len(groups)} produktů, do šupu {kept} ({time.time() - t0:.0f} s)')
         log(report[-1])
@@ -547,7 +547,7 @@ def pick_top(products, n=12):
             if len(out) >= n: return
             if d['id'] in out or not (d['pass'] and d['img']) or d.get('acc') or not cond(d): continue
             b = ' '.join(base(d))
-            if b in seen or per_cat.get(d['cat'], 0) >= cat_lim or per_shop.get(d['shop'], 0) >= shop_lim: continue
+            if b in seen or per_cat.get(d['cat'], 0) >= cat_lim or per_shop.get(d['shop'], 0) >= (min(shop_lim, 1) if d.get('lp') else shop_lim): continue
             out.append(d['id']); seen.add(b)
             per_cat[d['cat']] = per_cat.get(d['cat'], 0) + 1; per_shop[d['shop']] = per_shop.get(d['shop'], 0) + 1
     take(lambda d: d['disc'] > 0, 3, 4)
