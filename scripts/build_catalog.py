@@ -574,7 +574,8 @@ def main():
            'prevAt': state.get('prevAt'), 'top': pick_top(products), 'deals': products}
     with open('out/full.json', 'w', encoding='utf-8') as f: json.dump(out, f, ensure_ascii=False, separators=(',', ':'))  # pro split_catalog.py
     # latest.json zůstává ve starých kategoriích, dokud běží starší verze appky
-    old = dict(out, deals=[dict(d, cat=legacy_cat(d)) for d in products if legacy_cat(d)])
+    # jen malý výřez nejlepších nabídek pro staré verze appky (GitHub odmítne soubor nad 100 MB)
+    old = dict(out, deals=[dict(d, cat=legacy_cat(d)) for d in products if legacy_cat(d)][:4000])
     with open('out/latest.json', 'w', encoding='utf-8') as f: json.dump(old, f, ensure_ascii=False, separators=(',', ':'))
     with open('out/state.json', 'w', encoding='utf-8') as f: json.dump(state, f, ensure_ascii=False, separators=(',', ':'))
     with open('out/paths.json', 'w', encoding='utf-8') as f:  # přehled zařazení cest kategorií (kontrola)
