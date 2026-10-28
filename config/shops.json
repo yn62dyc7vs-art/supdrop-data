@@ -200,5 +200,95 @@
     "format": "auto",
     "trust": 8,
     "net": "dognet"
+  },
+  {
+    "shop": "Eppi.cz",
+    "format": "auto",
+    "bid": "a7bce6ab",
+    "trust": 8
+  },
+  {
+    "shop": "Legenio.cz",
+    "format": "auto",
+    "bid": "193ec796",
+    "trust": 8
+  },
+  {
+    "shop": "Knihy.cz",
+    "format": "auto",
+    "bid": "5101b902",
+    "trust": 8
+  },
+  {
+    "shop": "BeautyOnline.cz",
+    "format": "auto",
+    "bid": "99271766",
+    "trust": 8
+  },
+  {
+    "shop": "Najáda.games",
+    "format": "auto",
+    "bid": "23c81a0f",
+    "trust": 8
+  },
+  {
+    "shop": "TLAMAgames.com",
+    "format": "auto",
+    "bid": "3de0bfba",
+    "trust": 8
+  },
+  {
+    "shop": "Drátek.cz",
+    "format": "auto",
+    "bid": "beb6f6e3",
+    "trust": 8
+  },
+  {
+    "shop": "OutdoorMarket.cz",
+    "format": "auto",
+    "bid": "996ee252",
+    "trust": 8
+  },
+  {
+    "shop": "OK-Hračky.cz",
+    "format": "auto",
+    "bid": "20372289",
+    "trust": 8
+  },
+  {
+    "shop": "C-store.cz",
+    "format": "auto",
+    "bid": "97a638ff",
+    "trust": 8
+  },
+  {
+    "shop": "Pompo.cz",
+    "format": "auto",
+    "bid": "ce6cff81",
+    "trust": 8
+  },
+  {
+    "shop": "KrásnéVůně.cz",
+    "format": "auto",
+    "bid": "a6d1bfdf",
+    "trust": 8
+  },
+  {
+    "shop": "Kocosbeauty.cz",
+    "format": "auto",
+    "bid": "316fbecc",
+    "trust": 8
+  },
+  {
+    "shop": "Spartoo.cz",
+    "format": "auto",
+    "bid": "7b857422",
+    "trust": 7
+  },
+  {
+    "shop": "MinisterstvoHraček.cz",
+    "format": "auto",
+    "bid": "bfe5db0e",
+    "trust": 7
   }
 ]
