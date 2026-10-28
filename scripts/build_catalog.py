@@ -458,6 +458,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
         if not url: report.append(f'{name}: chybí adresa feedu'); continue
         t0 = time.time(); groups = {}; n = 0
+        brands = {norm(b) for b in sh.get('brands') or []}  # volitelně jen vybrané značky (velké feedy jako Spartoo)
         try:
             src = open_fn(url)
             fmt = sh.get('format')
@@ -466,6 +467,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
+                if brands and norm(x['brand']) not in brands: continue
                 cd = condition_of(x)
                 if cd is None: continue
                 x['cond'] = cd
