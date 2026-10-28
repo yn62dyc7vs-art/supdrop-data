@@ -12,6 +12,8 @@ Každé ráno:
 
 Adresy feedů jsou v tajné proměnné SHOP_FEEDS (JSON {"CoolBoty": "https://…", …}),
 ostatní nastavení obchodů v config/shops.json.
+Obchody z CJ ("net": "cj", "cj": "<id inzerenta>", "cjAds": ["<id feedu>"]) se nečtou z feedu, ale z Product Feed API CJ
+(GraphQL ads.api.cj.com); potřebují tajnou proměnnou CJ_TOKEN (Personal Access Token z developers.cj.com).
 """
 import gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
@@ -25,6 +27,8 @@ UA = 'supdrop-catalog/1.0 (+https://supdrop.cz; info@supdrop.cz)'
 EPOCH = date(2026, 1, 1)
 MIN_PRICE = 150          # levnější drobnosti (fólie, tkaničky…) do dropu nepatří
 HISTORY_DAYS = 30
+CJ_CID, CJ_PID = '8098362', '101903676'   # CJ: firma (CID) a propagační vlastnost „šup – supdrop.cz (web)“ (PID); nejsou tajné
+CJ_API = 'https://ads.api.cj.com/query'
 
 # ---------------------------------------------------------------- pomocné
 def norm(s):
@@ -429,6 +433,53 @@ def google_items(src):
                'size': g('size') or None, 'ean': g('gtin'), 'gender': g('gender'), 'cond': g('condition')}
         el.clear()
 
+CJ_QUERY = '''query($cid: ID!, $ids: [ID!], $ads: [ID!], $limit: Int, $lo: Float, $hi: Float) {
+  shoppingProducts(companyId: $cid, partnerIds: $ids, adIds: $ads, limit: $limit, offset: 0, lowPrice: $lo, highPrice: $hi) {
+    totalCount count
+    resultList { id itemGroupId title brand size gender productType googleProductCategory { name } availability condition gtin
+      link imageLink price { amount } salePrice { amount } linkCode(pid: "%s") { clickUrl } }
+  }
+}''' % CJ_PID
+
+def cj_call(token, variables, tries=3):
+    body = json.dumps({'query': CJ_QUERY, 'variables': dict(variables, cid=CJ_CID)}).encode()
+    for k in range(tries):
+        try:
+            req = urllib.request.Request(CJ_API, data=body, headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'User-Agent': UA})
+            j = json.load(urllib.request.urlopen(req, timeout=180))
+            if j.get('errors'): raise RuntimeError(str(j['errors'])[:300])
+            return j['data']['shoppingProducts']
+        except Exception:
+            if k == tries - 1: raise
+            time.sleep(5 * (k + 1))
+
+def cj_items(adv, token, ads=None, call=cj_call):
+    """Produkty inzerenta z CJ, jen z vybraných feedů (ads; inzerent může mít víc e-shopů nebo zemí).
+    Jeden dotaz vrátí nejvýš 10 000 kusů, větší katalog se proto dělí podle ceny."""
+    stack, seen, q = [(0.0, 1000000.0)], set(), {'ids': [adv], 'ads': ads or None}
+    while stack:
+        lo, hi = stack.pop()
+        head = call(token, dict(q, limit=1, lo=lo, hi=hi))
+        tot = head['totalCount']
+        if not tot: continue
+        if tot > 10000 and hi - lo > 1:
+            mid = float(int((lo + hi) / 2))
+            stack += [(lo, mid - 0.01), (mid, hi)]; continue
+        for r in call(token, dict(q, limit=min(tot, 10000), lo=lo, hi=hi))['resultList']:
+            if r['id'] in seen: continue
+            seen.add(r['id'])
+            price = num((r.get('price') or {}).get('amount')); sale = num((r.get('salePrice') or {}).get('amount'))
+            now = sale if sale and price and sale < price else price
+            click = ((r.get('linkCode') or {}).get('clickUrl') or '')
+            title = r.get('title') or ''
+            if ' | ' in title: title = title.split(' | ')[0]  # Meatfly: „Tričko Joe | Šedá | Velikost XXL“
+            path = (r.get('productType') or [''])[0] or ((r.get('googleProductCategory') or {}).get('name') or '')
+            yield {'id': r['id'], 'group': r.get('itemGroupId') or r['id'], 'name': title, 'brand': r.get('brand') or '',
+                   'path': path, 'url': click or r.get('link') or '', 'tracked': bool(click), 'img': r.get('imageLink') or '',
+                   'price': now, 'orig': price if now and price and now < price else None,
+                   'stock': (r.get('availability') or '').lower().replace('_', ' ') in ('in stock', 'preorder', 'backorder', ''),
+                   'size': r.get('size') or None, 'ean': r.get('gtin') or '', 'gender': r.get('gender') or '', 'cond': r.get('condition') or ''}
+
 # ---------------------------------------------------------------- hlavní běh
 def load(p, default):
     try:
@@ -446,7 +497,7 @@ def legacy_cat(d):
 
 PATHS = {}  # (obchod, cesta kategorie, zařazení) -> [počet, ukázkový název]; pro kontrolu zařazování
 
-def build(shops, feeds, state, now, open_fn=open_feed, log=print):
+def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items):
     today = day_no(now.date())
     stamp = now.strftime('%Y-%m-%dT%H:%M')
     hist = state.get('h', {})
@@ -454,16 +505,19 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
     products, report = [], []
     for sh in shops:
         name = sh['shop']; url = feeds.get(name)
+        if sh.get('net') == 'cj': url = ('cj:' + str(sh['cj'])) if cj_token else None  # CJ se čte z API, ne z feedu
         if isinstance(url, dict):  # SHOP_FEEDS může nést i kód partnera a formát: {"url": …, "bid": …, "format": …}
             sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
-        if not url: report.append(f'{name}: chybí adresa feedu'); continue
+        if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí adresa feedu')); continue
         t0 = time.time(); groups = {}; n = 0
         brands = {norm(b) for b in sh.get('brands') or []}  # volitelně jen vybrané značky (velké feedy jako Spartoo)
         try:
-            src = open_fn(url)
-            fmt = sh.get('format')
-            if fmt in (None, '', 'auto'): src, fmt = sniff_format(src)
-            it = google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else heureka_items(src)
+            if url.startswith('cj:'): it = cj_fn(url[3:], cj_token, sh.get('cjAds'))
+            else:
+                src = open_fn(url)
+                fmt = sh.get('format')
+                if fmt in (None, '', 'auto'): src, fmt = sniff_format(src)
+                it = google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else heureka_items(src)
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
@@ -494,7 +548,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print):
                 for col in zip(*words):
                     if all(w == col[0] for w in col): common.append(col[0])
                     else: break
-                if len(common) >= 2: nm = ' '.join(common).strip(' ,-–')
+                if len(common) >= 2: nm = ' '.join(common).strip(' ,-–|')
             brand = fix_brand((f['brand'] or '').strip(), nm)
             res = categorize(f['path'], nm)
             if not res and not (f['path'] or '').strip() and sh.get('defaultCat'):
@@ -568,7 +622,7 @@ def main():
     feeds.update(json.loads(os.environ.get('SHOP_FEEDS_EHUB2') or '{}'))  # další feedy z eHUBu, přidané 28. 10. 2026
     os.makedirs('out', exist_ok=True)
     state = load('out/state.json', {})
-    products, state, report = build(shops, feeds, state, now)
+    products, state, report = build(shops, feeds, state, now, cj_token=os.environ.get('CJ_TOKEN') or None)
     if not products:
         print('Žádný produkt, nic nezapisuji.'); print('\n'.join(report)); sys.exit(1)
     out = {'batch': now.strftime('%Y-%m-%d'), 'checkedAt': now.strftime('%Y-%m-%dT%H:%M'),
