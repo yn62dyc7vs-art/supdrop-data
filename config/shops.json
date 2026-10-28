@@ -324,5 +324,23 @@
     "format": "auto",
     "bid": "bfe5db0e",
     "trust": 7
+  },
+  {
+    "shop": "Kabea.cz",
+    "net": "cj",
+    "cj": "5316217",
+    "cjAds": [
+      "13899884"
+    ],
+    "trust": 8
+  },
+  {
+    "shop": "Meatfly.cz",
+    "net": "cj",
+    "cj": "5590289",
+    "cjAds": [
+      "15069792"
+    ],
+    "trust": 8
   }
 ]
