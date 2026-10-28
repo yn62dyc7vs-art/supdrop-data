@@ -563,6 +563,7 @@ def main():
     shops = load('config/shops.json', [])
     feeds = json.loads(os.environ.get('SHOP_FEEDS') or '{}') or load('config/feeds.local.json', {})
     feeds.update(json.loads(os.environ.get('SHOP_FEEDS_DOGNET') or '{}'))  # feedy z Dognetu (samostatná tajná proměnná)
+    feeds.update(json.loads(os.environ.get('SHOP_FEEDS_EHUB2') or '{}'))  # další feedy z eHUBu, přidané 28. 10. 2026
     os.makedirs('out', exist_ok=True)
     state = load('out/state.json', {})
     products, state, report = build(shops, feeds, state, now)
