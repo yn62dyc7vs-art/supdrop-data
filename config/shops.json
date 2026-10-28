@@ -342,5 +342,53 @@
       "15069792"
     ],
     "trust": 8
+  },
+  {
+    "shop": "Vivantis.cz",
+    "net": "cj",
+    "cj": "4384608",
+    "cjAds": [
+      "13580404"
+    ],
+    "trust": 8,
+    "brands": [
+      "Casio",
+      "Daniel Wellington",
+      "Fossil",
+      "Tommy Hilfiger",
+      "Calvin Klein",
+      "Hugo Boss",
+      "Lacoste",
+      "Guess",
+      "Michael Kors",
+      "Diesel",
+      "Armani Exchange",
+      "Emporio Armani",
+      "Skagen",
+      "Rosefield",
+      "adidas",
+      "Nike",
+      "Hollister",
+      "Abercrombie & Fitch",
+      "Pandora",
+      "Swarovski",
+      "Versace",
+      "Dolce & Gabbana",
+      "Yves Saint Laurent",
+      "Rabanne",
+      "Carolina Herrera",
+      "Dior",
+      "Gucci",
+      "Prada",
+      "Valentino",
+      "Ariana Grande",
+      "Billie Eilish",
+      "Givenchy",
+      "Lattafa",
+      "Armaf",
+      "NYX Professional Makeup",
+      "MAC Cosmetics",
+      "Rare Beauty"
+    ]
   }
 ]
