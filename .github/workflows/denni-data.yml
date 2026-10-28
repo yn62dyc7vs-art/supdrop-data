@@ -24,6 +24,7 @@ jobs:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
           SHOP_FEEDS_DOGNET: ${{ secrets.SHOP_FEEDS_DOGNET }}
           SHOP_FEEDS_EHUB2: ${{ secrets.SHOP_FEEDS_EHUB2 }}
+          CJ_TOKEN: ${{ secrets.CJ_TOKEN }}
         run: python scripts/build_catalog.py
       - name: Rozdělit data na malé soubory (rychlý start webu a appky)
         run: python scripts/split_catalog.py
