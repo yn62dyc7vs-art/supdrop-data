@@ -497,6 +497,13 @@ def legacy_cat(d):
 
 PATHS = {}  # (obchod, cesta kategorie, zařazení) -> [počet, ukázkový název]; pro kontrolu zařazování
 
+def hist_points(h, today):
+    """Graf ceny v appce: [dní zpět, cena] jen tam, kde se nejnižší cena dne změnila (od nejstaršího dne)."""
+    out = []
+    for d, lo, _hi in sorted(h):
+        if not out or out[-1][1] != lo: out.append([today - d, lo])
+    return out
+
 def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items):
     today = day_no(now.date())
     stamp = now.strftime('%Y-%m-%dT%H:%M')
@@ -586,7 +593,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                 'now': now_p, 'was': was, 'disc': disc, 'basis': basis, 'hype': hy, 'stock': stock, 'pass': stock,
                 'reason': None if stock else 'Není skladem.', 'score': sc, 'checked': stamp, 'img': fix_img(f['img'] or cheapest['img']),
                 'imgby': name, 'days': days, 'low': low, 'lowDays': min(HISTORY_DAYS, days + 1),
-                'prev': prev if prev and prev != now_p else None, 'lp': True if sh.get('low') else None})  # lp = nižší priorita obchodu
+                'prev': prev if prev and prev != now_p else None, 'lp': True if sh.get('low') else None, 'hist': hist_points(h, today)})  # lp = nižší priorita obchodu
             kept += 1
         report.append(f'{name}: {n} položek ve feedu, {len(groups)} produktů, do šupu {kept} ({time.time() - t0:.0f} s)')
         log(report[-1])
