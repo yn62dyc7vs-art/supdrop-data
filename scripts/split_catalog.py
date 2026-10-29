@@ -14,7 +14,7 @@ Rozložení 3 (drops.json "layout": 3): žádný soubor, který appka stahuje, n
 
 Plný záznam: i id, c kategorie, sb podkategorie, ac příslušenství, gd pro koho (m/f/u), cn stav (z = zánovní), o počet obchodů se stejným EAN, nx druhá nejlepší nabídka, k druh, b značka, n název, s obchod, u odkaz, g obrázek, p cena, d sleva,
 h hype, t skóre, e hotový partnerský odkaz, kb jiný kód partnera, w původní cena, v varianta, bs základ slevy, l nejnižší cena,
-ld počet dní historie, pv předchozí cena, dy dny ve slevě, r důvod, x neprošlo kontrolou.
+ld počet dní historie, hs změny ceny za 30 dní [dní zpět, cena, …], pv předchozí cena, dy dny ve slevě, r důvod, x neprošlo kontrolou.
 """
 import json, os, re, shutil, unicodedata
 from collections import Counter
@@ -163,6 +163,8 @@ def main():
             r['ld'] = x['lowDays']
             if x.get('low') not in (None, x['now']): r['l'] = x['low']
         if x.get('prev') not in (None, ''): r['pv'] = x['prev']
+        hs = x.get('hist') or []
+        if len(hs) > 1: r['hs'] = [v for pt in hs for v in pt]  # graf ceny: [dní zpět, cena, dní zpět, cena…], jen změny
         if x.get('days'): r['dy'] = x['days']
         if x.get('reason'): r['r'] = x['reason']
         if not x.get('pass'): r['x'] = 1
