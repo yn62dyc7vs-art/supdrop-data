@@ -102,7 +102,7 @@ SKIP = ['kojen', 'backor', 'domaci obuv', 'vlozk', 'kompres', 'zdravotn', 'banda
 # slova, která rozhodují jen v kategorii obchodu (v názvu by vyřadila i „inkoustové“ hodinky nebo MacBook s „CPU“)
 SKIP_PATH = ['toner', 'inkoust', 'naplne a tonery', 'cpu', 'procesory', 'zdroj', 'zakladni desk', 'graficka karta', 'operacni pamet',
              'pameti', 'chladic', 'disk', 'usb ', 'kabely a konektory', 'servis', 'sleeve', 'switche', 'tiskarny',
-             'komponenty na kol', 'nahradni dily']
+             'komponenty na kol', 'nahradni dily', 'ochranne pomucky', 'pracovni odev', 'pracovni obuv']  # pracovní a ochranné oblečení do šupu nepatří
 # příslušenství k elektronice: jen do podkategorie Příslušenství, do „celé kategorie“ ne
 ACC = ['prislusenstvi', 'ochranny film', 'ochranna folie', 'ochranne', 'pouzdr', 'kryt', 'folie', 'tvrzene sklo', 'sklo', 'skla', 'glass', 'remink', 'sklem', 'obal ', 'kabel ', 'kabely',
        'nabijec', 'adapter', 'drzak', 'reminek', 'powerbank', 'magsafe', 'redukce', 'stylus', 'ochrana cocek',
@@ -140,10 +140,10 @@ ELEC = [
 SHOES = [
     ('tenisky', 'bezecke', ['bezecke boty', 'bezecka obuv', 'trailova obuv', 'trailove boty', 'silnicni bezecke'], False),
     ('tenisky', 'outdoor', ['outdoorove boty', 'outdoorova obuv', 'trekova obuv', 'trekove boty', 'turisticke boty', 'turisticka obuv',
-                            'zimni obuv', 'zimni boty', 'snehul', 'holink', 'kotnikove boty', 'kotnikova obuv', 'pohorky', 'vysoke boty'], False),
+                            'zimni obuv', 'zimni boty', 'snehule', 'holink', 'kotnikove boty', 'kotnikova obuv', 'pohorky', 'vysoke boty'], False),
     ('tenisky', 'pantofle', ['pantofl', 'sandal', 'zabky', 'slapky', 'nazouvaky'], False),
     ('tenisky', 'tenisky', ['tenisky', 'sneakers', 'volnocasova obuv', 'skate boty', 'nizka obuv', 'slip on'], False),
-    ('tenisky', None, ['obuv', 'boty', 'lodick', 'kozack', 'balerin', 'polobotk', 'mokasin'], False),
+    ('tenisky', None, [' obuv', ' boty', 'ponozkobot', 'lodick', 'kozack', 'balerin', 'polobotk', 'mokasin'], False),  # „ boty“: Kuchyňské roboty nejsou boty
 ]
 CLOTH = [
     ('obleceni', 'pradlo', ['spodni pradlo', 'ponozk', 'puncoch', 'punchoch', 'boxerk', 'trenyrk', 'slipy', 'kalhotky', 'podprsenk',
@@ -212,6 +212,8 @@ NAME_RULES = [  # když obchod kategorii nemá (iStyle, JBL), podle názvu
 ]
 LEGACY = {'mobily': ('elektronika', 'mobily'), 'audio': ('elektronika', None), 'gadgety': ('elektronika', None),
           'pocitace': ('elektronika', 'notebooky'), 'fitness': ('sport', 'fitness')}
+NONFASHION = (' knih', ' cetba', ' poslech', ' audiokn', ' papirnictv', ' hrack', ' kreativ', ' dekorac', ' vonn', ' kostym', ' karneval',
+              ' stavebnic', ' omalov', ' vanoc', ' auto ')
 KIDS_PATH = ('detsk', 'kojen', 'junior', 'hracky pro holky', 'hracky pro kluky', 'mala paradnice', 'baby born', 'panenky',
              'plysov', 'dzieci', 'dzieciec', 'chlopi', 'dziewcz')
 MAIN_NAME = ('apple watch', 'iphone 1', 'iphone air', 'ipad', 'macbook', 'airpods', 'galaxy watch', 'pixel watch')
@@ -223,10 +225,33 @@ def _match(text, rules, leaf_ok=True):
         if any(k in text for k in keys): return cat, sub
     return None
 
+def url_section(u):
+    """První část cesty v adrese produktu (i uvnitř partnerského odkazu CJ s ?url=…)."""
+    try:
+        p = urllib.parse.urlparse(u or '')
+        q = urllib.parse.parse_qs(p.query)
+        if q.get('url'): p = urllib.parse.urlparse(q['url'][0])
+        return norm((p.path or '').strip('/').split('/')[0])
+    except ValueError:
+        return ''
+
+def categorize_url(url, path, name, url_cats):
+    """Kategorie podle sekce v adrese (nastavení obchodu „urlCats“: {"parfemy": "kosmetika/parfemy"}); podkategorii doplní cesta nebo název."""
+    t = (url_cats or {}).get(url_section(url))
+    if not t: return None
+    cat, _, sub = t.partition('/')
+    if not sub:
+        res = categorize(path, name)
+        if res and res[0] == cat: return res
+        alt = _match(' ' + norm(name) + ' ', [r for r in RULES if r[0] == cat and r[1]])
+        sub = alt[1] if alt else ''
+    return (cat, sub or None, False)
+
 def categorize(path, name):
     """Vrátí (kategorie, podkategorie, příslušenství) nebo None."""
     segs = [norm(x) for x in re.split(r'\s*[|>]\s*', path or '') if x.strip()]
-    segs = [x for x in segs if x not in ('heureka cz', 'heureka sk', 'zbozi cz')]
+    # kořeny stromu Heureky nic neříkají („Oblečení, obuv a doplňky“ by jinak poslalo pásky a klíčenky mezi boty)
+    segs = [x for x in segs if x not in ('heureka cz', 'heureka sk', 'zbozi cz', 'obleceni obuv a doplnky', 'obleceni a doplnky')]
     n = ' ' + norm(name) + ' '
     full = ' ' + ' '.join(segs) + ' '
     leaf = ' ' + (segs[-1] if segs else '') + ' '
@@ -264,6 +289,8 @@ def categorize(path, name):
             if alt: sub = alt[1]
         return (cat, sub, False)
     if segs:  # strom obchodu nepomohl (např. 8a.cz má polské kategorie) – zkusíme český název oblečení, bot, doplňků a sportu
+        # ale ne u knih, hraček a dekorací („Sněhuláček“, „Vášeň pro sneakers“, „Bůh a neonové žabky“)
+        if any(k in full for k in NONFASHION): return None
         alt = _match(n, EXC + SHOES[:-1] + CLOTH[:-1] + ACCES + SPORT[:-1] + [('pokoj', 'lahve', ['termohrn', 'hrnek', 'lahev', 'termosk'], False)])
         if alt and alt[1] == 'kola' and any(w in n for w in (' na kolo', 'helm', 'prilb', 'bidon', 'kosik')): alt = ('sport', None)
         return (alt[0], alt[1], False) if alt else None
@@ -557,7 +584,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                     else: break
                 if len(common) >= 2: nm = ' '.join(common).strip(' ,-–|')
             brand = fix_brand((f['brand'] or '').strip(), nm)
-            res = categorize(f['path'], nm)
+            res = (categorize_url(cheapest['url'] or f['url'], f['path'], nm, sh.get('urlCats')) if sh.get('urlCats') else None) or categorize(f['path'], nm)
             if not res and not (f['path'] or '').strip() and sh.get('defaultCat'):
                 dc = LEGACY.get(sh['defaultCat'], (sh['defaultCat'], None)); res = (dc[0], dc[1], False)
             lab = (res[0] + ('/' + res[1] if res[1] else '') + ('*' if res[2] else '')) if res else None
