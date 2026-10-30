@@ -389,6 +389,12 @@
       "NYX Professional Makeup",
       "MAC Cosmetics",
       "Rare Beauty"
-    ]
+    ],
+    "urlCats": {
+      "parfemy": "kosmetika/parfemy",
+      "hodinky": "doplnky/hodinky",
+      "sperky": "doplnky/sperky",
+      "kosmetika": "kosmetika"
+    }
   }
 ]
