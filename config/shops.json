@@ -396,5 +396,21 @@
       "sperky": "doplnky/sperky",
       "kosmetika": "kosmetika"
     }
+  },
+  {
+    "shop": "eObuv.cz",
+    "format": "awin",
+    "awin": "75859",
+    "bid": "568a437d",
+    "trust": 8,
+    "orig": "base_price"
+  },
+  {
+    "shop": "Myprotein",
+    "format": "awin",
+    "awin": "24533",
+    "bid": "04890426",
+    "trust": 8,
+    "orig": "-"
   }
 ]
