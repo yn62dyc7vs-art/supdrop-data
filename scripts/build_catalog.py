@@ -15,8 +15,10 @@ Adresy feedů jsou v tajné proměnné SHOP_FEEDS (JSON {"CoolBoty": "https://�
 ostatní nastavení obchodů v config/shops.json.
 Obchody z CJ ("net": "cj", "cj": "<id inzerenta>", "cjAds": ["<id feedu>"]) se nečtou z feedu, ale z Product Feed API CJ
 (GraphQL ads.api.cj.com); potřebují tajnou proměnnou CJ_TOKEN (Personal Access Token z developers.cj.com).
+Obchody z Awinu přes eHUB ("format": "awin", "awin": "<id feedu>", "bid": …) potřebují tajnou proměnnou AWIN_KEY
+(klíč z odkazu na feed, který poslal eHUB).
 """
-import gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import csv, gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, date
 from zoneinfo import ZoneInfo
@@ -34,6 +36,13 @@ PERM_DAYS = 14           # cena 14 dní stejná a obchod hlásí slevu → není
 MAX_RATIO = 3.0          # „původní“ cena víc než 3× vyšší = chyba ve feedu, ne sleva
 CJ_CID, CJ_PID = '8098362', '101903676'   # CJ: firma (CID) a propagační vlastnost „šup – supdrop.cz (web)“ (PID); nejsou tajné
 CJ_API = 'https://ads.api.cj.com/query'
+# Awin (feedy eObuv.cz a Myprotein přes eHUB): CSV v gzipu, klíč je v tajné proměnné AWIN_KEY
+AWIN_COLS = ('aw_product_id,merchant_product_id,product_name,brand_name,merchant_category,merchant_product_category_path,product_type,'
+             'search_price,rrp_price,product_price_old,base_price,in_stock,product_GTIN,ean,Fashion:size,Fashion:suitable_for,custom_1,'
+             'condition,item_group_id,merchant_deep_link,merchant_image_url,large_image')
+def awin_url(fid, key):
+    return ('https://productdata.awin.com/datafeed/download/apikey/' + key + '/language/cs/fid/' + str(fid) +
+            '/columns/' + AWIN_COLS + '/format/csv/delimiter/%2C/compression/gzip/adultcontent/1/')
 
 # ---------------------------------------------------------------- pomocné
 def norm(s):
@@ -465,6 +474,30 @@ def google_items(src):
                'size': g('size') or None, 'ean': g('gtin'), 'gender': g('gender'), 'cond': g('condition')}
         el.clear()
 
+def awin_items(src, orig_col=None):
+    """Awin CSV (sloupce AWIN_COLS). Varianty (velikosti) mají ID „EAN-velikost“, skupina je část před velikostí.
+    Původní cena: sloupec podle obchodu (eObuv base_price); '-' = nebrat (Myprotein má u všeho −40 % z doporučené ceny)."""
+    head = src.read(2)
+    if head == b'\x1f\x8b': raw = gzip.GzipFile(fileobj=_Peeked(head, src))
+    else: raw = io.BytesIO(head + src.read())
+    csv.field_size_limit(10 * 1024 * 1024)
+    for r in csv.DictReader(io.TextIOWrapper(raw, encoding='utf-8', newline='')):
+        g = lambda k: (r.get(k) or '').strip()
+        mpid = g('merchant_product_id') or g('aw_product_id')
+        sz = g('Fashion:size')
+        group = g('item_group_id') or (mpid[:-len(sz) - 1] if sz and mpid.endswith('-' + sz) else mpid)
+        price = num(g('search_price'))
+        orig = None
+        for col in [] if orig_col == '-' else [c for c in (orig_col, 'rrp_price', 'product_price_old') if c]:  # '-' = obchod má věčné „doporučené ceny“
+            o = num(g(col))
+            if o and price and o > price: orig = o; break
+        path = g('product_type') or g('merchant_product_category_path') or g('merchant_category')
+        path = re.sub(r'^(eobuv|myprotein)\s*>\s*', '', path, flags=re.I)
+        yield {'id': mpid, 'group': group, 'name': g('product_name'), 'brand': g('brand_name'), 'path': path,
+               'url': g('merchant_deep_link'), 'img': g('large_image') or g('merchant_image_url'), 'price': price, 'orig': orig,
+               'stock': g('in_stock').lower() not in ('0', 'false', 'no', 'n'), 'size': sz.replace('_', ',') or None,
+               'ean': g('product_GTIN') or g('ean'), 'gender': g('Fashion:suitable_for'), 'cond': g('condition')}
+
 CJ_QUERY = '''query($cid: ID!, $ids: [ID!], $ads: [ID!], $limit: Int, $lo: Float, $hi: Float) {
   shoppingProducts(companyId: $cid, partnerIds: $ids, adIds: $ads, limit: $limit, offset: 0, lowPrice: $lo, highPrice: $hi) {
     totalCount count
@@ -595,7 +628,7 @@ def hist_points(h, today):
         if not out or out[-1][1] != e[2]: out.append([today - e[0], e[2]])
     return out
 
-def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items):
+def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items, awin_key=None):
     today = day_no(now.date())
     stamp = now.strftime('%Y-%m-%dT%H:%M')
     hist = state.get('h', {})
@@ -604,9 +637,10 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
     for sh in shops:
         name = sh['shop']; url = feeds.get(name)
         if sh.get('net') == 'cj': url = ('cj:' + str(sh['cj'])) if cj_token else None  # CJ se čte z API, ne z feedu
+        if sh.get('format') == 'awin': url = awin_url(sh['awin'], awin_key) if awin_key else None
         if isinstance(url, dict):  # SHOP_FEEDS může nést i kód partnera a formát: {"url": …, "bid": …, "format": …}
             sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
-        if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí adresa feedu')); continue
+        if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí AWIN_KEY' if sh.get('format') == 'awin' else 'chybí adresa feedu')); continue
         t0 = time.time(); groups = {}; n = 0
         brands = {norm(b) for b in sh.get('brands') or []}  # volitelně jen vybrané značky (velké feedy jako Spartoo)
         try:
@@ -615,7 +649,8 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                 src = open_fn(url)
                 fmt = sh.get('format')
                 if fmt in (None, '', 'auto'): src, fmt = sniff_format(src)
-                it = google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else heureka_items(src)
+                it = (google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else
+                      awin_items(src, sh.get('orig')) if fmt == 'awin' else heureka_items(src))
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
@@ -716,7 +751,8 @@ def main():
     state = load('out/state.json.gz', None) or load('out/state.json', {})
     if os.environ.get('STATE_EXPECTED') and not state.get('h'):
         print('Historie cen se nenačetla, i když v datech má být. Končím, aby se nesmazala.'); sys.exit(1)
-    products, state, report = build(shops, feeds, state, now, cj_token=os.environ.get('CJ_TOKEN') or None)
+    products, state, report = build(shops, feeds, state, now, cj_token=os.environ.get('CJ_TOKEN') or None,
+                                    awin_key=(os.environ.get('AWIN_KEY') or '').strip() or None)
     if not products:
         print('Žádný produkt, nic nezapisuji.'); print('\n'.join(report)); sys.exit(1)
     out = {'batch': now.strftime('%Y-%m-%d'), 'checkedAt': now.strftime('%Y-%m-%dT%H:%M'),
