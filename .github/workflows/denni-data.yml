@@ -29,8 +29,10 @@ jobs:
           SHOP_FEEDS_DOGNET: ${{ secrets.SHOP_FEEDS_DOGNET }}
           SHOP_FEEDS_EHUB2: ${{ secrets.SHOP_FEEDS_EHUB2 }}
           CJ_TOKEN: ${{ secrets.CJ_TOKEN }}
+          AWIN_KEY: ${{ secrets.AWIN_KEY }}
         run: |
           python tests/test_slevy.py
+          python tests/test_awin.py
           python scripts/build_catalog.py
       - name: Rozdělit data na malé soubory (rychlý start webu a appky)
         run: python scripts/split_catalog.py
