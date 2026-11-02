@@ -197,7 +197,9 @@ COSM = [
     ('kosmetika', 'vlasy', ['vlasy', 'vlasov', 'kulma', 'fen '], False),
 ]
 RULES = EXC + ELEC + SHOES + CLOTH + ACCES + SPORT + COSM
-PRIORITY = [  # celé větve, kde rozhoduje rodič (merch kapel, vinyly, LEGO)
+PRIORITY = [  # celé větve, kde rozhoduje rodič (merch kapel, vinyly, LEGO, knihy)
+    ('knihy', 'manga', [' komiksy a manga ', ' komiksy ', ' knihy manga ']),  # ne „anime a manga“ merch
+    ('knihy', None, [' cetba knihy ']),  # beletrie a naučné knihy; učebnice, audioknihy, mapy a kalendáře ne
     ('sberatelske', 'lego', [' lego']),
     ('sberatelske', 'karty', [' pokemon', ' sberatelske karty', ' tcg', ' karetni hry']),
     ('sberatelske', 'figurky', [' funko', ' figurky', ' sberatelsk']),
@@ -280,7 +282,7 @@ def categorize(path, name):
     if any(k in acc_txt for k in ACC) and not any(k in ln for k in ('kryt na kolo', 'obal na kolo')):
         if any(c in full + n for c in ELEC_CTX): return ('elektronika', 'prislusenstvi', True)
         if not any(k in ln for k in ('bryle', 'hodinky', 'batoh', 'taska')): return None
-    if ' monitor' in n: return ('elektronika', 'notebooky', False)
+    if ' monitor' in n and ' cetba ' not in full: return ('elektronika', 'notebooky', False)
     for cat, sub, keys in PRIORITY:
         if any(k in full for k in keys): return (cat, sub, False)
     hit = None
@@ -313,6 +315,11 @@ def categorize(path, name):
             return (cat, sub, False)
     return None
 
+# BookTok a fantasy: autoři a série, které mladí čtou (obchody žánr v kategorii nemají, poznáme je podle autora a názvu)
+BOOKTOK = re.compile(r'\b(yarros\w*|sarah j maas|maasova|colleen hoover|hooverova|ali hazelwood\w*|holly black|leigh bardugo|'
+                     r'jennifer l armentrout|cassandra clare|ana huang|elle kennedy|emily henry|alice oseman\w*|taylor jenkins reid|'
+                     r'madeline miller|suzanne collins|v e schwab|tahereh mafi|brandon sanderson|romantasy|fantasy|ctvrte kridlo|'
+                     r'zelezny plamen|onyxova bour\w*|dvur trnu\w*|heartstopper|skleneny trun|hunger games|vladci stinu)\b')
 KIND = {'hudba': 'vinyl', 'sberatelske': 'figure', 'tenisky': 'shoe', 'obleceni': 'hoodie', 'doplnky': 'cap', 'elektronika': 'phone',
         'gaming': 'controller', 'pokoj': 'lamp', 'sport': 'scooter', 'kosmetika': 'bottle', 'knihy': 'book'}
 SUBKIND = {'sluchatka': 'headphones', 'repro': 'speaker', 'notebooky': 'laptop', 'tablety': 'tablet', 'hodinky': 'watch',
@@ -690,6 +697,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
             pr = PATHS.setdefault((name, f['path'] or '(bez kategorie)', lab), [0, nm]); pr[0] += 1
             if not res: continue
             cat, sub, acc = res
+            if cat == 'knihy' and not sub and BOOKTOK.search(norm(brand + ' ' + nm)): sub = 'booktok'
             if cat in sh.get('skipCats', []): continue
             now_p = cheapest['price']
             if now_p < MIN_PRICE: continue
