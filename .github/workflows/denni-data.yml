@@ -18,21 +18,28 @@ jobs:
       - name: Načíst historii cen z větve live
         run: |
           mkdir -p out
-          if git fetch --depth=1 origin live 2>/dev/null; then git show origin/live:state.json > out/state.json || true; else echo "Zatím bez historie."; fi
+          if git fetch --depth=1 origin live 2>/dev/null; then
+            if git show origin/live:state.json.gz > out/state.json.gz 2>/dev/null; then echo "STATE_EXPECTED=1" >> "$GITHUB_ENV"
+            elif git show origin/live:state.json > out/state.json 2>/dev/null; then rm -f out/state.json.gz; echo "STATE_EXPECTED=1" >> "$GITHUB_ENV"
+            else rm -f out/state.json.gz out/state.json; echo "Větev live je bez historie, začínám znovu."; fi
+          else echo "Zatím bez historie."; fi
       - name: Stáhnout feedy a sestavit katalog
         env:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
           SHOP_FEEDS_DOGNET: ${{ secrets.SHOP_FEEDS_DOGNET }}
           SHOP_FEEDS_EHUB2: ${{ secrets.SHOP_FEEDS_EHUB2 }}
           CJ_TOKEN: ${{ secrets.CJ_TOKEN }}
-        run: python scripts/build_catalog.py
+        run: |
+          python tests/test_slevy.py
+          python scripts/build_catalog.py
       - name: Rozdělit data na malé soubory (rychlý start webu a appky)
         run: python scripts/split_catalog.py
       - name: Zveřejnit data do větve live (web a appka si je načtou samy)
         run: |
           cd out
           rm -f full.json
-          find . -type f -size +90M -print -delete
+          find . -type f -size +90M ! -name 'state.json.gz' -print -delete
+          test -s state.json.gz || { echo "Chybí historie cen (state.json.gz), nezveřejňuji."; exit 1; }
           git init -q -b live
           git config user.name "šup bot"
           git config user.email "actions@users.noreply.github.com"
