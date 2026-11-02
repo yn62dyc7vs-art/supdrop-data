@@ -5,10 +5,11 @@ Každé ráno:
   1. stáhne XML feedy obchodů (formát Heureka nebo Google),
   2. spojí varianty (velikosti, barvy) do jednoho produktu,
   3. zařadí produkt do kategorie a podkategorie šupu (podle stromu kategorií obchodu),
-  4. spočítá slevu: u Google feedu z původní ceny obchodu, u Heureka feedu
-     z nejvyšší ceny za posledních 30 dní (historii si pamatuje ve state.json),
+  4. spočítá slevu poctivě: z původní ceny obchodu (když dává smysl a cena nebyla stejná celých 14 dní),
+     jinak z vlastní historie – z ceny, která u stejné varianty vydržela aspoň 3 dny (jednorázové výkyvy
+     a přeskakování mezi variantami slevu nedělají); historii si pamatuje ve state.json.gz,
   5. vytvoří partnerský odkaz přes eHUB,
-  6. zapíše out/latest.json (čte ho web a appka) a out/state.json (historie cen).
+  6. zapíše out/latest.json (čte ho web a appka) a out/state.json.gz (historie cen, zkomprimovaná).
 
 Adresy feedů jsou v tajné proměnné SHOP_FEEDS (JSON {"CoolBoty": "https://…", …}),
 ostatní nastavení obchodů v config/shops.json.
@@ -27,6 +28,10 @@ UA = 'supdrop-catalog/1.0 (+https://supdrop.cz; info@supdrop.cz)'
 EPOCH = date(2026, 1, 1)
 MIN_PRICE = 150          # levnější drobnosti (fólie, tkaničky…) do dropu nepatří
 HISTORY_DAYS = 30
+HIST_MIN_DAYS = 7        # sleva z vlastní historie až po týdnu dat
+HOLD_DAYS = 3            # „původní“ cena musí u stejné varianty vydržet aspoň 3 dny
+PERM_DAYS = 14           # cena 14 dní stejná a obchod hlásí slevu → není to sleva (zákon: nejnižší cena za 30 dní)
+MAX_RATIO = 3.0          # „původní“ cena víc než 3× vyšší = chyba ve feedu, ne sleva
 CJ_CID, CJ_PID = '8098362', '101903676'   # CJ: firma (CID) a propagační vlastnost „šup – supdrop.cz (web)“ (PID); nejsou tajné
 CJ_API = 'https://ads.api.cj.com/query'
 
@@ -510,9 +515,68 @@ def cj_items(adv, token, ads=None, call=cj_call):
 # ---------------------------------------------------------------- hlavní běh
 def load(p, default):
     try:
+        if p.endswith('.gz'):
+            with gzip.open(p, 'rt', encoding='utf-8') as f: return json.load(f)
         with open(p, encoding='utf-8') as f: return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
+    except (FileNotFoundError, json.JSONDecodeError, OSError, EOFError):
         return default
+
+# ---------------------------------------------------------------- cenová historie
+# záznam = [od dne, do dne, nejnižší cena dne, nejvyšší cena dne, varianta]; stejné dny za sebou se slučují do jednoho záznamu
+def h_norm(h):
+    out = []
+    for x in h or []:
+        if len(x) == 2: x = [x[0], x[0], x[1], x[1], '']
+        elif len(x) == 3: x = [x[0], x[0], x[1], x[2], '']
+        elif len(x) == 4: x = list(x) + ['']
+        out.append(list(x))
+    return out
+
+def h_add(h, today, price, vid):
+    if h and h[-1][1] == today:            # další kontrola téhož dne
+        e = h[-1]; new = [min(e[2], price), max(e[3], price), vid]
+        if e[0] == today: e[2:5] = new
+        elif new != e[2:5]: e[1] = today - 1; h.append([today, today] + new)
+    elif h and h[-1][1] == today - 1 and h[-1][2:5] == [price, price, vid]: h[-1][1] = today
+    else: h.append([today, today, price, price, vid])
+    lim = today - HISTORY_DAYS
+    h[:] = [e for e in h if e[1] >= lim]
+    for e in h: e[0] = max(e[0], lim)
+    return h
+
+def h_ref(h, today, vid, now_p):
+    """Poctivá „původní“ cena z historie: nejvyšší denní minimum, které u stejné varianty vydrželo aspoň HOLD_DAYS dní (bez dneška)."""
+    dur = {}
+    for e in h:
+        if vid and e[4] and e[4] != vid: continue
+        d1 = min(e[1], today - 1)
+        if d1 < e[0]: continue
+        dur[e[2]] = dur.get(e[2], 0) + d1 - e[0] + 1
+    ok = [p for p, n in dur.items() if n >= HOLD_DAYS and p > now_p]
+    return max(ok) if ok else None
+
+def h_same_days(h, today, vid):
+    """Kolik dní (bez dneška) známe cenu stejné varianty a jaká byla nejvyšší denní minimum."""
+    n, top = 0, None
+    for e in h:
+        if vid and e[4] and e[4] != vid: continue
+        d1 = min(e[1], today - 1)
+        if d1 < e[0]: continue
+        n += d1 - e[0] + 1; top = e[2] if top is None else max(top, e[2])
+    return n, top
+
+def fair_was(now_p, orig, h, today, vid):
+    """Vrátí (původní cena, základ). Bez důvěryhodné původní ceny je původní = dnešní (žádná sleva)."""
+    if orig and orig > now_p and orig / now_p > MAX_RATIO: orig = None              # chyba ve feedu
+    if orig and orig > now_p:
+        n, top = h_same_days(h, today, vid)
+        if n >= PERM_DAYS and (top or 0) <= now_p * 1.01: return now_p, 'historie'    # „sleva“, která trvá pořád, není sleva
+        return orig, 'obchod'
+    days = today - min(e[0] for e in h) if h else 0
+    if days >= HIST_MIN_DAYS:
+        ref = h_ref(h, today, vid, now_p)
+        if ref and ref / now_p <= MAX_RATIO: return ref, 'historie'
+    return now_p, 'historie'
 
 def legacy_cat(d):
     c, sb = d['cat'], d.get('sub')
@@ -527,8 +591,8 @@ PATHS = {}  # (obchod, cesta kategorie, zařazení) -> [počet, ukázkový náze
 def hist_points(h, today):
     """Graf ceny v appce: [dní zpět, cena] jen tam, kde se nejnižší cena dne změnila (od nejstaršího dne)."""
     out = []
-    for d, lo, _hi in sorted(h):
-        if not out or out[-1][1] != lo: out.append([today - d, lo])
+    for e in sorted(h):
+        if not out or out[-1][1] != e[2]: out.append([today - e[0], e[2]])
     return out
 
 def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items):
@@ -595,20 +659,14 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
             now_p = cheapest['price']
             if now_p < MIN_PRICE: continue
             key = slug(name) + ':' + str(gk)
-            # historie: [den, nejnižší, nejvyšší cena toho dne] (starší záznamy měly jen [den, cena])
-            h = [x if len(x) == 3 else [x[0], x[1], x[1]] for x in hist.get(key, []) if x[0] >= today - HISTORY_DAYS]
-            if h and h[-1][0] == today: h[-1] = [today, min(h[-1][1], now_p), max(h[-1][2], now_p)]
-            else: h.append([today, now_p, now_p])
+            vid = str(cheapest.get('id') or '')[-24:]
+            h = h_add(h_norm(hist.get(key)), today, now_p, vid)
             hist[key] = h
             prev = last.get(key); new_last[key] = now_p
-            low = min(x[1] for x in h)
-            if cheapest.get('orig'):
-                was = cheapest['orig']; basis = 'obchod'
-            else:
-                was = max(x[2] for x in h); basis = 'historie'
-            was = max(was, now_p)
-            disc = round((1 - now_p / was) * 100) if was else 0
-            days = today - min(x[0] for x in h)
+            low = min(e[2] for e in h)
+            was, basis = fair_was(now_p, cheapest.get('orig'), h, today, vid)
+            disc = round((1 - now_p / was) * 100) if was > now_p else 0
+            days = today - min(e[0] for e in h)
             at_min = days >= 7 and now_p <= low
             hy = hype_of(brand)
             sc = score(disc, hy, sh.get('trust', 7), at_min)
@@ -625,7 +683,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
         report.append(f'{name}: {n} položek ve feedu, {len(groups)} produktů, do šupu {kept} ({time.time() - t0:.0f} s)')
         log(report[-1])
     # historie: zahodit produkty, které 45 dní nikdo neviděl
-    hist = {k: v for k, v in hist.items() if v and v[-1][0] >= today - 45}
+    hist = {k: v for k, v in hist.items() if v and v[-1][1 if len(v[-1]) == 5 else 0] >= today - 45}
     products = dedupe_ean(products)
     products.sort(key=lambda d: -d['score']['total'])
     return products, {'h': hist, 'last': new_last, 'updated': stamp, 'prevAt': state.get('updated')}, report
@@ -655,7 +713,9 @@ def main():
     feeds.update(json.loads(os.environ.get('SHOP_FEEDS_DOGNET') or '{}'))  # feedy z Dognetu (samostatná tajná proměnná)
     feeds.update(json.loads(os.environ.get('SHOP_FEEDS_EHUB2') or '{}'))  # další feedy z eHUBu, přidané 28. 10. 2026
     os.makedirs('out', exist_ok=True)
-    state = load('out/state.json', {})
+    state = load('out/state.json.gz', None) or load('out/state.json', {})
+    if os.environ.get('STATE_EXPECTED') and not state.get('h'):
+        print('Historie cen se nenačetla, i když v datech má být. Končím, aby se nesmazala.'); sys.exit(1)
     products, state, report = build(shops, feeds, state, now, cj_token=os.environ.get('CJ_TOKEN') or None)
     if not products:
         print('Žádný produkt, nic nezapisuji.'); print('\n'.join(report)); sys.exit(1)
@@ -668,7 +728,8 @@ def main():
     # jen malý výřez nejlepších nabídek pro staré verze appky (GitHub odmítne soubor nad 100 MB)
     old = dict(out, deals=[dict(d, cat=legacy_cat(d)) for d in products if legacy_cat(d)][:4000])
     with open('out/latest.json', 'w', encoding='utf-8') as f: json.dump(old, f, ensure_ascii=False, separators=(',', ':'))
-    with open('out/state.json', 'w', encoding='utf-8') as f: json.dump(state, f, ensure_ascii=False, separators=(',', ':'))
+    with gzip.open('out/state.json.gz', 'wt', encoding='utf-8', compresslevel=6) as f: json.dump(state, f, ensure_ascii=False, separators=(',', ':'))
+    if os.path.exists('out/state.json'): os.remove('out/state.json')
     with open('out/paths.json', 'w', encoding='utf-8') as f:  # přehled zařazení cest kategorií (kontrola)
         json.dump(sorted([[k[0], k[1], v[0], k[2], v[1]] for k, v in PATHS.items()], key=lambda r: (r[0], -r[2])), f, ensure_ascii=False, separators=(',', ':'))
     by = {}
