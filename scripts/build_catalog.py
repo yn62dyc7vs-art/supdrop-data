@@ -131,6 +131,7 @@ EXC = [  # sportovní vybavení, které by jinak spadlo do bot / doplňků
                        'lyzarske helmy', 'lyzarske hulky', 'hulky'], False),
     ('sport', None, ['cyklisticke lahve', 'bezecke lahve', 'cyklisticke tretry', 'tretry', 'cyklisticke helmy', 'cyklisticke bryle', 'prilby na kolo', 'helmy na kolo'], False),
     ('sport', 'skate', ['chranice', 'helmy na skate'], False),
+    ('doplnky', 'batohy', ['tasky na notebook', 'batohy na notebook', 'brasny na notebook'], False),
 ]
 ELEC = [
     ('gaming', 'ovladace', ['dokovaci stanice', 'herni prislusenstvi', 'prislusenstvi k hernim'], True),
@@ -156,8 +157,8 @@ SHOES = [
     ('tenisky', 'outdoor', ['outdoorove boty', 'outdoorova obuv', 'trekova obuv', 'trekove boty', 'turisticke boty', 'turisticka obuv',
                             'zimni obuv', 'zimni boty', 'snehule', 'holink', 'kotnikove boty', 'kotnikova obuv', 'pohorky', 'vysoke boty'], False),
     ('tenisky', 'pantofle', ['pantofl', 'sandal', 'zabky', 'slapky', 'nazouvaky'], False),
-    ('tenisky', 'tenisky', ['tenisky', 'sneakers', 'volnocasova obuv', 'skate boty', 'nizka obuv', 'slip on'], False),
-    ('tenisky', None, [' obuv', ' boty', 'ponozkobot', 'lodick', 'kozack', 'balerin', 'polobotk', 'mokasin'], False),  # „ boty“: Kuchyňské roboty nejsou boty
+    ('tenisky', 'tenisky', ['tenisky', 'sneakers', 'volnocasova obuv', 'skate boty', 'nizka obuv', 'slip on', 'platenk'], False),
+    ('tenisky', None, [' obuv', ' boty', 'ponozkobot', 'lodick', 'kozack', 'balerin', 'polobotk', 'mokasin', 'lordsy', 'espadril'], False),  # „ boty“: Kuchyňské roboty nejsou boty
 ]
 CLOTH = [
     ('obleceni', 'pradlo', ['spodni pradlo', 'ponozk', 'puncoch', 'punchoch', 'boxerk', 'trenyrk', 'slipy', 'kalhotky', 'podprsenk',
@@ -168,7 +169,7 @@ CLOTH = [
     ('obleceni', 'kratasy', ['kratasy', 'sortky', 'kratke kalhoty'], False),
     ('obleceni', 'kalhoty', ['kalhoty', 'teplaky', 'leginy', 'dziny', 'jeans', 'joggers'], False),
     ('obleceni', 'saty', ['saty', 'sukne', 'overal'], False),
-    ('obleceni', 'tricka', ['tricka', 'tricko', 'triko', 'topy', 'tilka', 'tilko', 'kosile', 'polokosile', 'dresy', 'dres ', 'body ', 'trika'], False),
+    ('obleceni', 'tricka', ['tricka', 'tricko', 'triko', 'topy', 'tilka', 'tilko', 'kosile', 'polokosile', 'dresy', 'dres ', ' body ', 'trika'], False),
     ('obleceni', None, ['volnocasove obleceni', 'obleceni', 'komplety', 'soupravy', 'odevy'], False),
 ]
 ACCES = [
