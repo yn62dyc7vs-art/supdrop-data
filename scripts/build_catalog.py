@@ -382,6 +382,28 @@ def score(disc, hype, trust, at_min):
 
 # ---------------------------------------------------------------- čtení feedů
 SIZE_KEYS = {'velikost', 'size', 'velikost obuvi', 'velikost eu', 'eu velikost'}
+SIZE_NONE = {'', '0', '-', 'NOSIZE', 'NO SIZE', 'N/A', 'NA'}
+CLOTH_ORDER = ['XXXS', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '4XL', '5XL']
+
+def norm_size(s):
+    """Velikost pro zobrazení: bez „NOSIZE“ a „0“, bez předpony „EUR“/„EU“, eObuv „43_13“ → „43 1/3“, „44_5“ → „44,5“."""
+    t = re.sub(r'\s+', ' ', str(s or '')).strip()
+    t = re.sub(r'^(EUR|EU)\s+(EU\s+)?', '', t, flags=re.I)
+    if t.upper() in SIZE_NONE: return None
+    if t.lower() in ('one size', 'onesize', 'uni', 'os', 'universal', 'univerzální'): return 'One size'
+    m = re.fullmatch(r'(\d{2})_(1|2)_?3', t)              # eObuv: třetinové velikosti
+    if m: return m.group(1) + ' ' + m.group(2) + '/3'
+    t = re.sub(r'^(\d{2})_5$', r'\1,5', t).replace('_', ',')
+    if re.fullmatch(r'(?i)x{0,3}[sml]|[45]xl|xxs|xxxs', t): t = t.upper()
+    return t
+
+def size_key(s):
+    """Řazení velikostí: čísla vzestupně (43 < 43 1/3 < 43,5), oblečení XS < S < M…, ostatní podle abecedy na konec."""
+    m = re.match(r'(\d{2,3})(?:[,.](\d))?(?:\s+([12])/([23]))?(?!\d)', s)
+    if m: return (0, int(m.group(1)) + (int(m.group(2)) / 10 if m.group(2) else 0) + (int(m.group(3)) / int(m.group(4)) if m.group(3) else 0), '')
+    u = {'2XL': 'XXL', '3XL': 'XXXL'}.get(s.upper(), s.upper())
+    if u in CLOTH_ORDER: return (1, CLOTH_ORDER.index(u), '')
+    return (2, 0, u)
 
 def clean_name(name, size=None):
     n = re.sub(r'\s+', ' ', name or '').strip()
@@ -503,7 +525,7 @@ def awin_items(src, orig_col=None):
         path = re.sub(r'^(eobuv|myprotein)\s*>\s*', '', path, flags=re.I)
         yield {'id': mpid, 'group': group, 'name': g('product_name'), 'brand': g('brand_name'), 'path': path,
                'url': g('merchant_deep_link'), 'img': g('large_image') or g('merchant_image_url'), 'price': price, 'orig': orig,
-               'stock': g('in_stock').lower() not in ('0', 'false', 'no', 'n'), 'size': sz.replace('_', ',') or None,
+               'stock': g('in_stock').lower() not in ('0', 'false', 'no', 'n'), 'size': sz or None,
                'ean': g('product_GTIN') or g('ean'), 'gender': g('Fashion:suitable_for'), 'cond': g('condition')}
 
 CJ_QUERY = '''query($cid: ID!, $ids: [ID!], $ads: [ID!], $limit: Int, $lo: Float, $hi: Float) {
@@ -681,7 +703,9 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
             cheapest = min(base, key=lambda v: v['price'])
             sizes = []
             for v in avail:
-                if v['size'] and v['size'] not in sizes: sizes.append(v['size'])
+                s = norm_size(v['size'])
+                if s and s not in sizes: sizes.append(s)
+            sizes.sort(key=size_key)
             nm = clean_name(cheapest['name'], cheapest['size'] if len(vs) > 1 else None)
             if len(vs) > 1:  # společný začátek názvů variant
                 words = [clean_name(v['name']).split(' ') for v in vs[:20]]
