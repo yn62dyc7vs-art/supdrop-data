@@ -64,7 +64,10 @@ check('adresa feedu obsahuje klíč a gzip', all('/apikey/KLIC/' in u and '/comp
 check('Converse: dvě velikosti = jeden produkt', len([p for p in prods if 'Converse' in p['name']]), 1)
 check('Converse: kategorie', (conv['cat'], conv['sub']), ('tenisky', 'tenisky'))
 check('Converse: sleva z původní ceny obchodu', (conv['now'], conv['was'], conv['disc'], conv['basis']), (1409.0, 2390.0, 41, 'obchod'))
-check('Converse: velikosti', conv['variant'], 'Skladem: 44,5, 42')
+check('Converse: velikosti seřazené', conv['variant'], 'Skladem: 42, 44,5')
+check('velikosti: NOSIZE a 0 pryč, třetiny, EUR', [bc.norm_size(s) for s in ['NOSIZE', '0', '43_13', '40_23', '44_5', 'EUR 40', 'EUR EU S', 'xs']],
+      [None, None, '43 1/3', '40 2/3', '44,5', '40', 'S', 'XS'])
+check('velikosti: řazení', sorted(['44,5', 'M', '43 1/3', '40 1/2', 'XS', '40', '39,5'], key=bc.size_key), ['39,5', '40', '40 1/2', '43 1/3', '44,5', 'XS', 'M'])
 check('Converse: partnerský odkaz eHUB', conv['url'].startswith('https://ehub.cz/system/scripts/click.php?a_aid=') and 'a_bid=568a437d' in conv['url'] and 'desturl=https%3A%2F%2Feobuv.cz' in conv['url'], True)
 check('dětské boty vyřazené', any('Skechers' in p['name'] for p in prods), False)
 check('bačkory vyřazené', any('Bačkory' in p['name'] for p in prods), False)
