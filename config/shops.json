@@ -412,5 +412,13 @@
     "bid": "04890426",
     "trust": 8,
     "orig": "-"
+  },
+  {
+    "shop": "Allegro",
+    "net": "dognet",
+    "format": "td",
+    "td": "cache/allegro.json.gz",
+    "trust": 6,
+    "low": true
   }
 ]
