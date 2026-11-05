@@ -1,0 +1,33 @@
+name: Allegro pro šup
+on:
+  schedule:
+    - cron: '41 2 * * *'   # jednou denně v noci; stahování trvá desítky minut, do hodinového běhu by se nevešlo
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: allegro
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Stáhnout Allegro z Tradedoubleru (feed přes Dognet)
+        env:
+          TD_FEED_URL: ${{ secrets.TD_FEED_URL }}
+        run: |
+          python tests/test_td.py
+          python scripts/fetch_td.py
+      - name: Uložit do větve allegro (hodinový běh si ji načte)
+        run: |
+          test -s cache/allegro.json.gz || { echo "Bez dat Allegra, nic neukládám."; exit 0; }
+          cd cache
+          git init -q -b allegro
+          git config user.name "šup bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add allegro.json.gz
+          git commit -qm "Allegro $(date +%F)"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" allegro
