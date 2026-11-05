@@ -17,7 +17,7 @@ Obchody z CJ ("net": "cj", "cj": "<id inzerenta>", "cjAds": ["<id feedu>"]) se n
 (GraphQL ads.api.cj.com); potřebují tajnou proměnnou CJ_TOKEN (Personal Access Token z developers.cj.com).
 Obchody z Awinu přes eHUB ("format": "awin", "awin": "<id feedu>", "bid": …) potřebují tajnou proměnnou AWIN_KEY
 (klíč z odkazu na feed, který poslal eHUB).
-Allegro ("format": "td", "td": "cache/allegro.json.gz") se stahuje zvlášť jednou denně (scripts/fetch_td.py,
+Allegro ("format": "td", "td": "cache/allegro.json.gz") se stahuje zvlášť jednou denně z feedů Dognetu (scripts/fetch_td.py,
 workflow „Allegro pro šup“); hlavní běh si jen načte hotový soubor z větve allegro.
 """
 import csv, gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
@@ -602,7 +602,7 @@ def td_items(src, now=None):
     at = datetime.fromisoformat(data.get('at') or '2000-01-01T00:00+00:00')
     if (now or datetime.now(TZ)) - at > TD_MAX_AGE: raise RuntimeError('data Allegra jsou starší než 3 dny (' + data.get('at', '?') + ')')
     for x in data.get('items') or []:
-        yield {'id': x['id'], 'group': x['id'], 'name': x['name'], 'brand': guess_brand(x['name']), 'path': x.get('path') or '',
+        yield {'id': x['id'], 'group': x['id'], 'name': x['name'], 'brand': x.get('brand') or guess_brand(x['name']), 'path': x.get('path') or '',
                'url': x['url'], 'img': x.get('img') or '', 'price': num(x.get('price')), 'orig': None, 'stock': True, 'size': None,
                'ean': x.get('ean') or '', 'gender': '', 'cond': ''}
 
