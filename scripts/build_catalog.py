@@ -17,6 +17,8 @@ Obchody z CJ ("net": "cj", "cj": "<id inzerenta>", "cjAds": ["<id feedu>"]) se n
 (GraphQL ads.api.cj.com); potřebují tajnou proměnnou CJ_TOKEN (Personal Access Token z developers.cj.com).
 Obchody z Awinu přes eHUB ("format": "awin", "awin": "<id feedu>", "bid": …) potřebují tajnou proměnnou AWIN_KEY
 (klíč z odkazu na feed, který poslal eHUB).
+Allegro ("format": "td", "td": "cache/allegro.json.gz") se stahuje zvlášť jednou denně (scripts/fetch_td.py,
+workflow „Allegro pro šup“); hlavní běh si jen načte hotový soubor z větve allegro.
 """
 import csv, gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
@@ -440,6 +442,7 @@ def sniff_format(src):
     return _Peeked(head, src), fmt
 
 def open_feed(url, timeout=180):
+    if not re.match(r'https?://', url): return open(url, 'rb')   # předem stažený soubor (Allegro)
     req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept-Encoding': 'gzip'})
     r = urllib.request.urlopen(req, timeout=timeout)
     if r.headers.get('Content-Encoding') == 'gzip' or url.endswith('.gz'):
@@ -575,6 +578,34 @@ def cj_items(adv, token, ads=None, call=cj_call):
                    'stock': (r.get('availability') or '').lower().replace('_', ' ') in ('in stock', 'preorder', 'backorder', ''),
                    'size': r.get('size') or None, 'ean': r.get('gtin') or '', 'gender': r.get('gender') or '', 'cond': r.get('condition') or ''}
 
+# Allegro: značku feed nemá, poznáme ji z názvu (kvůli zájmu o značku a zobrazení)
+BRAND_NAMES = {'apple': 'Apple', 'samsung': 'Samsung', 'xiaomi': 'Xiaomi', 'google': 'Google', 'sony': 'Sony', 'jbl': 'JBL',
+               'marshall': 'Marshall', 'bose': 'Bose', 'beats': 'Beats', 'dji': 'DJI', 'garmin': 'Garmin', 'nothing': 'Nothing',
+               'lego': 'LEGO', 'playstation': 'PlayStation', 'nintendo': 'Nintendo', 'xbox': 'Xbox', 'lenovo': 'Lenovo', 'asus': 'ASUS',
+               'acer': 'Acer', 'hp': 'HP', 'dell': 'Dell', 'msi': 'MSI', 'huawei': 'Huawei', 'honor': 'Honor', 'motorola': 'Motorola',
+               'oneplus': 'OnePlus', 'realme': 'Realme', 'philips': 'Philips', 'lg': 'LG', 'tcl': 'TCL', 'hisense': 'Hisense',
+               'logitech': 'Logitech', 'razer': 'Razer', 'steelseries': 'SteelSeries', 'hyperx': 'HyperX', 'corsair': 'Corsair',
+               'anker': 'Anker', 'gopro': 'GoPro', 'insta360': 'Insta360', 'canon': 'Canon', 'nikon': 'Nikon', 'fujifilm': 'Fujifilm',
+               'sennheiser': 'Sennheiser', 'dyson': 'Dyson', 'roborock': 'Roborock', 'ecovacs': 'Ecovacs', 'govee': 'Govee',
+               'segway': 'Segway', 'ninebot': 'Segway-Ninebot', 'kukirin': 'Kukirin', 'specialized': 'Specialized', 'kross': 'Kross'}
+def guess_brand(name):
+    n = ' ' + norm(name) + ' '
+    hits = [(n.find(' ' + k + ' '), v) for k, v in BRAND_NAMES.items() if ' ' + k + ' ' in n]
+    return min(hits)[1] if hits else ''
+
+TD_MAX_AGE = timedelta(days=3)   # starší data Allegra (denní stahování selhává) raději nezobrazit – ceny by nemusely sedět
+def td_items(src, now=None):
+    """Allegro předzpracované skriptem fetch_td.py: {"at": …, "items": [{id, name, path, url, img, price, ean}]}."""
+    b = src.read()
+    if b[:2] == b'\x1f\x8b': b = gzip.decompress(b)
+    data = json.loads(b.decode('utf-8'))
+    at = datetime.fromisoformat(data.get('at') or '2000-01-01T00:00+00:00')
+    if (now or datetime.now(TZ)) - at > TD_MAX_AGE: raise RuntimeError('data Allegra jsou starší než 3 dny (' + data.get('at', '?') + ')')
+    for x in data.get('items') or []:
+        yield {'id': x['id'], 'group': x['id'], 'name': x['name'], 'brand': guess_brand(x['name']), 'path': x.get('path') or '',
+               'url': x['url'], 'img': x.get('img') or '', 'price': num(x.get('price')), 'orig': None, 'stock': True, 'size': None,
+               'ean': x.get('ean') or '', 'gender': '', 'cond': ''}
+
 # ---------------------------------------------------------------- hlavní běh
 def load(p, default):
     try:
@@ -668,9 +699,11 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
         name = sh['shop']; url = feeds.get(name)
         if sh.get('net') == 'cj': url = ('cj:' + str(sh['cj'])) if cj_token else None  # CJ se čte z API, ne z feedu
         if sh.get('format') == 'awin': url = awin_url(sh['awin'], awin_key) if awin_key else None
+        if sh.get('format') == 'td' and not url: url = sh.get('td') if os.path.exists(sh.get('td') or '') else None  # Allegro: hotový soubor
         if isinstance(url, dict):  # SHOP_FEEDS může nést i kód partnera a formát: {"url": …, "bid": …, "format": …}
             sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
-        if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí AWIN_KEY' if sh.get('format') == 'awin' else 'chybí adresa feedu')); continue
+        if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí AWIN_KEY' if sh.get('format') == 'awin' else
+                                                  'chybí data z denního stahování (větev allegro)' if sh.get('format') == 'td' else 'chybí adresa feedu')); continue
         t0 = time.time(); groups = {}; n = 0
         brands = {norm(b) for b in sh.get('brands') or []}  # volitelně jen vybrané značky (velké feedy jako Spartoo)
         try:
@@ -680,7 +713,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                 fmt = sh.get('format')
                 if fmt in (None, '', 'auto'): src, fmt = sniff_format(src)
                 it = (google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else
-                      awin_items(src, sh.get('orig')) if fmt == 'awin' else heureka_items(src))
+                      awin_items(src, sh.get('orig')) if fmt == 'awin' else td_items(src, now) if fmt == 'td' else heureka_items(src))
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
