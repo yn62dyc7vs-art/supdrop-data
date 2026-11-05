@@ -22,6 +22,7 @@ workflow „Allegro pro šup“); hlavní běh si jen načte hotový soubor z v�
 """
 import csv, gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
+from collections import Counter
 from datetime import datetime, timedelta, date
 from zoneinfo import ZoneInfo
 
@@ -593,6 +594,16 @@ def guess_brand(name):
     hits = [(n.find(' ' + k + ' '), v) for k, v in BRAND_NAMES.items() if ' ' + k + ' ' in n]
     return min(hits)[1] if hits else ''
 
+# Allegro má u bot a oblečení každou velikost jako zvláštní nabídku („… bílé 42“) – spojíme je do jednoho produktu s velikostmi
+TD_SIZE = re.compile(r'\s+(?:vel\.?|velikost|rozměr|roz\.)?\s*((?:3[3-9]|4[0-9])(?:[.,]5| ?[12]/[23])?|XXS|XS|S|M|L|XL|XXL|XXXL|[2-5]XL)\s*$', re.I)
+def td_split_size(name, path):
+    p = norm(path)
+    if not any(k in p for k in ('obleceni', 'obuv', 'boty')): return name, None
+    m = TD_SIZE.search(name or '')
+    if not m or m.start() < 8: return name, None
+    base = re.sub(r'[\s,]*(?:vel\.?|velikost|rozměr|roz\.)\s*$', '', name[:m.start()], flags=re.I)
+    return base.rstrip(' ,-–/'), m.group(1)
+
 TD_MAX_AGE = timedelta(days=3)   # starší data Allegra (denní stahování selhává) raději nezobrazit – ceny by nemusely sedět
 def td_items(src, now=None):
     """Allegro předzpracované skriptem fetch_td.py: {"at": …, "items": [{id, name, path, url, img, price, ean}]}."""
@@ -602,8 +613,9 @@ def td_items(src, now=None):
     at = datetime.fromisoformat(data.get('at') or '2000-01-01T00:00+00:00')
     if (now or datetime.now(TZ)) - at > TD_MAX_AGE: raise RuntimeError('data Allegra jsou starší než 3 dny (' + data.get('at', '?') + ')')
     for x in data.get('items') or []:
-        yield {'id': x['id'], 'group': x['id'], 'name': x['name'], 'brand': x.get('brand') or guess_brand(x['name']), 'path': x.get('path') or '',
-               'url': x['url'], 'img': x.get('img') or '', 'price': num(x.get('price')), 'orig': None, 'stock': True, 'size': None,
+        base, size = td_split_size(x['name'], x.get('path') or '')
+        yield {'id': x['id'], 'group': ('g:' + norm(base)) if size else x['id'], 'name': base, 'brand': x.get('brand') or guess_brand(x['name']),
+               'path': x.get('path') or '', 'url': x['url'], 'img': x.get('img') or '', 'price': num(x.get('price')), 'orig': None, 'stock': True, 'size': size,
                'ean': x.get('ean') or '', 'gender': '', 'cond': ''}
 
 # ---------------------------------------------------------------- hlavní běh
@@ -706,6 +718,9 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                                                   'chybí data z denního stahování (větev allegro)' if sh.get('format') == 'td' else 'chybí adresa feedu')); continue
         t0 = time.time(); groups = {}; n = 0
         brands = {norm(b) for b in sh.get('brands') or []}  # volitelně jen vybrané značky (velké feedy jako Spartoo)
+        if sh.get('knownBrands') and not brands:  # jen značky, které šup už má od jiných obchodů (Allegro je v seznamu poslední)
+            cnt = Counter(norm(p['brand']) for p in products if p.get('brand') and p.get('shop') != name)
+            brands = {b for b, c in cnt.items() if c >= sh['knownBrands']} | set(HYPE)
         try:
             if url.startswith('cj:'): it = cj_fn(url[3:], cj_token, sh.get('cjAds'))
             else:
