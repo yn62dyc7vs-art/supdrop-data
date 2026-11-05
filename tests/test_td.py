@@ -36,7 +36,8 @@ check('použité pryč', td.item(row('Reproduktor JBL Flip 6', SPK, 2490, stav='
 check('levné pryč', td.item(row('Reproduktor JBL Go', SPK, 99)), None)
 check('toner pryč', td.item(row('Toner pro Lexmark MS310', 'Elektronika > Počítače > Tiskárny a skenery > Tonery > Náhradní', 900)), None)
 check('LEGO projde', bool(td.item(row('LEGO Technic 42171 Mercedes', 'Děti > Hračky > Stavebnice > LEGO > Technic', 4999, brand='LEGO'))), True)
-check('značka „žádná“ se nebere', (td.item(row('Reproduktor bezdrátový', SPK, 900, brand='žádná')) or {}).get('brand'), '')
+check('značka „žádná“ se nebere', (td.item(row('Reproduktor bezdrátový', SPK, 900, brand='žádná značka')) or {}).get('brand'), '')
+check('pouzdro na mobil pryč', td.item(row('Pouzdro Spigen pro iPhone 16', 'Elektronika > Telefony a příslušenství > Příslušenství GSM > Pouzdra', 499, brand='Spigen')), None)
 
 # čtení feedu po řádcích (bajty jako z HTTP), duplicity a rozbité řádky
 lines = [json.dumps(row(f'Reproduktor JBL Flip {i}', SPK, 500 + i, sid=str(100 + i))).encode() + b'\n' for i in range(5)]
@@ -58,4 +59,17 @@ prods, state, rep = bc.build(shops, {'Allegro': 'x'}, {}, now, open_fn=lambda u:
 check('stará data se nezobrazí', (len(prods), 'starší než 3 dny' in rep[0]), (0, True))
 prods, state, rep = bc.build(shops, {}, {}, now, log=lambda *a: None)
 check('bez souboru jen hlášení', rep, ['Allegro: chybí data z denního stahování (větev allegro)'])
+# jen značky, které šup zná od jiných obchodů (aspoň „knownBrands“ produktů) nebo z HYPE
+two = gzip.compress(json.dumps({'at': '2026-11-05T03:00+01:00', 'items': [td.item(row('Reproduktor JBL Flip 6 černý', SPK, 2490, sid='777')),
+      td.item(row('Reproduktor Bewood Mini dřevěný', SPK, 990, sid='778', brand='Bewood'))]}).encode())
+prods, state, rep = bc.build([dict(shops[0], knownBrands=10)], {'Allegro': 'x'}, {}, now, open_fn=lambda u: io.BytesIO(two), log=lambda *a: None)
+check('neznámá značka z Allegra pryč', sorted(p['brand'] for p in prods), ['JBL'])
+BOTY = 'Sport a cestování > Fotbal > Obuv > Kopačky'
+check('velikost z názvu', [bc.td_split_size(n, BOTY) for n in ['Boty adidas Mundial Team bílé 42', 'Boty Puma Ultra 5 zelené 42 1/2', 'Kopačky Nike Phantom vel. 44,5', 'Tričko Puma Essentials M', 'Tričko Jordan Dri-Fit se zipem, velikost S']],
+      [('Boty adidas Mundial Team bílé', '42'), ('Boty Puma Ultra 5 zelené', '42 1/2'), ('Kopačky Nike Phantom', '44,5'), ('Tričko Puma Essentials', 'M'), ('Tričko Jordan Dri-Fit se zipem', 'S')])
+check('u elektroniky se velikost nehledá', bc.td_split_size('Monitor Samsung Odyssey 49', SPK), ('Monitor Samsung Odyssey 49', None))
+sizes = gzip.compress(json.dumps({'at': '2026-11-05T03:00+01:00', 'items': [dict(td.item(row(f'Kopačky adidas Predator League bílé {v}', BOTY, 1990 + i, sid=str(800 + i), brand='adidas')), path=BOTY)
+      for i, v in enumerate(['44', '42', '43'])]}).encode())
+prods, state, rep = bc.build(shops, {'Allegro': 'x'}, {}, now, open_fn=lambda u: io.BytesIO(sizes), log=lambda *a: None)
+check('velikosti spojené do jednoho produktu', [(p['now'], p['name'], p.get('variant')) for p in prods], [(1990.0, 'Kopačky adidas Predator League bílé', 'Skladem: 42, 43, 44')])
 sys.exit(0 if ok else 1)
