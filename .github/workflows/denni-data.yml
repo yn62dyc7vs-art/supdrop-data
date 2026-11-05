@@ -23,6 +23,11 @@ jobs:
             elif git show origin/live:state.json > out/state.json 2>/dev/null; then rm -f out/state.json.gz; echo "STATE_EXPECTED=1" >> "$GITHUB_ENV"
             else rm -f out/state.json.gz out/state.json; echo "Větev live je bez historie, začínám znovu."; fi
           else echo "Zatím bez historie."; fi
+      - name: Načíst Allegro (stahuje se zvlášť jednou denně)
+        run: |
+          mkdir -p cache
+          if git fetch --depth=1 origin allegro 2>/dev/null; then git show origin/allegro:allegro.json.gz > cache/allegro.json.gz || rm -f cache/allegro.json.gz
+          else echo "Allegro zatím není."; fi
       - name: Stáhnout feedy a sestavit katalog
         env:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
@@ -33,6 +38,7 @@ jobs:
         run: |
           python tests/test_slevy.py
           python tests/test_awin.py
+          python tests/test_td.py
           python scripts/build_catalog.py
       - name: Rozdělit data na malé soubory (rychlý start webu a appky)
         run: python scripts/split_catalog.py
