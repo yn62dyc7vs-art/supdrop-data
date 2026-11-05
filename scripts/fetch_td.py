@@ -7,7 +7,8 @@ do cache/allegro.json.gz a workflow „Allegro pro šup“ ho dá do větve alle
 - Feedy jsou velké (GB), čtou se proudem řádek po řádku; když dojde čas, uloží se, co se stihlo.
   (API Tradedoubleru se nedalo použít: dovolí jen pár dotazů a celý katalog by trval přes hodinu.)
 - Bereme jen nové nabídky Smart! (Allegro je dovolí jen prodejcům s kvalitou prodeje aspoň „Neutrální“),
-  skladem, od MIN_PRICE Kč, bez Auto-moto a jen to, co šup umí zařadit do své kategorie.
+  skladem, od MIN_PRICE Kč, bez Auto-moto a bez příslušenství (pouzdra, skla…) a jen to, co šup umí zařadit.
+  Na značky, které šup zná od jiných obchodů, zúží Allegro až hodinový běh ("knownBrands" v shops.json).
 - Odkaz do obchodu je čistá adresa nabídky; partnerský odkaz Dognetu z ní udělá build_catalog.py.
 """
 import gzip, json, os, re, sys, time, urllib.parse, urllib.request
@@ -20,7 +21,7 @@ FEEDS = ['allegro.cz', 'allegro.cz-sport_and_tourism', 'allegro.cz-electronics']
 OUT = 'cache/allegro.json.gz'
 BUDGET = 45 * 60                 # nejvýš 45 minut, pak se uloží, co se stihlo
 SKIP_TOP = ('auto moto',)        # autodíly, pneumatiky, nářadí – do šupu nepatří
-NO_BRAND = {'zadna', 'bez znacky', 'neznama', 'no name', 'noname', 'jina', 'ostatni', 'generic'}
+NO_BRAND = {'zadna', 'zadna znacka', 'bez znacky', 'neznama', 'no name', 'noname', 'jina', 'ostatni', 'generic'}
 
 def say(*a): print(*a, flush=True)
 
@@ -49,7 +50,8 @@ def item(o):
     url = offer_url(o.get('itemLink') or '')
     name = re.sub(r'\s+', ' ', o.get('name') or '').strip()
     if not price or price < bc.MIN_PRICE or not url or not name: return None
-    if bc.categorize(path, name) is None: return None   # díly, filtry, tonery… (a menší cache)
+    c = bc.categorize(path, name)
+    if c is None or c[2]: return None   # díly, filtry, tonery, pouzdra a skla… (a menší cache)
     brand = (a.get('Značka') or '').strip()
     if bc.norm(brand) in NO_BRAND: brand = ''
     return {'id': str(o.get('id') or url.rsplit('-', 1)[-1]), 'name': name, 'brand': brand, 'path': path, 'url': url,
