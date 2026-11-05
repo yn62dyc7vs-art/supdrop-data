@@ -419,6 +419,7 @@
     "format": "td",
     "td": "cache/allegro.json.gz",
     "trust": 6,
-    "low": true
+    "low": true,
+    "knownBrands": 10
   }
 ]
