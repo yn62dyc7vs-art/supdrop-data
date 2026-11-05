@@ -10,6 +10,7 @@ do cache/allegro.json.gz a workflow „Allegro pro šup“ ho dá do větve alle
 - Adresa feedu i s tokenem je v tajné proměnné TD_FEED_URL (tlačítko „Copy URL“ u feedu Allegro.cz v Dognetu).
 """
 import gzip, json, os, re, sys, time, urllib.parse, urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_catalog as bc
@@ -18,6 +19,8 @@ API = 'https://api.tradedoubler.com/1.0/products.json'
 PAGE = 1000                      # víc API na jeden dotaz nevrátí
 SKIP_TOP = ('auto moto',)        # autodíly, pneumatiky, nářadí – do šupu nepatří
 OUT = 'cache/allegro.json.gz'
+WORKERS = 6                      # souběžné dotazy (jeden po druhém by stahování trvalo přes hodinu)
+BUDGET = 40 * 60                 # nejvýš 40 minut, pak se uloží, co se stihlo
 
 def parse_feed_url(u):
     fid = re.search(r'fid=(\d+)', u or '')
@@ -29,8 +32,10 @@ def call(fid, token, lo, hi, size, tries=4):
     url = f'{API};fid={fid};minPrice={lo:.2f};maxPrice={hi:.2f};page=1;pageSize={size}?token={token}'
     for k in range(tries):
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': bc.UA, 'Accept': 'application/json'})
-            return json.load(urllib.request.urlopen(req, timeout=120))
+            req = urllib.request.Request(url, headers={'User-Agent': bc.UA, 'Accept': 'application/json', 'Accept-Encoding': 'gzip'})
+            r = urllib.request.urlopen(req, timeout=90); b = r.read()
+            if r.headers.get('Content-Encoding') == 'gzip' or b[:2] == b'\x1f\x8b': b = gzip.decompress(b)
+            return json.loads(b)
         except Exception:
             if k == tries - 1: raise
             time.sleep(5 * (k + 1))
@@ -60,22 +65,41 @@ def item(p):
     return {'id': str(of.get('sourceProductId') or url.rsplit('-', 1)[-1]), 'name': name, 'path': path, 'url': url,
             'img': (p.get('productImage') or {}).get('url') or '', 'price': price, 'ean': f.get('gtin') or ''}
 
-def fetch_all(fid, token, call=call, log=print):
-    """Celý katalog po cenových pásmech (do každého se vejde nejvýš PAGE produktů)."""
-    stack, seen, out, n, calls = [(float(bc.MIN_PRICE), 1000000.0)], set(), [], 0, 0
-    while stack:
-        lo, hi = stack.pop()
-        tot = ((call(fid, token, lo, hi, 1) or {}).get('productHeader') or {}).get('totalHits') or 0; calls += 1
-        if not tot: continue
-        if tot > PAGE and hi - lo > 1:
-            mid = float(int((lo + hi) / 2))
-            stack += [(lo, mid - 0.01), (mid, hi)]; continue
-        if tot > PAGE: log(f'{lo:.2f} Kč: {tot} produktů za stejnou cenu, beru prvních {PAGE}')
-        for p in (call(fid, token, lo, hi, min(tot, PAGE)) or {}).get('products') or []:
-            n += 1
-            x = item(p)
-            if x and x['id'] not in seen: seen.add(x['id']); out.append(x)
-        calls += 1
+def say(*a): print(*a, flush=True)
+
+def fetch_all(fid, token, call=call, log=say, workers=WORKERS, budget=BUDGET):
+    """Celý katalog po cenových pásmech (do každého se vejde nejvýš PAGE produktů), několik dotazů souběžně.
+    1. krok: počty produktů v pásmech (malé dotazy), pásma nad PAGE se půlí; 2. krok: stažení pásem.
+    Když dojde čas (budget v sekundách), uloží se, co se stihlo – lepší část Allegra než nic."""
+    t0, calls, seen, out, n = time.time(), 0, set(), [], 0
+    def count(r): return r, ((call(fid, token, r[0], r[1], 1) or {}).get('productHeader') or {}).get('totalHits') or 0
+    def page(rt): (lo, hi), tot = rt; return (call(fid, token, lo, hi, min(tot, PAGE)) or {}).get('products') or []
+    todo, ready = [(float(bc.MIN_PRICE), 1000000.0)], []
+    with ThreadPoolExecutor(workers) as ex:
+        while todo:
+            nxt = []
+            for (lo, hi), tot in ex.map(count, todo):
+                calls += 1
+                if not tot: continue
+                if tot > PAGE and hi - lo > 1:
+                    mid = float(int((lo + hi) / 2)); nxt += [(lo, mid - 0.01), (mid, hi)]
+                else:
+                    if tot > PAGE: log(f'{lo:.2f} Kč: {tot} produktů za stejnou cenu, beru prvních {PAGE}')
+                    ready.append(((lo, hi), tot))
+            todo = nxt
+        log(f'{len(ready)} cenových pásem, {sum(t for _, t in ready)} produktů ({calls} dotazů, {time.time() - t0:.0f} s)')
+        futs = [ex.submit(page, rt) for rt in ready]
+        for i, f in enumerate(futs):
+            if budget and time.time() - t0 > budget:
+                log(f'Došel čas: staženo {i} z {len(futs)} pásem')
+                for g in futs[i:]: g.cancel()
+                break
+            for p in f.result():
+                n += 1
+                x = item(p)
+                if x and x['id'] not in seen: seen.add(x['id']); out.append(x)
+            calls += 1
+            if i % 50 == 49: log(f'  {i + 1}/{len(futs)} pásem, {len(out)} do cache ({time.time() - t0:.0f} s)')
     return out, n, calls
 
 def main():
