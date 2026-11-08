@@ -39,6 +39,8 @@ jobs:
           python tests/test_slevy.py
           python tests/test_awin.py
           python tests/test_td.py
+          python tests/test_off.py
+          python tests/test_fallback.py
           python scripts/build_catalog.py
       - name: Rozdělit data na malé soubory (rychlý start webu a appky)
         run: python scripts/split_catalog.py
