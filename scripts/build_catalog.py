@@ -709,6 +709,8 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
     products, report = [], []
     for sh in shops:
         name = sh['shop']; url = feeds.get(name)
+        if sh.get('off'):  # dočasně vypnutý obchod (nefunkční odkazy/obrázky); historie cen zůstává pro návrat
+            report.append(f"{name}: vypnuto ({sh['off']})"); continue
         if sh.get('net') == 'cj': url = ('cj:' + str(sh['cj'])) if cj_token else None  # CJ se čte z API, ne z feedu
         if sh.get('format') == 'awin': url = awin_url(sh['awin'], awin_key) if awin_key else None
         if sh.get('format') == 'td' and not url: url = sh.get('td') if os.path.exists(sh.get('td') or '') else None  # Allegro: hotový soubor
