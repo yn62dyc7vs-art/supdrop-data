@@ -15,9 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Stáhnout Allegro z Tradedoubleru (feed přes Dognet)
-        env:
-          TD_FEED_URL: ${{ secrets.TD_FEED_URL }}
+      - name: Stáhnout Allegro (feedy od Dognetu)
         run: |
           python tests/test_td.py
           python scripts/fetch_td.py
