@@ -9,7 +9,7 @@ concurrency: denni-data
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -41,7 +41,7 @@ jobs:
           python tests/test_td.py
           python tests/test_off.py
           python tests/test_fallback.py
-          python scripts/build_catalog.py
+          python -u scripts/build_catalog.py
       - name: Rozdělit data na malé soubory (rychlý start webu a appky)
         run: python scripts/split_catalog.py
       - name: Zveřejnit data do větve live (web a appka si je načtou samy)
