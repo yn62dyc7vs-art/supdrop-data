@@ -401,7 +401,7 @@
     "shop": "eObuv.cz",
     "format": "awin",
     "awin": "75859",
-    "bid": "568a437d",
+    "bidOff": "568a437d",
     "trust": 8,
     "orig": "base_price"
   },
@@ -409,7 +409,7 @@
     "shop": "Myprotein",
     "format": "awin",
     "awin": "24533",
-    "bid": "04890426",
+    "bidOff": "04890426",
     "trust": 8,
     "orig": "-"
   },
@@ -417,7 +417,7 @@
     "shop": "Allegro",
     "net": "dognet",
     "format": "td",
-    "td": "cache/allegro.json.gz",
+    "tdOff": "cache/allegro.json.gz",
     "trust": 6,
     "low": true,
     "knownBrands": 10
