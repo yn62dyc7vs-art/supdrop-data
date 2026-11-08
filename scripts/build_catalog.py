@@ -732,19 +732,29 @@ def restore_prev(r, meta):
             'img': g, 'imgby': s, 'days': r.get('dy', 0), 'low': r.get('l', r['p']), 'lowDays': r.get('ld'), 'prev': r.get('pv'),
             'lp': True if r.get('lp') else None, 'hist': [hs[i:i + 2] for i in range(0, len(hs), 2)]}
 
-def fallback(name, why, prev_fn, fresh, now, products, last, new_last):
-    """Feed obchodu selhal: když jsou poslední zveřejněná data mladší než FALLBACK_HOURS, použijeme je. Vrací řádek hlášení."""
+def reuse(name, prev_fn, fresh, now, products, last, new_last, max_hours, need_fresh=False):
+    """Převezme poslední zveřejněná data obchodu, pokud nejsou starší než max_hours. Vrací (stav, čas dat, počet)."""
+    at = fresh.get(name)
+    if need_fresh and not at: return 'none', None, 0
     recs, meta = prev_fn(name) if prev_fn else (None, None)
-    if not recs: return f'{name}: {why} – starší data nejsou'
-    at = fresh.get(name) or meta.get('checkedAt')
+    if not recs: return 'none', None, 0
+    at = at or meta.get('checkedAt')
     try: when = datetime.strptime(at, '%Y-%m-%dT%H:%M').replace(tzinfo=TZ)
-    except (TypeError, ValueError): return f'{name}: {why} – neznámé stáří starších dat'
-    if now - when > timedelta(hours=FALLBACK_HOURS): return f'{name}: {why} – poslední data z {when:%H:%M} jsou starší než {FALLBACK_HOURS} h'
+    except (TypeError, ValueError): return 'unknown', None, 0
+    if now - when > timedelta(hours=max_hours): return 'old', when, 0
     fresh[name] = at
     products.extend(restore_prev(r, meta) for r in recs)
     pre = slug(name) + ':'
     new_last.update({k: v for k, v in last.items() if k.startswith(pre)})
-    return f'{name}: {why} – použita data z {when:%H:%M} ({len(recs)} produktů)'
+    return 'ok', when, len(recs)
+
+def fallback(name, why, prev_fn, fresh, now, products, last, new_last):
+    """Feed obchodu selhal: když jsou poslední zveřejněná data mladší než FALLBACK_HOURS, použijeme je. Vrací řádek hlášení."""
+    st, when, k = reuse(name, prev_fn, fresh, now, products, last, new_last, FALLBACK_HOURS)
+    if st == 'none': return f'{name}: {why} – starší data nejsou'
+    if st == 'unknown': return f'{name}: {why} – neznámé stáří starších dat'
+    if st == 'old': return f'{name}: {why} – poslední data z {when:%H:%M} jsou starší než {FALLBACK_HOURS} h'
+    return f'{name}: {why} – použita data z {when:%H:%M} ({k} produktů)'
 
 def prev_from_git(ref='origin/live'):
     """Poslední zveřejněná data (v2/p z větve live, workflow ji stáhne kvůli historii). Načte se jen při výpadku feedu."""
@@ -785,6 +795,9 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
             sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
         if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí AWIN_KEY' if sh.get('format') == 'awin' else
                                                   'chybí data z denního stahování (větev allegro)' if sh.get('format') == 'td' else 'chybí adresa feedu')); continue
+        if sh.get('every') and prev_fn:  # pomalý obchod (CJ API): stahovat jen jednou za „every“ hodin, mezitím poslední data
+            st, when, k = reuse(name, prev_fn, fresh, now, products, last, new_last, sh['every'] - 0.25, need_fresh=True)
+            if st == 'ok': report.append(f'{name}: data z {when:%H:%M} ({k} produktů, obnova jednou za {sh["every"]} h)'); log(report[-1]); continue
         t0 = time.time(); groups = {}; n = 0
         brands = {norm(b) for b in sh.get('brands') or []}  # volitelně jen vybrané značky (velké feedy jako Spartoo)
         if sh.get('knownBrands') and not brands:  # jen značky, které šup už má od jiných obchodů (Allegro je v seznamu poslední)
