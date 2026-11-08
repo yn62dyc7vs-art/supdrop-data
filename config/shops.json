@@ -328,6 +328,7 @@
   },
   {
     "shop": "Kabea.cz",
+    "every": 3,
     "net": "cj",
     "cj": "5316217",
     "cjAds": [
@@ -337,6 +338,7 @@
   },
   {
     "shop": "Meatfly.cz",
+    "every": 3,
     "net": "cj",
     "cj": "5590289",
     "cjAds": [
@@ -346,6 +348,7 @@
   },
   {
     "shop": "Vivantis.cz",
+    "every": 3,
     "net": "cj",
     "cj": "4384608",
     "cjAds": [
