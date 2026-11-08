@@ -86,4 +86,18 @@ try:
 finally:
     bc.urllib.request.urlopen = orig
 
+# 7) pomalý obchod („every“: 3): do 3 h se nestahuje a převezmou se poslední data
+SLOW = dict(SHOP, every=3)
+opened = []
+def track(url): opened.append(url); return io.BytesIO(FEED)
+p, st, rep = bc.build([SLOW], {'Shop.cz': 'https://feed'}, {'fresh': {'Shop.cz': '2026-11-08T13:30'}}, now, open_fn=track, log=log, prev_fn=prev)
+check('every: nestahuje se', opened, [])
+check('every: převzato', (len(p), rep), (2, ['Shop.cz: data z 13:30 (2 produktů, obnova jednou za 3 h)']))
+check('every: čas dat se nemění', st['fresh'], {'Shop.cz': '2026-11-08T13:30'})
+p, st, rep = bc.build([SLOW], {'Shop.cz': 'https://feed'}, {'fresh': {'Shop.cz': '2026-11-08T12:10'}}, now, open_fn=track, log=log, prev_fn=prev)
+check('every: po 3 h se stáhne', (len(opened), len(p), st['fresh']), (1, 1, {'Shop.cz': '2026-11-08T15:00'}))
+opened.clear()
+p, st, rep = bc.build([SLOW], {'Shop.cz': 'https://feed'}, {}, now, open_fn=track, log=log, prev_fn=prev)
+check('every: bez záznamu se stáhne', len(opened), 1)
+
 print('\nVŠE OK' if ok else '\nNĚCO NESEDÍ'); sys.exit(0 if ok else 1)
