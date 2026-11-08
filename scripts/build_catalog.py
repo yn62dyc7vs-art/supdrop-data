@@ -20,7 +20,7 @@ Obchody z Awinu přes eHUB ("format": "awin", "awin": "<id feedu>", "bid": …) 
 Allegro ("format": "td", "td": "cache/allegro.json.gz") se stahuje zvlášť jednou denně z feedů Dognetu (scripts/fetch_td.py,
 workflow „Allegro pro šup“); hlavní běh si jen načte hotový soubor z větve allegro.
 """
-import csv, gzip, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request
+import csv, gzip, io, json, os, re, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
 from collections import Counter
 from datetime import datetime, timedelta, date
@@ -442,10 +442,21 @@ def sniff_format(src):
     else: fmt = 'heureka'
     return _Peeked(head, src), fmt
 
+SLEEP = time.sleep
+RETRY_WAITS = (20, 60)   # přechodná chyba feedu (5xx, 429, výpadek spojení): ještě dva pokusy
+def _transient(e):
+    if isinstance(e, urllib.error.HTTPError): return e.code >= 500 or e.code == 429
+    return isinstance(e, (urllib.error.URLError, TimeoutError, ConnectionError))
+
 def open_feed(url, timeout=180):
     if not re.match(r'https?://', url): return open(url, 'rb')   # předem stažený soubor (Allegro)
     req = urllib.request.Request(url, headers={'User-Agent': UA, 'Accept-Encoding': 'gzip'})
-    r = urllib.request.urlopen(req, timeout=timeout)
+    for wait in RETRY_WAITS + (None,):
+        try:
+            r = urllib.request.urlopen(req, timeout=timeout); break
+        except Exception as e:
+            if wait is None or not _transient(e): raise
+            SLEEP(wait)
     if r.headers.get('Content-Encoding') == 'gzip' or url.endswith('.gz'):
         return gzip.GzipFile(fileobj=r)
     return r
@@ -701,11 +712,67 @@ def hist_points(h, today):
         if not out or out[-1][1] != e[2]: out.append([today - e[0], e[2]])
     return out
 
-def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items, awin_key=None):
+FALLBACK_HOURS = 6   # při výpadku feedu převezmeme poslední zveřejněná data obchodu, nejvýš takhle stará
+
+def restore_prev(r, meta):
+    """Plný záznam z v2/p (split_catalog.py) zpátky na produkt katalogu."""
+    s = r['s']; pu, pg = (meta.get('pre') or {}).get(s) or ['', '']
+    u = r['u'][1:] if r['u'].startswith('~') else pu + r['u']
+    g = r['g'][1:] if r['g'].startswith('~') else pg + r['g']
+    ehub = 'e' not in r   # odkaz eHUB split rozložil na cílovou adresu
+    url = ('https://ehub.cz/system/scripts/click.php?a_aid=' + (meta.get('aid') or EHUB_AID) + '&a_bid=' + (r.get('kb') or meta['bids'][s]) +
+           '&desturl=' + urllib.parse.quote(u, safe='')) if ehub else u
+    hs = r.get('hs') or []
+    cat, sub = r['c'], r.get('sb') or None
+    return {'id': r['i'], 'cat': cat, 'sub': sub, 'acc': True if r.get('ac') else None, 'gender': r.get('gd') or None,
+            'kind': r.get('k') or (meta.get('kinds') or {}).get(cat) or kind_of(cat, sub), 'brand': r.get('b') or s, 'name': r['n'],
+            'variant': r.get('v'), 'cond': r.get('cn'), 'ean': None, 'shop': s, 'url': url, 'aff': ehub or bool(r.get('e')),
+            'now': r['p'], 'was': r.get('w', r['p']), 'disc': r.get('d') or 0, 'basis': r.get('bs', 'historie'), 'hype': r.get('h', 5),
+            'stock': True, 'pass': not r.get('x'), 'reason': r.get('r'), 'score': {'total': r.get('t', 0)}, 'checked': meta.get('checkedAt'),
+            'img': g, 'imgby': s, 'days': r.get('dy', 0), 'low': r.get('l', r['p']), 'lowDays': r.get('ld'), 'prev': r.get('pv'),
+            'lp': True if r.get('lp') else None, 'hist': [hs[i:i + 2] for i in range(0, len(hs), 2)]}
+
+def fallback(name, why, prev_fn, fresh, now, products, last, new_last):
+    """Feed obchodu selhal: když jsou poslední zveřejněná data mladší než FALLBACK_HOURS, použijeme je. Vrací řádek hlášení."""
+    recs, meta = prev_fn(name) if prev_fn else (None, None)
+    if not recs: return f'{name}: {why} – starší data nejsou'
+    at = fresh.get(name) or meta.get('checkedAt')
+    try: when = datetime.strptime(at, '%Y-%m-%dT%H:%M').replace(tzinfo=TZ)
+    except (TypeError, ValueError): return f'{name}: {why} – neznámé stáří starších dat'
+    if now - when > timedelta(hours=FALLBACK_HOURS): return f'{name}: {why} – poslední data z {when:%H:%M} jsou starší než {FALLBACK_HOURS} h'
+    fresh[name] = at
+    products.extend(restore_prev(r, meta) for r in recs)
+    pre = slug(name) + ':'
+    new_last.update({k: v for k, v in last.items() if k.startswith(pre)})
+    return f'{name}: {why} – použita data z {when:%H:%M} ({len(recs)} produktů)'
+
+def prev_from_git(ref='origin/live'):
+    """Poslední zveřejněná data (v2/p z větve live, workflow ji stáhne kvůli historii). Načte se jen při výpadku feedu."""
+    cache = {}
+    def get(shop):
+        if 'by' not in cache:
+            cache['by'], cache['meta'] = {}, None
+            try:
+                names = subprocess.run(['git', 'ls-tree', '-r', '--name-only', ref, 'v2/p'], capture_output=True, text=True, check=True).stdout.split()
+                out = subprocess.run(['git', 'cat-file', '--batch'], input=''.join(f'{ref}:{n}\n' for n in names).encode(),
+                                     capture_output=True, check=True).stdout
+                i = 0
+                while i < len(out):
+                    j = out.index(b'\n', i); size = int(out[i:j].split()[2]); body = out[j + 1:j + 1 + size]; i = j + 2 + size
+                    d = json.loads(body)
+                    cache['meta'] = cache['meta'] or {k: v for k, v in d.items() if k != 'items'}
+                    for r in d.get('items') or []: cache['by'].setdefault(r['s'], []).append(r)
+            except Exception as e:
+                print('Starší data (v2/p) se nenačetla:', type(e).__name__, e)
+        return (cache['by'].get(shop), cache['meta'])
+    return get
+
+def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items, awin_key=None, prev_fn=None):
     today = day_no(now.date())
     stamp = now.strftime('%Y-%m-%dT%H:%M')
     hist = state.get('h', {})
     last, new_last = state.get('last', {}), {}
+    fresh = dict(state.get('fresh') or {})   # kdy měl obchod naposledy čerstvá data z feedu
     products, report = [], []
     for sh in shops:
         name = sh['shop']; url = feeds.get(name)
@@ -743,8 +810,12 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                 if g is None: g = groups[gk] = {'v': [], 'first': x}
                 g['v'].append(x)
         except Exception as e:  # jeden rozbitý feed nesmí shodit celý běh
+            if not groups:
+                report.append(fallback(name, f'chyba feedu ({type(e).__name__}: {e})', prev_fn, fresh, now, products, last, new_last)); log(report[-1]); continue
             report.append(f'{name}: chyba feedu ({type(e).__name__}: {e})'); log(report[-1])
-            if not groups: continue
+        if n == 0:  # prázdný feed bereme jako výpadek, ne jako „obchod nic neprodává“
+            report.append(fallback(name, 'prázdný feed', prev_fn, fresh, now, products, last, new_last)); log(report[-1]); continue
+        fresh[name] = stamp
         kept = 0
         for gk, g in groups.items():
             f = g['first']; vs = g['v']
@@ -804,7 +875,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
     hist = {k: v for k, v in hist.items() if v and v[-1][1 if len(v[-1]) == 5 else 0] >= today - 45}
     products = dedupe_ean(products)
     products.sort(key=lambda d: -d['score']['total'])
-    return products, {'h': hist, 'last': new_last, 'updated': stamp, 'prevAt': state.get('updated')}, report
+    return products, {'h': hist, 'last': new_last, 'fresh': fresh, 'updated': stamp, 'prevAt': state.get('updated')}, report
 
 def pick_top(products, n=12):
     """Pestrý výběr pro web: nejlepší skóre, max. 3 z kategorie, 4 z obchodu, bez barevných variant téhož."""
@@ -835,7 +906,7 @@ def main():
     if os.environ.get('STATE_EXPECTED') and not state.get('h'):
         print('Historie cen se nenačetla, i když v datech má být. Končím, aby se nesmazala.'); sys.exit(1)
     products, state, report = build(shops, feeds, state, now, cj_token=os.environ.get('CJ_TOKEN') or None,
-                                    awin_key=(os.environ.get('AWIN_KEY') or '').strip() or None)
+                                    awin_key=(os.environ.get('AWIN_KEY') or '').strip() or None, prev_fn=prev_from_git())
     if not products:
         print('Žádný produkt, nic nezapisuji.'); print('\n'.join(report)); sys.exit(1)
     out = {'batch': now.strftime('%Y-%m-%d'), 'checkedAt': now.strftime('%Y-%m-%dT%H:%M'),
