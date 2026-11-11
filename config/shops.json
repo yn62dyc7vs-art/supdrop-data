@@ -164,7 +164,8 @@
     "shop": "MasterSport.cz",
     "format": "auto",
     "trust": 8,
-    "net": "dognet"
+    "net": "dognet",
+    "off": "11. 11. Dognet ukončuje program MasterSport.cz k 20. 11. 2026"
   },
   {
     "shop": "GymBeam.cz",
@@ -400,6 +401,27 @@
       "sperky": "doplnky/sperky",
       "kosmetika": "kosmetika"
     }
+  },
+  {
+    "shop": "Answear.cz",
+    "every": 3,
+    "net": "cj",
+    "cj": "4327375",
+    "trust": 8
+  },
+  {
+    "shop": "Husky",
+    "every": 3,
+    "net": "cj",
+    "cj": "5404810",
+    "trust": 8
+  },
+  {
+    "shop": "Metalshop.cz",
+    "every": 3,
+    "net": "cj",
+    "cj": "5807640",
+    "trust": 8
   },
   {
     "shop": "eObuv.cz",
