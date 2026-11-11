@@ -21,6 +21,7 @@ Allegro ("format": "td", "td": "cache/allegro.json.gz") se stahuje zvlášť jed
 workflow „Allegro pro šup“); hlavní běh si jen načte hotový soubor z větve allegro.
 Velké katalogy z CJ ("cjFile": "cache/cj/<obchod>.json.gz", např. Answear a Allegro) se stahují zvlášť dvakrát denně
 (scripts/fetch_cj.py, workflow „CJ pro šup“); hlavní běh si jen načte hotové soubory z větve cj.
+Obchody, které denní kontrola odkazů (scripts/check_links.py, větev kontrola → cache/linkcheck.json) vyřadila, se vynechají.
 """
 import csv, gzip, io, json, os, re, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
@@ -791,7 +792,7 @@ def prev_from_git(ref='origin/live'):
         return (cache['by'].get(shop), cache['meta'])
     return get
 
-def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items, awin_key=None, prev_fn=None):
+def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None, cj_fn=cj_items, awin_key=None, prev_fn=None, auto_off=None):
     today = day_no(now.date())
     stamp = now.strftime('%Y-%m-%dT%H:%M')
     hist = state.get('h', {})
@@ -802,6 +803,9 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
         name = sh['shop']; url = feeds.get(name)
         if sh.get('off'):  # dočasně vypnutý obchod (nefunkční odkazy/obrázky); historie cen zůstává pro návrat
             report.append(f"{name}: vypnuto ({sh['off']})"); continue
+        ao = (auto_off or {}).get(name)   # vyřazeno denní kontrolou odkazů (check_links.py); ručně zpět: "linkcheckOk": "<datum>"
+        if ao and sh.get('linkcheck') is not False and str(sh.get('linkcheckOk') or '') < ao.get('od', ''):
+            report.append(f"{name}: vypnuto kontrolou odkazů od {ao.get('od')} ({ao.get('proc')})"); continue
         if sh.get('net') == 'cj': url = ('cj:' + str(sh['cj'])) if cj_token else None  # CJ se čte z API, ne z feedu
         if sh.get('format') == 'awin': url = awin_url(sh['awin'], awin_key) if awin_key else None
         if sh.get('format') == 'td' and not url: url = sh.get('td') if os.path.exists(sh.get('td') or '') else None  # Allegro: hotový soubor
@@ -938,7 +942,8 @@ def main():
     if os.environ.get('STATE_EXPECTED') and not state.get('h'):
         print('Historie cen se nenačetla, i když v datech má být. Končím, aby se nesmazala.'); sys.exit(1)
     products, state, report = build(shops, feeds, state, now, cj_token=os.environ.get('CJ_TOKEN') or None,
-                                    awin_key=(os.environ.get('AWIN_KEY') or '').strip() or None, prev_fn=prev_from_git())
+                                    awin_key=(os.environ.get('AWIN_KEY') or '').strip() or None, prev_fn=prev_from_git(),
+                                    auto_off=(load('cache/linkcheck.json', {}) or {}).get('auto_off'))
     if not products:
         print('Žádný produkt, nic nezapisuji.'); print('\n'.join(report)); sys.exit(1)
     out = {'batch': now.strftime('%Y-%m-%d'), 'checkedAt': now.strftime('%Y-%m-%dT%H:%M'),
