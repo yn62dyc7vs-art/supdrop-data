@@ -404,9 +404,9 @@
   },
   {
     "shop": "Answear.cz",
-    "every": 3,
     "net": "cj",
     "cj": "4327375",
+    "cjFile": "cache/cj/answear.json.gz",
     "trust": 8
   },
   {
@@ -441,9 +441,10 @@
   },
   {
     "shop": "Allegro",
-    "net": "dognet",
-    "format": "td",
-    "tdOff": "cache/allegro.json.gz",
+    "net": "cj",
+    "cj": "6464420",
+    "cjFile": "cache/cj/allegro.json.gz",
+    "cjMinDisc": 25,
     "trust": 6,
     "low": true,
     "knownBrands": 10
