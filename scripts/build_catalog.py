@@ -19,6 +19,8 @@ Obchody z Awinu přes eHUB ("format": "awin", "awin": "<id feedu>", "bid": …) 
 (klíč z odkazu na feed, který poslal eHUB).
 Allegro ("format": "td", "td": "cache/allegro.json.gz") se stahuje zvlášť jednou denně z feedů Dognetu (scripts/fetch_td.py,
 workflow „Allegro pro šup“); hlavní běh si jen načte hotový soubor z větve allegro.
+Velké katalogy z CJ ("cjFile": "cache/cj/<obchod>.json.gz", např. Answear a Allegro) se stahují zvlášť dvakrát denně
+(scripts/fetch_cj.py, workflow „CJ pro šup“); hlavní běh si jen načte hotové soubory z větve cj.
 """
 import csv, gzip, io, json, os, re, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
@@ -629,6 +631,18 @@ def td_items(src, now=None):
                'path': x.get('path') or '', 'url': x['url'], 'img': x.get('img') or '', 'price': num(x.get('price')), 'orig': None, 'stock': True, 'size': size,
                'ean': x.get('ean') or '', 'gender': '', 'cond': ''}
 
+CJ_MAX_AGE = timedelta(hours=36)   # katalogy z CJ se stahují dvakrát denně; starší data raději nezobrazit – ceny by nemusely sedět
+def cjfile_items(src, now=None):
+    """Velký katalog z CJ předem stažený skriptem fetch_cj.py: {"at": …, "items": [záznamy ve tvaru z cj_items]}."""
+    b = src.read()
+    if b[:2] == b'\x1f\x8b': b = gzip.decompress(b)
+    data = json.loads(b.decode('utf-8'))
+    at = datetime.fromisoformat(data.get('at') or '2000-01-01T00:00+00:00')
+    if (now or datetime.now(TZ)) - at > CJ_MAX_AGE: raise RuntimeError('data z CJ jsou starší než 36 h (' + data.get('at', '?') + ')')
+    for x in data.get('items') or []:
+        if not x.get('brand'): x['brand'] = guess_brand(x.get('name'))   # Allegro: značku feed nemá
+        yield x
+
 # ---------------------------------------------------------------- hlavní běh
 def load(p, default):
     try:
@@ -791,6 +805,10 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
         if sh.get('net') == 'cj': url = ('cj:' + str(sh['cj'])) if cj_token else None  # CJ se čte z API, ne z feedu
         if sh.get('format') == 'awin': url = awin_url(sh['awin'], awin_key) if awin_key else None
         if sh.get('format') == 'td' and not url: url = sh.get('td') if os.path.exists(sh.get('td') or '') else None  # Allegro: hotový soubor
+        if sh.get('cjFile'):  # velký katalog z CJ: hotový soubor z větve cj (stahuje se zvlášť), ne dotaz na API
+            sh = dict(sh, format='cjfile', every=None); url = sh['cjFile'] if os.path.exists(sh['cjFile']) else None
+            if not url:
+                report.append(fallback(name, 'chybí data z denního stahování (větev cj)', prev_fn, fresh, now, products, last, new_last)); log(report[-1]); continue
         if isinstance(url, dict):  # SHOP_FEEDS může nést i kód partnera a formát: {"url": …, "bid": …, "format": …}
             sh = dict(sh, **{k: url[k] for k in ('bid', 'format') if url.get(k)}); url = url.get('url')
         if not url: report.append(f'{name}: ' + ('chybí CJ_TOKEN' if sh.get('net') == 'cj' else 'chybí AWIN_KEY' if sh.get('format') == 'awin' else
@@ -810,7 +828,8 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
                 fmt = sh.get('format')
                 if fmt in (None, '', 'auto'): src, fmt = sniff_format(src)
                 it = (google_items(src) if fmt == 'google' else ehub_items(src) if fmt == 'ehub' else
-                      awin_items(src, sh.get('orig')) if fmt == 'awin' else td_items(src, now) if fmt == 'td' else heureka_items(src))
+                      awin_items(src, sh.get('orig')) if fmt == 'awin' else td_items(src, now) if fmt == 'td' else
+                      cjfile_items(src, now) if fmt == 'cjfile' else heureka_items(src))
             for x in it:
                 n += 1
                 if not x['price'] or not x['url']: continue
