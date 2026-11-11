@@ -1,0 +1,38 @@
+name: Kontrola odkazů
+on:
+  schedule:
+    - cron: '13 5 * * *'   # jednou denně ráno; vzorek produktů od každého obchodu (stránka produktu a obrázek)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: kontrola
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Načíst poslední data (live) a předchozí kontrolu (kontrola)
+        run: |
+          mkdir -p out
+          git fetch --depth=1 origin live
+          if git fetch --depth=1 origin kontrola 2>/dev/null; then git show origin/kontrola:linkcheck.json > out/linkcheck.json || rm -f out/linkcheck.json
+          else echo "Předchozí kontrola zatím není."; fi
+      - name: Zkontrolovat odkazy a obrázky
+        run: |
+          python tests/test_links.py
+          python -u scripts/check_links.py
+      - name: Uložit do větve kontrola (hodinový běh vyřazené obchody vynechá)
+        run: |
+          cd out
+          test -s linkcheck.json || { echo "Bez výsledku, nic neukládám."; exit 0; }
+          mkdir -p ../kontrola && cp linkcheck.json ../kontrola/ && cd ../kontrola
+          git init -q -b kontrola
+          git config user.name "šup bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add linkcheck.json
+          git commit -qm "Kontrola odkazů $(date +%F)"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" kontrola

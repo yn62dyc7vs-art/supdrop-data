@@ -33,6 +33,10 @@ jobs:
           mkdir -p cache/cj
           if git fetch --depth=1 origin cj 2>/dev/null; then git archive origin/cj | tar -x -C cache/cj
           else echo "Katalogy z CJ zatím nejsou."; fi
+      - name: Načíst výsledek kontroly odkazů (vyřazené obchody)
+        run: |
+          if git fetch --depth=1 origin kontrola 2>/dev/null; then git show origin/kontrola:linkcheck.json > cache/linkcheck.json || rm -f cache/linkcheck.json
+          else echo "Kontrola odkazů zatím neproběhla."; fi
       - name: Stáhnout feedy a sestavit katalog
         env:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
@@ -45,6 +49,7 @@ jobs:
           python tests/test_awin.py
           python tests/test_td.py
           python tests/test_cj.py
+          python tests/test_links.py
           python tests/test_off.py
           python tests/test_fallback.py
           python -u scripts/build_catalog.py
