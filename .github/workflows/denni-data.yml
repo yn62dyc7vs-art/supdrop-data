@@ -28,6 +28,11 @@ jobs:
           mkdir -p cache
           if git fetch --depth=1 origin allegro 2>/dev/null; then git show origin/allegro:allegro.json.gz > cache/allegro.json.gz || rm -f cache/allegro.json.gz
           else echo "Allegro zatím není."; fi
+      - name: Načíst velké katalogy z CJ (stahují se zvlášť dvakrát denně)
+        run: |
+          mkdir -p cache/cj
+          if git fetch --depth=1 origin cj 2>/dev/null; then git archive origin/cj | tar -x -C cache/cj
+          else echo "Katalogy z CJ zatím nejsou."; fi
       - name: Stáhnout feedy a sestavit katalog
         env:
           SHOP_FEEDS: ${{ secrets.SHOP_FEEDS }}
@@ -39,6 +44,7 @@ jobs:
           python tests/test_slevy.py
           python tests/test_awin.py
           python tests/test_td.py
+          python tests/test_cj.py
           python tests/test_off.py
           python tests/test_fallback.py
           python -u scripts/build_catalog.py

@@ -1,0 +1,38 @@
+name: CJ pro šup
+on:
+  schedule:
+    - cron: '17 1,13 * * *'   # dvakrát denně; stahování velkých katalogů z CJ API trvá desítky minut, do hodinového běhu by se nevešlo
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: cj
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Načíst předchozí soubory (když obchod selže, zůstanou)
+        run: |
+          mkdir -p cache/cj
+          if git fetch --depth=1 origin cj 2>/dev/null; then git archive origin/cj | tar -x -C cache/cj
+          else echo "Větev cj zatím není."; fi
+      - name: Stáhnout katalogy z CJ (Answear, Allegro…)
+        env:
+          CJ_TOKEN: ${{ secrets.CJ_TOKEN }}
+        run: |
+          python tests/test_cj.py
+          python -u scripts/fetch_cj.py
+      - name: Uložit do větve cj (hodinový běh si ji načte)
+        run: |
+          cd cache/cj
+          ls *.json.gz >/dev/null 2>&1 || { echo "Bez dat z CJ, nic neukládám."; exit 0; }
+          git init -q -b cj
+          git config user.name "šup bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add *.json.gz
+          git commit -qm "CJ $(date '+%F %H:%M')"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" cj
