@@ -9,7 +9,8 @@ je dá do větve cj a hodinový běh (build_catalog.py) si je odtamtud jen načt
 - Do souboru jde jen to, co má šanci do šupu: skladem, nové, od MIN_PRICE Kč, bez erotiky (a jen vybrané značky, má-li obchod "brands").
 - "cjMinDisc": N = jen zboží, které obchod sám hlásí zlevněné aspoň o N % (Allegro: celý katalog je obrovský).
 - Když stažení obchodu selže, zůstane jeho předchozí soubor (workflow ho předem načte z větve cj).
-- Když dojde čas (BUDGET), uloží se, co se stihlo, a další obchody se přeskočí.
+- Když dojde čas (BUDGET, hlídá se před každým dotazem i čekáním), uloží se, co se stihlo, a další obchody se přeskočí.
+  Workflow tak vždy doběhne do uložení (dřív ho limit 180 min při pomalém Allegru zrušil a neuložilo se nic).
 - Vypnutý obchod ("off") se stahuje jen s "cjTry": true – na zkoušku, než se zapne (Allegro: čeká na kontrolu prodejců).
 - Na začátku vypíše, jaké filtry a pole CJ API nabízí (např. jestli zná prodejce na Allegru) – podklad pro další úpravy.
 
@@ -21,21 +22,31 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_catalog as bc
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config', 'shops.json')
-BUDGET = 150 * 60          # workflow má limit 180 min; po 150 min se uloží, co se stihlo
+BUDGET = 140 * 60          # workflow má limit 180 min; po 140 min se uloží, co se stihlo
 WAITS = (60, 180, 300)     # CJ při mnoha dotazech vrací 403/429: počkat a zkusit znovu
 ADULT = re.compile(r'\b(eroti\w*|sex ?shop\w*|porno\w*|xxx|dorcel|vibrator\w*|dild\w*|bdsm|milfs?|penis\w*)\b')
 SLEEP = time.sleep
 
 def say(*a): print(*a, flush=True)
 
+DEADLINE = [None]          # čas, kdy se má stahování ukončit (nastavuje fetch); hlídá se před každým dotazem na CJ
+class OutOfTime(Exception): pass
+
 def call(token, variables):
-    """bc.cj_call s delším čekáním při omezení počtu dotazů (403/429) a výpadku CJ (5xx)."""
+    """bc.cj_call s delším čekáním při omezení počtu dotazů (403/429), výpadku CJ (5xx) a vypršení spojení.
+    Když by čekání nebo další dotaz přesáhly DEADLINE, skončí výjimkou OutOfTime (fetch pak uloží, co má)."""
     for wait in WAITS + (None,):
+        if DEADLINE[0] and time.time() > DEADLINE[0]: raise OutOfTime()
         try:
             return bc.cj_call(token, variables)
         except urllib.error.HTTPError as e:
             if wait is None or not (e.code in (403, 429) or e.code >= 500): raise
-            say(f'  CJ vrátil {e.code}, čekám {wait} s'); SLEEP(wait)
+            why = str(e.code)
+        except (TimeoutError, urllib.error.URLError, ConnectionError) as e:
+            if wait is None: raise
+            why = type(e).__name__
+        if DEADLINE[0] and time.time() + wait > DEADLINE[0]: raise OutOfTime()
+        say(f'  CJ: {why}, čekám {wait} s'); SLEEP(wait)
 
 def keep(x, min_disc=0, brands=None):
     """Záznam z bc.cj_items → patří do souboru? (stejná síta jako hodinový běh, ať soubor není zbytečně velký)"""
@@ -71,10 +82,16 @@ def fetch(sh, token, deadline, items_fn=bc.cj_items):
     """Stáhne jeden obchod; vrátí (záznamy do souboru, položek v CJ, dočteno do konce?)."""
     brands = {bc.norm(b) for b in sh.get('brands') or []}
     out, n = [], 0
-    for x in items_fn(str(sh['cj']), token, sh.get('cjAds'), call=call):
-        n += 1
-        if keep(x, sh.get('cjMinDisc') or 0, brands): out.append(x)
-        if n % 10000 == 0 and time.time() > deadline: return out, n, False
+    DEADLINE[0] = deadline
+    try:
+        for x in items_fn(str(sh['cj']), token, sh.get('cjAds'), call=call):
+            n += 1
+            if keep(x, sh.get('cjMinDisc') or 0, brands): out.append(x)
+            if n % 10000 == 0 and time.time() > deadline: return out, n, False
+    except OutOfTime:
+        return out, n, False
+    finally:
+        DEADLINE[0] = None
     return out, n, True
 
 def save(path, sh, out, n, whole):
