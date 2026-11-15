@@ -96,4 +96,38 @@ fc.save(path, {'shop': 'Answear.cz'}, out, n, whole)
 prods, state, rep = bc.build(shops, {}, {}, now, log=lambda *a: None, prev_fn=lambda s: (None, None))
 check('every se ignoruje', len(prods), 2)
 
+# pořadí a časový strop jednoho obchodu (Allegro nesmí čekat za pomalým Answearem)
+lst = [{'shop': 'Kabea.cz'}, {'shop': 'Answear.cz'}, {'shop': 'Allegro', 'cjPrio': 1}, {'shop': 'Husky'}]
+check('Allegro první, ostatní v původním pořadí', [s['shop'] for s in fc.order(lst)], ['Allegro', 'Kabea.cz', 'Answear.cz', 'Husky'])
+check('strop obchodu výchozí 40 min', fc.shop_deadline({}, 1000, 1000 + 140 * 60), 1000 + 40 * 60)
+check('strop obchodu cjBudget 10 min', fc.shop_deadline({'cjBudget': 10}, 1000, 1000 + 140 * 60), 1000 + 10 * 60)
+check('strop nepřesáhne celkový limit', fc.shop_deadline({'cjBudget': 90}, 1000, 1000 + 20 * 60), 1000 + 20 * 60)
+
+# nedočtený výsledek nesmí přepsat větší soubor
+big = os.path.join(tmp, 'velky.json.gz')
+fc.save(big, {'shop': 'Answear.cz'}, [dict(LEGO, id=str(i)) for i in range(5)], 5, True)
+check('nedočtený menší nepřepíše větší', fc.keeps_old(big, [LEGO] * 2, False), True)
+check('nedočtený větší přepíše', fc.keeps_old(big, [LEGO] * 8, False), False)
+check('dočtený vždy přepíše', fc.keeps_old(big, [LEGO] * 2, True), False)
+check('bez souboru se uloží', fc.keeps_old(os.path.join(tmp, 'nic.json.gz'), [LEGO], False), False)
+# dělení velkého obchodu na cenová pásma
+many = [dict(LEGO, id=str(i), price=float(100 + i)) for i in range(2000)]          # ceny 100–2099
+bs = fc.bands(many, 2)
+check('2 pásma, hranice u mediánu', (len(bs), bs[0][0], bs[0][1], bs[1][0], bs[1][1]), (2, 0.0, 1099.99, 1100.0, 1000000.0))
+sl = os.path.join(tmp, 'sl.json.gz')
+fc.save(sl, {'shop': 'Answear.cz'}, many, 2000, True)
+sh = {'shop': 'Answear.cz', 'cjFile': sl, 'cjSlices': 2}
+check('pásmo se střídá po 12 h', (fc.slice_plan(sh, 0)[0], fc.slice_plan(sh, 12 * 3600)[0]), (bs[0], bs[1]))
+check('bez cjSlices se dělí nic', fc.slice_plan(dict(sh, cjSlices=None), 0), None)
+check('bez souboru se dělí nic', fc.slice_plan(dict(sh, cjFile=os.path.join(tmp, 'neni2.json.gz')), 0), None)
+new = [dict(LEGO, id='5', price=105.0), dict(LEGO, id='n1', price=500.0)]           # 5 zdražilo na 105 (zůstává v pásmu), n1 je nové
+m = fc.merge(many, new, bs[0])
+check('merge: staré pásmo se nahradí, druhé zůstane', (len(m), sum(1 for x in m if x['price'] >= 1100), sorted(x['id'] for x in m if x['id'] in ('5', 'n1'))), (1000 + 2, 1000, ['5', 'n1']))
+seen = []
+def fake_call(token, v): seen.append((v.get('lo'), v.get('hi'))); return {'totalCount': 0}
+list(bc.cj_items('1', 't', None, call=fake_call, rng=(1100.0, 1000000.0)))
+check('cj_items se drží v pásmu', seen, [(1100.0, 1000000.0)])
+cfg = [s for s in json.load(open(fc.CONFIG, encoding='utf-8')) if s.get('cjFile')]
+check('v shops.json je Allegro první', fc.order(cfg)[0]['shop'], 'Allegro')
+
 print('\nVŠE V POŘÁDKU' if ok else '\nNĚCO NESEDÍ'); sys.exit(0 if ok else 1)
