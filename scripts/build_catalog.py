@@ -376,10 +376,11 @@ def fix_brand(brand, name):
     return brand
 
 # obrázky z domén s ochranou proti botům (v cizí stránce se nenačtou) bereme ze sesterské domény obchodu
-IMG_HOSTS = {'https://8a.pl/': 'https://8a.cz/'}
+# 8a.pl: Cloudflare challenge i na /media (ověřeno 15. 11.); 8a.cz má sdílená média se stejnými cestami a v <img> jde
+IMG_HOSTS = [(re.compile(r'^https?://(?:www\.)?8a\.pl/', re.I), 'https://8a.cz/')]
 def fix_img(url):
-    for a, b in IMG_HOSTS.items():
-        if url and url.startswith(a): return b + url[len(a):]
+    for a, b in IMG_HOSTS:
+        if url and a.match(url): return a.sub(b, url, count=1)
     return url
 
 def score(disc, hype, trust, at_min):
