@@ -566,10 +566,10 @@ def cj_call(token, variables, tries=3):
             if k == tries - 1: raise
             time.sleep(5 * (k + 1))
 
-def cj_items(adv, token, ads=None, call=cj_call):
+def cj_items(adv, token, ads=None, call=cj_call, rng=(0.0, 1000000.0)):
     """Produkty inzerenta z CJ, jen z vybraných feedů (ads; inzerent může mít víc e-shopů nebo zemí).
-    Jeden dotaz vrátí nejvýš 10 000 kusů, větší katalog se proto dělí podle ceny."""
-    stack, seen, q = [(0.0, 1000000.0)], set(), {'ids': [adv], 'ads': ads or None}
+    Jeden dotaz vrátí nejvýš 10 000 kusů, větší katalog se proto dělí podle ceny; rng omezí stahování na jedno cenové pásmo."""
+    stack, seen, q = [tuple(rng)], set(), {'ids': [adv], 'ads': ads or None}
     while stack:
         lo, hi = stack.pop()
         head = call(token, dict(q, limit=1, lo=lo, hi=hi))
