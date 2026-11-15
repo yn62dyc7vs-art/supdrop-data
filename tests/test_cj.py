@@ -44,7 +44,22 @@ fc.bc.cj_call = bad
 try: fc.call('t', {}); r = 'bez chyby'
 except urllib.error.HTTPError as e: r = e.code
 check('400 se neopakuje', r, 400)
+def slow(token, v): raise TimeoutError('The read operation timed out')
+fc.bc.cj_call = slow; calls.clear()
+try: fc.call('t', {}); r = 'bez chyby'
+except TimeoutError: r = 'TimeoutError po opakování'
+check('vypršení spojení se zkusí znovu, pak chyba', r, 'TimeoutError po opakování')
+fc.DEADLINE[0] = time.time() - 1
+try: fc.call('t', {}); r = 'bez chyby'
+except fc.OutOfTime: r = 'OutOfTime'
+check('po termínu se už nedotazuje', r, 'OutOfTime')
+fc.DEADLINE[0] = None
 fc.bc.cj_call = orig_call
+def stuck_items(adv, token, ads=None, call=None):
+    yield LEGO
+    raise fc.OutOfTime()
+out, n, whole = fc.fetch({'shop': 'Allegro', 'cj': '6464420', 'cjMinDisc': 25}, 't', time.time() + 60, items_fn=stuck_items)
+check('došel čas uprostřed: uloží, co má', (n, len(out), whole, fc.DEADLINE[0]), (1, 1, False, None))
 
 def fake_items(adv, token, ads=None, call=None):
     yield LEGO; yield item('LEGO 40197', 2667.0, 3637.0, iid='2'); yield item('Držák na TV', 900.0, iid='3')
