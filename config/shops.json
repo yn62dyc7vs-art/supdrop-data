@@ -329,32 +329,32 @@
   },
   {
     "shop": "Kabea.cz",
-    "every": 3,
     "net": "cj",
     "cj": "5316217",
     "cjAds": [
       "13899884"
     ],
+    "cjFile": "cache/cj/kabea.json.gz",
     "trust": 8
   },
   {
     "shop": "Meatfly.cz",
-    "every": 3,
     "net": "cj",
     "cj": "5590289",
     "cjAds": [
       "15069792"
     ],
+    "cjFile": "cache/cj/meatfly.json.gz",
     "trust": 8
   },
   {
     "shop": "Vivantis.cz",
-    "every": 3,
     "net": "cj",
     "cj": "4384608",
     "cjAds": [
       "13580404"
     ],
+    "cjFile": "cache/cj/vivantis.json.gz",
     "trust": 8,
     "brands": [
       "Casio",
@@ -411,16 +411,16 @@
   },
   {
     "shop": "Husky",
-    "every": 3,
     "net": "cj",
     "cj": "5404810",
+    "cjFile": "cache/cj/husky.json.gz",
     "trust": 8
   },
   {
     "shop": "Metalshop.cz",
-    "every": 3,
     "net": "cj",
     "cj": "5807640",
+    "cjFile": "cache/cj/metalshop.json.gz",
     "trust": 8
   },
   {
