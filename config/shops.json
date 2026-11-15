@@ -407,6 +407,7 @@
     "net": "cj",
     "cj": "4327375",
     "cjFile": "cache/cj/answear.json.gz",
+    "cjSlices": 2,
     "trust": 8
   },
   {
@@ -445,6 +446,7 @@
     "cj": "6464420",
     "cjFile": "cache/cj/allegro.json.gz",
     "cjMinDisc": 25,
+    "cjPrio": 1,
     "trust": 6,
     "low": true,
     "knownBrands": 10
