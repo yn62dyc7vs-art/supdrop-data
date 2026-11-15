@@ -23,6 +23,7 @@ import build_catalog as bc
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config', 'shops.json')
 BUDGET = 140 * 60          # workflow má limit 180 min; po 140 min se uloží, co se stihlo
+SHOP_BUDGET = 40 * 60      # strop na jeden obchod (klíč "cjBudget" v minutách ho mění); pomalý obchod tak nespotřebuje čas ostatním
 WAITS = (60, 180, 300)     # CJ při mnoha dotazech vrací 403/429: počkat a zkusit znovu
 ADULT = re.compile(r'\b(eroti\w*|sex ?shop\w*|porno\w*|xxx|dorcel|vibrator\w*|dild\w*|bdsm|milfs?|penis\w*)\b')
 SLEEP = time.sleep
@@ -102,23 +103,74 @@ def save(path, sh, out, n, whole):
                   f, ensure_ascii=False, separators=(',', ':'))
     os.replace(tmp, path)
 
+def order(shops):
+    """Pořadí stahování: obchody s vyšším "cjPrio" první (stabilně), ostatní v pořadí z shops.json."""
+    return sorted(shops, key=lambda s: -(s.get('cjPrio') or 0))
+
+def shop_deadline(sh, now, deadline):
+    """Konec stahování jednoho obchodu: jeho strop (cjBudget v minutách, jinak SHOP_BUDGET), nejdéle celkový limit."""
+    return min(deadline, now + (sh.get('cjBudget') * 60 if sh.get('cjBudget') else SHOP_BUDGET))
+
+def keeps_old(path, out, whole):
+    """Nedočtený výsledek nesmí přepsat existující soubor, který má víc položek (jinak by zmizela část nabídky)."""
+    if whole or not os.path.exists(path): return False
+    try:
+        with gzip.open(path, 'rt', encoding='utf-8') as f: old = len(json.load(f).get('items') or [])
+    except Exception:
+        return False
+    return old > len(out)
+
+def bands(items, n):
+    """Rozdělí obchod na n cenových pásem se zhruba stejným počtem položek (podle předchozího souboru): [(od, do), …]."""
+    prices = sorted(x['price'] for x in items if x.get('price'))
+    edges = [0] + [int(prices[len(prices) * i // n]) for i in range(1, n)] + [1000000]
+    edges = sorted(set(edges))
+    return [(float(a), float(b) - 0.01 if b != 1000000 else float(b)) for a, b in zip(edges, edges[1:])]
+
+def slice_plan(sh, now, load=None):
+    """Obchod s "cjSlices": n → v tomto běhu se stáhne jen jedno cenové pásmo (střídají se po 12 h), zbytek zůstane z minulého souboru.
+    Vrací (pásmo, staré položky), nebo None = stáhnout celý obchod (bez dělení nebo bez předchozího souboru)."""
+    n = sh.get('cjSlices') or 1
+    if n < 2 or not os.path.exists(sh['cjFile']): return None
+    try:
+        with gzip.open(sh['cjFile'], 'rt', encoding='utf-8') as f: old = json.load(f).get('items') or []
+    except Exception:
+        return None
+    if len(old) < 1000: return None
+    bs = bands(old, n)
+    return bs[int(now // (12 * 3600)) % len(bs)], old
+
+def merge(old, new, rng):
+    """Staré položky mimo stažené pásmo a bez nového záznamu + nově stažené."""
+    ids = {x['id'] for x in new}
+    return [x for x in old if x['id'] not in ids and not (rng[0] <= (x.get('price') or 0) <= rng[1])] + new
+
 def main(argv):
     token = os.environ.get('CJ_TOKEN')
     if not token: say('Chybí CJ_TOKEN.'); sys.exit(1)
     with open(CONFIG, encoding='utf-8') as f: shops = json.load(f)
     shops = [s for s in shops if s.get('cjFile') and s.get('cj') and (not s.get('off') or s.get('cjTry')) and (not argv or s['shop'] in argv)]
     if not shops: say('Žádný obchod s "cjFile".'); sys.exit(1)
+    shops = order(shops)
     t0 = time.time(); deadline = t0 + BUDGET; saved = 0
     schema(token)
     for sh in shops:
         name = sh['shop']
         if time.time() > deadline: say(f'{name}: došel čas, zůstává předchozí soubor'); continue
         t1 = time.time()
+        plan = slice_plan(sh, t1)
+        items_fn = bc.cj_items
+        if plan:
+            rng = plan[0]; say(f'{name}: dnes jen cenové pásmo {rng[0]:.0f}–{rng[1]:.0f} Kč, zbytek zůstává z minulého souboru')
+            items_fn = lambda adv, tok, ads, call=call: bc.cj_items(adv, tok, ads, call=call, rng=rng)
         try:
-            out, n, whole = fetch(sh, token, deadline)
+            out, n, whole = fetch(sh, token, shop_deadline(sh, t1, deadline), items_fn)
         except Exception as e:
             say(f'{name}: chyba ({type(e).__name__}: {str(e)[:200]}) – zůstává předchozí soubor'); continue
         if not out: say(f'{name}: {n} položek v CJ, do souboru nic – zůstává předchozí soubor'); continue
+        if plan: out = merge(plan[1], out, plan[0]); n = len(out)
+        if keeps_old(sh['cjFile'], out, whole):
+            say(f'{name}: {n} položek v CJ, nedočteno ({len(out)} do souboru) – zůstává předchozí, větší soubor'); continue
         save(sh['cjFile'], sh, out, n, whole); saved += 1
         say(f'{name}: {n} položek v CJ, do souboru {len(out)} ({time.time() - t1:.0f} s, {os.path.getsize(sh["cjFile"]) // 1024} kB)'
             + ('' if whole else ' – nedočteno, došel čas'))
