@@ -15,18 +15,29 @@ je dá do větve cj a hodinový běh (build_catalog.py) si je odtamtud jen načt
 - Na začátku vypíše, jaké filtry a pole CJ API nabízí (např. jestli zná prodejce na Allegru) – podklad pro další úpravy.
 
 Spuštění: CJ_TOKEN=… python scripts/fetch_cj.py [obchod …]   (bez jmen = všechny s "cjFile")
+
+Paralelní stahování (workflow cj.yml s maticí úloh; bez přepínačů se chová jako dřív):
+  --slice K/N obchod   stáhne jen K-té z N cenových pásem (pásma podle minulého souboru, funkce bands) do
+                       CJ_PARTS/<soubor>.K.json.gz – hlavní soubor obchodu se nemění.
+  --assemble obchod    poskládá pásma z CJ_PARTS do cjFile; chybějící/nedočtené pásmo doplní z minulého souboru,
+                       pokud ta data nejsou starší než 36 h (CJ_MAX_AGE). Nevolá CJ API, token netřeba.
+  Proměnné: CJ_BUDGET_MIN (celkový limit běhu v min, výchozí 140), CJ_SHOP_BUDGET_MIN (strop obchodu bez cjBudget, výchozí 40),
+            CJ_JITTER (náhodné prodloužení čekání po 403/429 v s, výchozí 0), CJ_SCHEMA=0 (nevypisovat přehled API), CJ_PARTS (adresář pásem, výchozí cache/cj-parts).
 """
-import gzip, json, os, re, sys, time, urllib.error, urllib.request
+import gzip, json, os, random, re, sys, time, urllib.error, urllib.request
 from datetime import datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_catalog as bc
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'config', 'shops.json')
-BUDGET = 140 * 60          # workflow má limit 180 min; po 140 min se uloží, co se stihlo
-SHOP_BUDGET = 40 * 60      # strop na jeden obchod (klíč "cjBudget" v minutách ho mění); pomalý obchod tak nespotřebuje čas ostatním
+BUDGET = int(os.environ.get('CJ_BUDGET_MIN') or 140) * 60   # workflow má limit 180 min; po 140 min se uloží, co se stihlo
+SHOP_BUDGET = int(os.environ.get('CJ_SHOP_BUDGET_MIN') or 40) * 60      # strop na jeden obchod (klíč "cjBudget" v minutách ho mění); pomalý obchod tak nespotřebuje čas ostatním
 WAITS = (60, 180, 300)     # CJ při mnoha dotazech vrací 403/429: počkat a zkusit znovu
 ADULT = re.compile(r'\b(eroti\w*|sex ?shop\w*|porno\w*|xxx|dorcel|vibrator\w*|dild\w*|bdsm|milfs?|penis\w*)\b')
 SLEEP = time.sleep
+JITTER = float(os.environ.get('CJ_JITTER') or 0)   # souběžné úlohy: ať se po 403/429 neozvou všechny ve stejnou chvíli
+PARTS = os.environ.get('CJ_PARTS') or os.path.join('cache', 'cj-parts')
+FALLBACK_EDGES = (0, 300, 500, 700, 1000, 1400, 2000, 3000, 5000)   # pásma, když minulý soubor chybí (Answear: móda)
 
 def say(*a): print(*a, flush=True)
 
@@ -47,7 +58,8 @@ def call(token, variables):
             if wait is None: raise
             why = type(e).__name__
         if DEADLINE[0] and time.time() + wait > DEADLINE[0]: raise OutOfTime()
-        say(f'  CJ: {why}, čekám {wait} s'); SLEEP(wait)
+        wait += random.uniform(0, JITTER) if JITTER else 0
+        say(f'  CJ: {why}, čekám {wait:.0f} s'); SLEEP(wait)
 
 def keep(x, min_disc=0, brands=None):
     """Záznam z bc.cj_items → patří do souboru? (stejná síta jako hodinový běh, ať soubor není zbytečně velký)"""
@@ -95,12 +107,13 @@ def fetch(sh, token, deadline, items_fn=bc.cj_items):
         DEADLINE[0] = None
     return out, n, True
 
-def save(path, sh, out, n, whole):
+def save(path, sh, out, n, whole, extra=None, at=None):
     os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
     tmp = path + '.tmp'
+    data = {'at': at or datetime.now(bc.TZ).isoformat(timespec='minutes'), 'shop': sh['shop'], 'total': n, 'whole': whole, 'items': out}
+    data.update(extra or {})
     with gzip.open(tmp, 'wt', encoding='utf-8', compresslevel=9) as f:
-        json.dump({'at': datetime.now(bc.TZ).isoformat(timespec='minutes'), 'shop': sh['shop'], 'total': n, 'whole': whole, 'items': out},
-                  f, ensure_ascii=False, separators=(',', ':'))
+        json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
     os.replace(tmp, path)
 
 def order(shops):
@@ -145,15 +158,132 @@ def merge(old, new, rng):
     ids = {x['id'] for x in new}
     return [x for x in old if x['id'] not in ids and not (rng[0] <= (x.get('price') or 0) <= rng[1])] + new
 
+# ---------------------------------------------------------------- paralelní stahování po cenových pásmech
+def read(path):
+    """Obsah souboru z fetch_cj (dict), nebo None (chybí, poškozený)."""
+    try:
+        with gzip.open(path, 'rt', encoding='utf-8') as f: return json.load(f)
+    except Exception:
+        return None
+
+def slice_bands(sh, n, old=None):
+    """N cenových pásem pro paralelní stažení: podle minulého souboru (stejně položek v každém pásmu = podobně dlouhé úlohy),
+    bez něj pevné hranice FALLBACK_EDGES. Všechny úlohy čtou stejný soubor z větve cj, takže pásma vyjdou stejně."""
+    if old is None: old = (read(sh['cjFile']) or {}).get('items') or []
+    if len(old) >= 1000: return bands(old, n)
+    e = FALLBACK_EDGES
+    edges = sorted({e[len(e) * i // n] for i in range(n)}) + [1000000]
+    return [(float(a), float(b) - 0.01 if b != 1000000 else float(b)) for a, b in zip(edges, edges[1:])]
+
+def parse_slice(text):
+    """"2/4" → (2, 4); chybný zápis → ValueError."""
+    k, n = (int(x) for x in text.split('/'))
+    if not 1 <= k <= n: raise ValueError(text)
+    return k, n
+
+def part_path(sh, k, parts=None):
+    base = os.path.basename(sh['cjFile']).replace('.json.gz', '')
+    return os.path.join(parts or PARTS, f'{base}.{k}.json.gz')
+
+def fetch_slice(sh, token, k, n, deadline, parts=None, items_fn=None):
+    """Stáhne K-té z N pásem obchodu do souboru pásma. Vrátí cestu, nebo None (pásmo neexistuje, chyba, nic) – pak
+    --assemble nechá tohle pásmo z minulého souboru."""
+    bs = slice_bands(sh, n)
+    if k > len(bs): say(f'{sh["shop"]}: pásmo {k}/{n} neexistuje (málo různých cen), nic nestahuji'); return None
+    rng = bs[k - 1]
+    say(f'{sh["shop"]}: pásmo {k}/{n}: {rng[0]:.0f}–{rng[1]:.0f} Kč')
+    fn = items_fn or (lambda adv, tok, ads, call=call: bc.cj_items(adv, tok, ads, call=call, rng=rng))
+    t1 = time.time()
+    try:
+        out, cnt, whole = fetch(sh, token, deadline, fn)
+    except Exception as e:
+        say(f'{sh["shop"]} {k}/{n}: chyba ({type(e).__name__}: {str(e)[:200]}) – pásmo zůstane z minulého souboru'); return None
+    if not out: say(f'{sh["shop"]} {k}/{n}: {cnt} položek v CJ, do souboru nic – pásmo zůstane z minulého souboru'); return None
+    path = part_path(sh, k, parts)
+    save(path, sh, out, cnt, whole, {'lo': rng[0], 'hi': rng[1], 'k': k, 'of': n})
+    say(f'{sh["shop"]} {k}/{n}: {cnt} položek v CJ, do pásma {len(out)} ({time.time() - t1:.0f} s)' + ('' if whole else ' – nedočteno, došel čas'))
+    return path
+
+def _age_of(data):
+    """Funkce cena → čas (datetime), kdy byla data v minulém souboru naposledy celá stažená (podle "parts", jinak "at")."""
+    at0 = datetime.fromisoformat(data.get('at') or '2000-01-01T00:00+00:00')
+    ps = [(p['lo'], p['hi'], datetime.fromisoformat(p['at'])) for p in data.get('parts') or []]
+    def f(price):
+        return next((t for lo, hi, t in ps if lo <= (price or 0) <= hi), at0)
+    return f
+
+def assemble(sh, now, parts=None, max_age=None):
+    """Poskládá pásma (soubory z --slice) do jednoho cjFile ve stejném tvaru, jaký čte build_catalog (at, shop, total, whole, items)
+    + "parts" (rozsah a stáří každého pásma). Pravidla:
+      - dočtené pásmo nahradí staré položky ve svém cenovém rozsahu (jako merge),
+      - nedočtené pásmo: nové položky + staré z rozsahu, které nepřišly (nic neztratit),
+      - chybějící pásmo (chyba, 403…): staré položky z rozsahu zůstanou – ale jen nejsou-li starší než max_age (36 h),
+      Pravidlo keeps_old („nedočtené nepřepíše větší“) tak platí po pásmech: ubrat staré položky smí jen dočtené pásmo
+      (zboží opravdu zmizelo) nebo stáří nad 36 h; celkový počet proto bez kontroly velikosti souboru.
+    Vrátí True, když soubor uložil."""
+    max_age = max_age or bc.CJ_MAX_AGE
+    base = os.path.basename(sh['cjFile']).replace('.json.gz', '')
+    d = parts or PARTS
+    got = sorted((p for p in (read(os.path.join(d, f)) for f in (os.listdir(d) if os.path.isdir(d) else [])
+                              if f.startswith(base + '.') and f.endswith('.json.gz') and f[len(base) + 1:-8].isdigit()) if p),
+                 key=lambda p: p['lo'])
+    name = sh['shop']
+    if not got: say(f'{name}: žádné pásmo nedorazilo – zůstává předchozí soubor'); return False
+    old = read(sh['cjFile']) or {}
+    age = _age_of(old)
+    new, ids = [], set()
+    for p in got:
+        for x in p.get('items') or []:
+            if x['id'] not in ids: ids.add(x['id']); new.append(x)
+    def part_of(price):
+        return next((p for p in got if p['lo'] <= (price or 0) <= p['hi']), None)
+    carried, gap_at, part_old = [], {}, {}
+    for x in old.get('items') or []:
+        if x['id'] in ids: continue
+        p = part_of(x.get('price'))
+        if p and p.get('whole'): continue                     # dočtené pásmo: stará položka už v nabídce není
+        t = age(x.get('price'))
+        if now - t > max_age: continue                        # staré pásmo by ukazovalo neplatné ceny
+        carried.append(x)
+        if p: part_old[p['k']] = min(t, part_old.get(p['k'], t))
+        else: gap_at.setdefault(t.isoformat(timespec='minutes'), []).append(x.get('price') or 0)
+    meta = [{'lo': p['lo'], 'hi': p['hi'], 'whole': bool(p.get('whole')),
+             'at': min(datetime.fromisoformat(p['at']), part_old.get(p['k'], datetime.fromisoformat(p['at']))).isoformat(timespec='minutes')}
+            for p in got]
+    meta += [{'lo': min(v), 'hi': max(v), 'whole': False, 'at': t} for t, v in sorted(gap_at.items())]   # zbytky chybějících pásem
+    of = max(p.get('of') or 0 for p in got)
+    whole = len(got) >= of and all(p.get('whole') for p in got) and not gap_at
+    items = new + carried
+    total = sum(p.get('total') or 0 for p in got) + sum(len(v) for v in gap_at.values())
+    save(sh['cjFile'], sh, items, total, whole, {'parts': meta}, at=max(datetime.fromisoformat(p['at']) for p in got).isoformat(timespec='minutes'))
+    say(f'{name}: poskládáno z {len(got)}/{of} pásem: {len(new)} nových + {len(carried)} z minulého souboru'
+        + ('' if whole else ' – neúplné, chybějící část z minulého souboru'))
+    return True
+
 def main(argv):
+    argv = list(argv); sl = mode = None
+    if '--assemble' in argv: argv.remove('--assemble'); mode = 'assemble'
+    if '--slice' in argv:
+        i = argv.index('--slice'); sl = parse_slice(argv[i + 1]); del argv[i:i + 2]; mode = 'slice'
     token = os.environ.get('CJ_TOKEN')
-    if not token: say('Chybí CJ_TOKEN.'); sys.exit(1)
+    if not token and mode != 'assemble': say('Chybí CJ_TOKEN.'); sys.exit(1)
     with open(CONFIG, encoding='utf-8') as f: shops = json.load(f)
     shops = [s for s in shops if s.get('cjFile') and s.get('cj') and (not s.get('off') or s.get('cjTry')) and (not argv or s['shop'] in argv)]
     if not shops: say('Žádný obchod s "cjFile".'); sys.exit(1)
     shops = order(shops)
     t0 = time.time(); deadline = t0 + BUDGET; saved = 0
-    schema(token)
+    if mode == 'assemble':
+        now = datetime.now(bc.TZ)
+        for sh in shops:
+            try: saved += assemble(sh, now)
+            except Exception as e: say(f'{sh["shop"]}: skládání selhalo ({type(e).__name__}: {str(e)[:200]}) – zůstává předchozí soubor')
+        return
+    if mode == 'slice':
+        for sh in shops: saved += bool(fetch_slice(sh, token, sl[0], sl[1], deadline))
+        say(f'Hotovo za {time.time() - t0:.0f} s, uloženo {saved} pásem.')
+        if not saved: sys.exit(1)
+        return
+    if os.environ.get('CJ_SCHEMA') != '0': schema(token)
     for sh in shops:
         name = sh['shop']
         if time.time() > deadline: say(f'{name}: došel čas, zůstává předchozí soubor'); continue
