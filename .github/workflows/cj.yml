@@ -21,14 +21,18 @@ jobs:
       max-parallel: ${{ fromJSON(vars.CJ_PARALLEL || '8') }}
       matrix:
         include:   # pořadí = pořadí spuštění, když CJ_PARALLEL nestačí na všechny
-          - { id: allegro-1,    shops: 'Allegro',                                               slice: '1/4', delay: 0,   shop_min: 55 }
-          - { id: allegro-2,    shops: 'Allegro',                                               slice: '2/4', delay: 15,  shop_min: 55 }
-          - { id: allegro-3,    shops: 'Allegro',                                               slice: '3/4', delay: 30,  shop_min: 55 }
-          - { id: allegro-4,    shops: 'Allegro',                                               slice: '4/4', delay: 45,  shop_min: 55 }
-          - { id: answear-1,    shops: 'Answear.cz',                                            slice: '1/3', delay: 60,  shop_min: 55 }
-          - { id: answear-2,    shops: 'Answear.cz',                                            slice: '2/3', delay: 75,  shop_min: 55 }
-          - { id: answear-3,    shops: 'Answear.cz',                                            slice: '3/3', delay: 90,  shop_min: 55 }
-          - { id: ostatni,      shops: 'Kabea.cz Meatfly.cz Vivantis.cz Husky Metalshop.cz',    slice: '',    delay: 105, shop_min: 25 }
+          - { id: ostatni, shops: 'Kabea.cz Meatfly.cz Vivantis.cz Husky Metalshop.cz', slice: '', delay: 0, shop_min: 25 }
+          - { id: answear-1, shops: 'Answear.cz', slice: '1/3', delay: 20, shop_min: 55 }
+          - { id: answear-2, shops: 'Answear.cz', slice: '2/3', delay: 40, shop_min: 55 }
+          - { id: answear-3, shops: 'Answear.cz', slice: '3/3', delay: 60, shop_min: 55 }
+          - { id: allegro-1, shops: 'Allegro', slice: '1/8', delay: 5, shop_min: 55 }
+          - { id: allegro-2, shops: 'Allegro', slice: '2/8', delay: 20, shop_min: 55 }
+          - { id: allegro-3, shops: 'Allegro', slice: '3/8', delay: 35, shop_min: 55 }
+          - { id: allegro-4, shops: 'Allegro', slice: '4/8', delay: 50, shop_min: 55 }
+          - { id: allegro-5, shops: 'Allegro', slice: '5/8', delay: 0, shop_min: 55 }
+          - { id: allegro-6, shops: 'Allegro', slice: '6/8', delay: 15, shop_min: 55 }
+          - { id: allegro-7, shops: 'Allegro', slice: '7/8', delay: 30, shop_min: 55 }
+          - { id: allegro-8, shops: 'Allegro', slice: '8/8', delay: 45, shop_min: 55 }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
