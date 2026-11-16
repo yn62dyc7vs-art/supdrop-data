@@ -1,8 +1,8 @@
 name: CJ pro šup
-# Paralelně: každý obchod / každé cenové pásmo Answearu ve vlastní úloze (vlastní limit), výsledky jako artefakty.
+# Paralelně: každý obchod / každé cenové pásmo Answearu a Allegra ve vlastní úloze (vlastní limit), výsledky jako artefakty.
 # Do větve cj zapisuje JEN závěrečná úloha „ulozit“ (žádný souběžný force-push). Když úloha selže, zůstane předchozí soubor.
 # Ladění bez úprav souboru (Settings → Secrets and variables → Actions → Variables):
-#   CJ_PARALLEL   kolik úloh smí běžet najednou (výchozí 5; při častých 403/429 dát 3, krajně 2)
+#   CJ_PARALLEL   kolik úloh smí běžet najednou (výchozí 8; při častých 403/429 dát 3, krajně 2)
 #   CJ_BUDGET_MIN po kolika minutách úloha uloží, co stihla (výchozí 55)
 on:
   schedule:
@@ -18,14 +18,17 @@ jobs:
     timeout-minutes: 90
     strategy:
       fail-fast: false
-      max-parallel: ${{ fromJSON(vars.CJ_PARALLEL || '5') }}
+      max-parallel: ${{ fromJSON(vars.CJ_PARALLEL || '8') }}
       matrix:
         include:   # pořadí = pořadí spuštění, když CJ_PARALLEL nestačí na všechny
-          - { id: allegro,      shops: 'Allegro',                                               slice: '',    delay: 0,   shop_min: 55 }
-          - { id: answear-1,    shops: 'Answear.cz',                                            slice: '1/3', delay: 30,  shop_min: 55 }
-          - { id: answear-2,    shops: 'Answear.cz',                                            slice: '2/3', delay: 60,  shop_min: 55 }
+          - { id: allegro-1,    shops: 'Allegro',                                               slice: '1/4', delay: 0,   shop_min: 55 }
+          - { id: allegro-2,    shops: 'Allegro',                                               slice: '2/4', delay: 15,  shop_min: 55 }
+          - { id: allegro-3,    shops: 'Allegro',                                               slice: '3/4', delay: 30,  shop_min: 55 }
+          - { id: allegro-4,    shops: 'Allegro',                                               slice: '4/4', delay: 45,  shop_min: 55 }
+          - { id: answear-1,    shops: 'Answear.cz',                                            slice: '1/3', delay: 60,  shop_min: 55 }
+          - { id: answear-2,    shops: 'Answear.cz',                                            slice: '2/3', delay: 75,  shop_min: 55 }
           - { id: answear-3,    shops: 'Answear.cz',                                            slice: '3/3', delay: 90,  shop_min: 55 }
-          - { id: ostatni,      shops: 'Kabea.cz Meatfly.cz Vivantis.cz Husky Metalshop.cz',    slice: '',    delay: 120, shop_min: 25 }
+          - { id: ostatni,      shops: 'Kabea.cz Meatfly.cz Vivantis.cz Husky Metalshop.cz',    slice: '',    delay: 105, shop_min: 25 }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -46,7 +49,7 @@ jobs:
           CJ_BUDGET_MIN: ${{ vars.CJ_BUDGET_MIN || '55' }}
           CJ_SHOP_BUDGET_MIN: ${{ matrix.shop_min }}
           CJ_JITTER: '45'                  # po 403/429 čekat 60–105 s místo přesně 60 s (úlohy se nerozběhnou najednou)
-          CJ_SCHEMA: ${{ matrix.id == 'allegro' && '1' || '0' }}
+          CJ_SCHEMA: ${{ matrix.id == 'allegro-1' && '1' || '0' }}
         run: |
           sleep ${{ matrix.delay }}        # rozestup startů, ať první dotazy nepřijdou do CJ ve stejnou chvíli
           python -u scripts/fetch_cj.py ${{ matrix.slice && format('--slice {0}', matrix.slice) || '' }} ${{ matrix.shops }}
@@ -92,7 +95,7 @@ jobs:
           if ! ls in/shops/*.json.gz in/parts/*.json.gz >/dev/null 2>&1; then echo "Žádná nová data z CJ, větev cj nechávám."; echo "SKIP=1" >> "$GITHUB_ENV"; exit 0; fi
           cp in/shops/*.json.gz cache/cj/ 2>/dev/null || true      # každý obchod uložila jen jeho úloha → bez kolizí
           cp in/parts/*.json.gz cache/cj-parts/ 2>/dev/null || true
-          python -u scripts/fetch_cj.py --assemble Answear.cz
+          python -u scripts/fetch_cj.py --assemble Answear.cz Allegro
       - name: Uložit do větve cj (hodinový běh si ji načte)
         if: env.SKIP != '1'
         run: |
