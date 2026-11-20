@@ -424,6 +424,20 @@
     "trust": 8
   },
   {
+    "shop": "4camping.cz",
+    "net": "cj",
+    "cj": "4786110",
+    "cjFile": "cache/cj/4camping.json.gz",
+    "trust": 8
+  },
+  {
+    "shop": "Footshop.cz",
+    "net": "cj",
+    "cj": "4352963",
+    "cjFile": "cache/cj/footshop.json.gz",
+    "trust": 8
+  },
+  {
     "shop": "eObuv.cz",
     "format": "awin",
     "awin": "75859",

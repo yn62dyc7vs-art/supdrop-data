@@ -36,7 +36,7 @@ jobs:
           - { id: answear-1, shops: 'Answear.cz', slice: '1/3', delay: 0, shop_min: 55 }
           - { id: answear-2, shops: 'Answear.cz', slice: '2/3', delay: 0, shop_min: 55 }
           - { id: answear-3, shops: 'Answear.cz', slice: '3/3', delay: 0, shop_min: 55 }
-          - { id: ostatni, shops: 'Kabea.cz Meatfly.cz Vivantis.cz Husky Metalshop.cz', slice: '', delay: 0, shop_min: 25 }
+          - { id: ostatni, shops: 'Kabea.cz Meatfly.cz Vivantis.cz Husky Metalshop.cz 4camping.cz Footshop.cz', slice: '', delay: 0, shop_min: 25 }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
