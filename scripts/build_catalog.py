@@ -161,7 +161,7 @@ ELEC = [
 SHOES = [
     ('tenisky', 'bezecke', ['bezecke boty', 'bezecka obuv', 'trailova obuv', 'trailove boty', 'silnicni bezecke'], False),
     ('tenisky', 'outdoor', ['outdoorove boty', 'outdoorova obuv', 'trekova obuv', 'trekove boty', 'turisticke boty', 'turisticka obuv',
-                            'zimni obuv', 'zimni boty', 'snehule', 'holink', 'kotnikove boty', 'kotnikova obuv', 'pohorky', 'vysoke boty'], False),
+                            'trekingove boty', 'trekingova obuv', 'zimni obuv', 'zimni boty', 'snehule', 'holink', 'kotnikove boty', 'kotnikova obuv', 'pohorky', 'vysoke boty'], False),
     ('tenisky', 'pantofle', ['pantofl', 'sandal', 'zabky', 'slapky', 'nazouvaky'], False),
     ('tenisky', 'tenisky', ['tenisky', 'sneakers', 'volnocasova obuv', 'skate boty', 'nizka obuv', 'slip on', 'platenk'], False),
     ('tenisky', None, [' obuv', ' boty', 'ponozkobot', 'lodick', 'kozack', 'balerin', 'polobotk', 'mokasin', 'lordsy', 'espadril'], False),  # „ boty“: Kuchyňské roboty nejsou boty
@@ -269,6 +269,21 @@ def categorize_url(url, path, name, url_cats):
         alt = _match(' ' + norm(name) + ' ', [r for r in RULES if r[0] == cat and r[1]])
         sub = alt[1] if alt else ''
     return (cat, sub or None, False)
+
+# Boty patří do „Boty a tenisky“, i když je obchod zařadí do oblečení nebo sportu (Allegro, Spartoo „Basketbal Baskets…“,
+# Answear „boty trekingové“). Výjimky: lyžařské a skialpové boty, kolečkové boty a věci k botám zůstávají, kde jsou.
+SHOE_NAME = re.compile(r' (boty|botasky|obuv|tenisky|tenisk\w*|sneakers?|kopacky|sandal\w*|pantofl\w*|zabky|slapky|polobotky|snehule|'
+                       r'holinky|lodicky|kozacky|mokasiny|espadrilky)(?= )')
+SHOE_NOT = re.compile(r'ponoz|podprsen|mikin|svetr|bund|kalhot|trick|triko|sortk|kratas|dres|legin|task|batoh|na boty|do bot|tkanic|vlozk|'
+                      r'impregn|cistic|susak|lyzar|skialp|snowboard|bezkar|kolec|kolob|tretr|navlek|cepic|rukavic|bryle|kryt|velikost boty|delka boty|oblek|ozdob|snb | nn |nordic|nordik|brusl|fingerboard|heelys|na bezky|brankar|talirk| hole ')
+def shoe_fix(res, name):
+    if not res or res[0] not in ('obleceni', 'sport') or res[2]: return res
+    n = ' ' + norm(name) + ' '
+    if SHOE_NOT.search(n): return res
+    if SHOE_NAME.search(n) or (res[0] == 'sport' and ' baskets ' in n):
+        alt = _match(n, SHOES[:-1])
+        return ('tenisky', alt[1] if alt else None, False)
+    return res
 
 def categorize(path, name):
     """Vrátí (kategorie, podkategorie, příslušenství) nebo None."""
@@ -876,6 +891,7 @@ def build(shops, feeds, state, now, open_fn=open_feed, log=print, cj_token=None,
             res = (categorize_url(cheapest['url'] or f['url'], f['path'], nm, sh.get('urlCats')) if sh.get('urlCats') else None) or categorize(f['path'], nm)
             if not res and not (f['path'] or '').strip() and sh.get('defaultCat'):
                 dc = LEGACY.get(sh['defaultCat'], (sh['defaultCat'], None)); res = (dc[0], dc[1], False)
+            res = shoe_fix(res, nm)
             lab = (res[0] + ('/' + res[1] if res[1] else '') + ('*' if res[2] else '')) if res else None
             pr = PATHS.setdefault((name, f['path'] or '(bez kategorie)', lab), [0, nm]); pr[0] += 1
             if not res: continue
