@@ -421,6 +421,7 @@
     "net": "cj",
     "cj": "5807640",
     "cjFile": "cache/cj/metalshop.json.gz",
+    "cjBudget": 40,
     "trust": 8
   },
   {
