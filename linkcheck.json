@@ -1,0 +1,4849 @@
+{
+ "at": "2026-11-27T16:16+01:00",
+ "day": "2026-11-27",
+ "auto_off": {
+  "DronPro.cz": {
+   "od": "2026-11-13",
+   "proc": "5 z 5 obrázků nefunguje",
+   "urls": [
+    [
+     "https://dronpro.cz/viceuhlovy-prisavny-drzak-na-vozidlo-pro-kameru-insta360-go-ultra?utm_campaign=Heureka&utm_content=Viceuhlovy+prisavny+drzak+na+vozidlo+pro+kameru+Insta360+GO+Ultra+1INST948&utm_medium=product&utm_source=heureka.cz&utm_term=8723&var=8723",
+     "https://dronpro.cz/data/images/38628-viceuhlovy-prisavny-drzak-na-vozidlo-pro-kameru-insta360-go-ultra.jpeg"
+    ],
+    [
+     "https://dronpro.cz/ochrana-narazniku-s-podvozkem-na-dron-dji-flip-cerna?utm_campaign=Heureka&utm_content=Ochrana+narazniku+s+podvozkem+na+dron+DJI+Flip+-+cerna+1DJFL45&utm_medium=product&utm_source=heureka.cz&utm_term=7545&var=7545",
+     "https://dronpro.cz/data/images/33506-ochrana-narazniku-s-podvozkem-na-dron-dji-flip-cerna.jpeg"
+    ],
+    [
+     "https://dronpro.cz/pouzdro-na-dalkovy-ovladac-dji-rc-n2?utm_campaign=Heureka&utm_content=Pouzdro+na+dalkovy+ovladac+DJI+RC-N2+1DJ2914&utm_medium=product&utm_source=heureka.cz&utm_term=5657&var=5657",
+     "https://dronpro.cz/data/images/25758-pouzdro-na-dalkovy-ovladac-dji-rc-n2-vnitrek.jpg"
+    ],
+    [
+     "https://dronpro.cz/freewell-nd1000-filtr-pro-dji-mavic-4-pro?utm_campaign=Heureka&utm_content=Freewell+ND1000+filtr+pro+DJI+Mavic+4+Pro+FW-M4P-ND1000&utm_medium=product&utm_source=heureka.cz&utm_term=7937&var=7937",
+     "https://dronpro.cz/data/images/35468-freewell-nd1000-filtr-pro-dji-mavic-4-pro.jpeg"
+    ],
+    [
+     "https://dronpro.cz/pgytech-pouzdro-na-pametove-karty?utm_campaign=Heureka&utm_content=Pgytech+pouzdro+na+pametove+karty+1SA1004&utm_medium=product&utm_source=heureka.cz&utm_term=3577&var=3577",
+     "https://dronpro.cz/data/images/15351-pgytech-pouzdro-na-pametove-karty-vnitrek.jpg"
+    ]
+   ]
+  }
+ },
+ "history": {
+  "CoolBoty": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Sachasport": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Kilpi": {
+   "2026-11-13": "nelze",
+   "2026-11-14": "nelze",
+   "2026-11-15": "nelze",
+   "2026-11-16": "nelze",
+   "2026-11-17": "nelze",
+   "2026-11-18": "nelze",
+   "2026-11-19": "nelze",
+   "2026-11-20": "nelze",
+   "2026-11-21": "nelze",
+   "2026-11-22": "nelze",
+   "2026-11-23": "nelze",
+   "2026-11-24": "nelze",
+   "2026-11-25": "nelze",
+   "2026-11-26": "nelze",
+   "2026-11-27": "nelze"
+  },
+  "iStyle": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "XM.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Urbanmaster": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "JBL": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Sparkys": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "EMP": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "FYFT.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Fanda-NHL.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Hairplanet.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Shopcom.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Netestováno.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "TrailStore.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Sluchátka-náušníky.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Bagmaster.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Obujtese.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Eleven-sportswear.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Honzovy-longboardy.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Jabkolevně.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "iPhoneMarket.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "DronPro.cz": {
+   "2026-11-13": "špatný",
+   "2026-11-14": "špatný",
+   "2026-11-15": "špatný",
+   "2026-11-16": "špatný",
+   "2026-11-17": "špatný",
+   "2026-11-18": "špatný",
+   "2026-11-19": "špatný",
+   "2026-11-20": "špatný",
+   "2026-11-21": "špatný",
+   "2026-11-22": "špatný",
+   "2026-11-23": "špatný",
+   "2026-11-24": "špatný",
+   "2026-11-25": "nelze",
+   "2026-11-26": "špatný",
+   "2026-11-27": "špatný"
+  },
+  "Počítače24.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Smarty.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "špatný",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "KKboty.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Sportby.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Sport365.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "GymBeam.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "eyerim.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Carneo.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Electronic-star.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Klarstein.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "TonerPartner.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Eppi.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Legenio.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Knihy.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "BeautyOnline.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Najáda.games": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "TLAMAgames.com": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Drátek.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "OutdoorMarket.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "OK-Hračky.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "C-store.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Pompo.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "KrásnéVůně.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Kocosbeauty.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Spartoo.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "MinisterstvoHraček.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "nelze",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "nelze",
+   "2026-11-27": "ok"
+  },
+  "Kabea.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Meatfly.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Vivantis.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Answear.cz": {
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "eObuv.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Myprotein": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-15": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Husky": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  },
+  "Metalshop.cz": {
+   "2026-11-13": "ok",
+   "2026-11-14": "ok",
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok"
+  },
+  "8a.cz": {
+   "2026-11-16": "nelze",
+   "2026-11-17": "nelze",
+   "2026-11-18": "nelze",
+   "2026-11-19": "nelze",
+   "2026-11-20": "nelze",
+   "2026-11-21": "nelze",
+   "2026-11-22": "nelze",
+   "2026-11-23": "nelze",
+   "2026-11-24": "nelze",
+   "2026-11-25": "nelze",
+   "2026-11-26": "nelze",
+   "2026-11-27": "nelze"
+  },
+  "Allegro": {
+   "2026-11-16": "ok",
+   "2026-11-17": "ok",
+   "2026-11-18": "ok",
+   "2026-11-19": "ok",
+   "2026-11-20": "ok",
+   "2026-11-21": "ok",
+   "2026-11-22": "ok",
+   "2026-11-23": "ok",
+   "2026-11-24": "ok",
+   "2026-11-25": "ok",
+   "2026-11-26": "ok",
+   "2026-11-27": "ok"
+  }
+ },
+ "last": {
+  "CoolBoty": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.coolboty.cz/cestovni-kufr-bhpc-4w-s-bh-250-55-23-antracitova-36-l",
+     "img_url": "https://www.coolboty.cz/images/thumbs/0264648_cestovni-kufr-bhpc-4w-s-bh-250-55-23-antracitova-36-l.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.coolboty.cz/tamaris-1-25286-41-001-damske-kotnikove-boty-cerne/21404CI84660",
+     "img_url": "https://www.coolboty.cz/images/thumbs/0162715_tamaris-1-25286-41-001-damske-kotnikove-boty-cerne.jpeg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.coolboty.cz/ipanema-rio-27314-bi546-damske-zabky-cerno-bezove/31079CI112267",
+     "img_url": "https://www.coolboty.cz/images/thumbs/0251689_ipanema-rio-27314-bi546-damske-zabky-cerno-bezove.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.coolboty.cz/voxx-cepice-traject-svseda-1-ks/21886CI86200",
+     "img_url": "https://www.coolboty.cz/images/thumbs/0239340_voxx-cepice-panska-pletena-traject-zimni-svetle-seda.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.coolboty.cz/panska-3l-bunda-ardonultritego-cerna/31061CI112155",
+     "img_url": "https://www.coolboty.cz/images/thumbs/0251581_panska-3l-bunda-ardonultritego-cerna.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Sachasport": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.sachasport.cz/rukavice-dynafit-blacklight-softshell-golden-lime-26-27/?variantId=175802",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sachasport.cz/user/shop/orig/84992_rukavice-dynafit-blacklight-softshell--limetkova-cerna.jpg?6ab23a91",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sachasport.cz/helma-specialized-loma-black/?variantId=198880",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sachasport.cz/user/shop/orig/98521-7_helma-specialized-loma--cerna.jpg?6ab23a54",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sachasport.cz/dynafit-one-u-army/?variantId=76430",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sachasport.cz/user/shop/orig/62636_dynafit-one-u-army--bila.png?6ab23a52",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sachasport.cz/ponozky-dynafit-ultra-crew-black-out-ultra-coral-2026/?variantId=183192",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sachasport.cz/user/shop/orig/86724_ponozky-dynafit-ultra-crew--cerna.jpg?6ab23a8e",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sachasport.cz/bunda-dynafit-blacklight-hybrid-thermal-w-cinder-black-out-26-27/?variantId=204013",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sachasport.cz/user/shop/orig/99910_bunda-dynafit-blacklight-hybrid-thermal-w-cinder-black-out-26-27--barva-seda-cerna.jpg?6ab645c5",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Kilpi": {
+   "stav": "nelze",
+   "proc": "web nejde z kontroly ověřit (ochrana proti robotům)",
+   "vzorky": [
+    {
+     "url": "https://www.kilpi.cz/cs/mali-w/18014/114202",
+     "img_url": "https://www.kilpi.cz/i/md/files/products/1L0306KIDBL_MALI-W_01.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://www.kilpi.cz/cs/kalahari-w/3401/28303",
+     "img_url": "https://www.kilpi.cz/i/md/files/products/KL0074KILRN_KALAHARI-W_01.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://www.kilpi.cz/cs/mamba-m/17506/108196",
+     "img_url": "https://www.kilpi.cz/i/md/files/products/YM0101KIBLU_MAMBA-M_01.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://www.kilpi.cz/cs/methone-m/8849/102007",
+     "img_url": "https://www.kilpi.cz/i/md/files/products/UM0405KIBLU_METHONE-M_01.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://www.kilpi.cz/cs/lorien-w/8723/96711",
+     "img_url": "https://www.kilpi.cz/i/md/files/products/UL0106KIBLK_LORIEN-W_01.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    }
+   ]
+  },
+  "iStyle": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://istyle.cz/products/kryt-pro-iphone-18-pro-max-peak-design-everyday-case-salvejove-zeleny?variant=58719631900936&utm_source=heureka.cz&utm_medium=product&utm_campaign=Heureka",
+     "img_url": "https://cdn.shopify.com/s/files/1/0780/2113/2322/files/k-m-ns-cp-sg-1-1_a1c652d1-ec02-4962-afef-a08623df6758.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://istyle.cz/products/2025-apple-watch-nike-sport-band-mg9x4zm-a?variant=52393310683400&utm_source=heureka.cz&utm_medium=product&utm_campaign=Heureka",
+     "img_url": "https://cdn.shopify.com/s/files/1/0780/2113/2322/files/IMG-17898419_m_jpeg_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://istyle.cz/products/kryt-beats-s-magsafe-na-iphone-16-pulnocne-cerny-mcfc4ll-a?variant=51252871430408&utm_source=heureka.cz&utm_medium=product&utm_campaign=Heureka",
+     "img_url": "https://cdn.shopify.com/s/files/1/0780/2113/2322/files/mcfc4.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://istyle.cz/products/apple-watch-38-40-41-mm-zhave-oranzovy-karminovy-sportovni-reminek-nike?variant=58142529061128&utm_source=heureka.cz&utm_medium=product&utm_campaign=Heureka",
+     "img_url": "https://cdn.shopify.com/s/files/1/0780/2113/2322/files/ml853_2.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://istyle.cz/products/dji-mic-mini-2-2-tx-1-mobile-rx-charging-case?variant=57700796039432&utm_source=heureka.cz&utm_medium=product&utm_campaign=Heureka",
+     "img_url": "https://cdn.shopify.com/s/files/1/0780/2113/2322/files/DJIMicMini2_2TX_1MobileRX_ChargingCase_-frontview.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "XM.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://xm.cz/lacoste-liquid-silicone-glossy-printing-logo-pouzdro-pro-airpods-1-2-pink_z67138/",
+     "img_url": "https://xm.cz/data/tmp/102/0/206860_102.jpg?1705778650_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://xm.cz/bosch-serie-4-bgb38rd2-vysavac-4-l-cylindrovy-suchy-600-w-prachovy-sacek_z109373/",
+     "img_url": "https://xm.cz/data/tmp/102/5/312925_102.jpg?1739715325_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://xm.cz/tefal-pro-express-ultimate-ii-gv9712-3000-w-1-2-l-podesev-durilium-airglide-modra-bila_z109464/",
+     "img_url": "https://xm.cz/data/tmp/102/8/313248_102.jpg?1739715616_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://xm.cz/tactical-magforce-hyperstealth-kryt-pro-samsung-galaxy-z-fold-8-ultra-asphalt_z144873/",
+     "img_url": "https://xm.cz/data/tmp/102/2/358842_102.jpg?1787425514_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://xm.cz/bmw-m-edition-magneticky-drzak-do-auta-s-15w-bezdratovym-nabijenim-black_z70917/",
+     "img_url": "https://xm.cz/data/tmp/102/8/221218_102.jpg?1710931544_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Urbanmaster": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://urbanmaster.cz/produkty/termolahev-na-piti-dual-design-you-bottles-500-ml/?attribute_pa_barva=art-leaf",
+     "img_url": "https://urbanmaster.cz/wp-content/uploads/2023/06/Termolahev-na-piti-Dual-Design-You-Bottles-500-ml-01.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://urbanmaster.cz/produkty/crossbody-taska-pres-rameno-avery-johnny-urban/?attribute_pa_barva=cerna-fialova",
+     "img_url": "https://urbanmaster.cz/wp-content/uploads/2025/01/Johnny-Urban-Crossbody-bag-Avery-17.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://urbanmaster.cz/produkty/nerezova-termoska-dopper-insulated-580-ml/?attribute_pa_barva=breaker-blue",
+     "img_url": "https://urbanmaster.cz/wp-content/uploads/2024/08/Dopper-termoska-580ml-65.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://urbanmaster.cz/produkty/crossbody-taska-josh-johnny-urban/?attribute_pa_barva=peach",
+     "img_url": "https://urbanmaster.cz/wp-content/uploads/2024/08/Johnny-Urban-Josh-Peach-6.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://urbanmaster.cz/produkty/mestsky-batoh-s-klopou-johnny-urban-mika/?attribute_pa_barva=bezova",
+     "img_url": "https://urbanmaster.cz/wp-content/uploads/2022/01/Johnny-Urban_Mika_35.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "JBL": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.jbl.cz/jbl-wind-3s-red",
+     "img_url": "https://www.edsi.sk/api/v1/image?query=product/80/14/87/04/5/240603145607-jbl-wind-3s-red.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jbl.cz/jbl-sense-pro-grey",
+     "img_url": "https://www.edsi.sk/api/v1/image?query=product/80/14/87/57/0/251027132846-jbl-sense-pro-grey.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jbl.cz/jbl-endurance-run-3-blackgrey",
+     "img_url": "https://www.edsi.sk/api/v1/image?query=product/80/14/87/58/0/251030131750-jbl-endurance-run-3-blackgrey.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jbl.cz/jbl-endurance-run-3-white",
+     "img_url": "https://www.edsi.sk/api/v1/image?query=product/80/14/87/57/7/251030132505-jbl-endurance-run-3-white.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jbl.cz/jbl-basspro-12",
+     "img_url": "https://www.edsi.sk/api/v1/image?query=product/20/47/00/29631.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "8a.cz": {
+   "stav": "nelze",
+   "proc": "web nejde z kontroly ověřit (ochrana proti robotům)",
+   "vzorky": [
+    {
+     "url": "https://8a.cz/lyzarske-bryle-julbo-lightyear-reactiv-2-4-polarized-red-black",
+     "img_url": "https://8a.cz/media/catalog/product/g/o/gogle-narciarskie-julbo-lightyear-reactiv-2-4-polarized-red-black-1788672197.webp@jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://8a.cz/lyzarske-ponozky-stance-boyd-mid-wool-snow-blue",
+     "img_url": "https://8a.cz/media/catalog/product/s/k/skarpety-narciarskie-stance-boyd-mid-wool-snow-blue-1794823281.webp@jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://8a.cz/gore-tex-bunda-mountain-equipment-saltoro-jacket-dusk-cosmos",
+     "img_url": "https://8a.cz/media/catalog/product/k/u/kurtka-gore-tex-mountain-equipment-saltoro-jacket-dusk-cosmos-1784805260.webp@jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://8a.cz/damska-funkcni-mikina-ortovox-230-competition-long-sleeve-faded-tangerine",
+     "img_url": "https://8a.cz/media/catalog/product/b/l/bluza-termoaktywna-damska-ortovox-230-competition-long-sleeve-faded-tangerine-1788782850.webp@jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    },
+    {
+     "url": "https://8a.cz/rukavice-na-kolo-oakley-drops-road-glove-2-0-blackout",
+     "img_url": "https://8a.cz/media/catalog/product/r/e/rekawiczki-rowerowe-oakley-drops-road-glove-2-0-blackout-1770280340.webp@jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "nelze",
+      "403"
+     ]
+    }
+   ]
+  },
+  "Sparkys": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.sparkys.cz/clementoni-puzzle-1500-muzeum-babylonska-vez/?utm_campaign=heureka_cpc&utm_id=heureka_cpc&utm_medium=cpc&utm_source=heureka",
+     "img_url": "https://www.sparkys.cz/data/cache/thumb_600-600-12-0/products/10367798/f1451a3b8ce4dc45807991a19100dde9/33C31738_1.jpg?s=38acaecbdf3f16e4120b35e247937353",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sparkys.cz/kralovstvi-her-365-her-spolecenska-hra/?utm_campaign=heureka_cpc&utm_id=heureka_cpc&utm_medium=cpc&utm_source=heureka",
+     "img_url": "https://www.sparkys.cz/data/cache/thumb_600-600-12-0/products/26792262/43e38a44b1c3972a967852753ea8ca28/5132-632028_1.jpg?s=402bbce113c6c7e2079a4ea22af22d6f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sparkys.cz/puzzle-1000-prvni-snih-v-portlandu/?utm_campaign=heureka_cpc&utm_id=heureka_cpc&utm_medium=cpc&utm_source=heureka",
+     "img_url": "https://www.sparkys.cz/data/cache/thumb_600-600-12-0/products/19496015/97d19ef1218b825b17655cb9c5cbdfea/33CP37112_1.jpg?s=5ff3806ba0f867d532e13fdd721a9d1f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sparkys.cz/clementoni-puzzle-180-sonic-the-hedgehog-2/?utm_campaign=heureka_cpc&utm_id=heureka_cpc&utm_medium=cpc&utm_source=heureka",
+     "img_url": "https://www.sparkys.cz/data/cache/thumb_600-600-12-0/products/10365906/cb6eca08ffb7f367e8c1d49f5f1e6099/33C29797_1.jpg?s=3cdfee0296f5c2a82ecbfb67e8777962",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sparkys.cz/drevene-puzzle-ledni-medved/?utm_campaign=heureka_cpc&utm_id=heureka_cpc&utm_medium=cpc&utm_source=heureka",
+     "img_url": "https://www.sparkys.cz/data/cache/thumb_600-600-12-0/products/20059844/3cc7ab96252bfcda1f1435f6025af6d9/46OR-ORT36302_1.jpg?s=78556cdfe8c738f11b87b80b5464ce04",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "EMP": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.emp-shop.cz/p/Pruhovaný-svetr-NMMAYSA-NOOS-s-kulatým-výstřihem-a-dlouhými-rukávy/580301.html",
+     "img_url": "https://images.datadepo.cz/742/u/4/czkagi1zvau4syz/8212ccbc1aaf38661f0dcbbfc00d1beb.jpg?54637045d2501eb5fb762b4186c09b5b",
+     "page": [
+      "chyba",
+      "UnicodeEncodeError"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.emp-shop.cz/p/Dropkick-Murphys/391044.html",
+     "img_url": "https://images.datadepo.cz/742/b/x/xb52sosrtmufjly/8715e4929f08eb10041821f88749b56c.jpg?741eec5b874745c231400186becb8bce",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.emp-shop.cz/p/Finn-Ames-Vinyl-Figurine-2184/590364.html",
+     "img_url": "https://images.datadepo.cz/742/0/c/uz4ujbpcxa093f9/6fa6076cbb035b54abfb73184853622b.jpg?d38c55013f8cff7071672684a5eeb750",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.emp-shop.cz/p/Black-Premium-by-EMP/395497.html",
+     "img_url": "https://images.datadepo.cz/742/0/g/3g7uzt7901tl5gb/c08ea35f2693d74b75670c683da1648c.jpg?48cca4ef4b45e57855e9b3ae4e0fe68f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.emp-shop.cz/p/Hello-Kitty/597467.html",
+     "img_url": "https://images.datadepo.cz/742/8/8/j1lfy8zr0rm8gcv/0ae038e4f0037f93760ee93199607eb4.jpg?07b9e9640bb159a546ea1cabe059842c",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "FYFT.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.fyft.cz/dneska-jsem-vysla-z-domu/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fyft.cz/user/shop/orig/76309_0063878103-dneska-jsem-vysla-z-domu-2.jpg?68bee704",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fyft.cz/betafpv-air75-ii-brushless-whoop-zavodni-dron--betafpv-/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fyft.cz/user/shop/orig/89221_b86ab8e4-d464-4a24-8637-ac9a34b468bb.jpg?6a2ae068",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fyft.cz/ak-ak9134-elastic-rigging-bobbin--mega-thin--20m-/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fyft.cz/user/shop/orig/64549_ak-ak9134-elastic-rigging-bobbin--mega-thin--20m-.jpg?662c201b",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fyft.cz/p1-p-line-flex-2-discmania/?variantId=109774",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fyft.cz/user/shop/orig/75298-4_discmania-p-line-flex-2-p1.jpg?6870aeba",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fyft.cz/yileng-3x3x3-icy-amber-qiyi/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fyft.cz/user/shop/orig/73624-1_mg-0211.jpg?68666b0e",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Fanda-NHL.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.fanda-nhl.cz/panska-mikina-miami-dolphins-nfl-1972-afc-champions-hoodie/?variantId=495923",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fanda-nhl.cz/user/shop/orig/171869_panska-mikina-miami-dolphins-nfl-1972-afc-champions-hoodie.jpg?6aa05632",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fanda-nhl.cz/panska-bunda-vegas-golden-knights-nhl-authentic-pro-rink-qz/?variantId=408677",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fanda-nhl.cz/user/shop/orig/127412_panska-bunda-vegas-golden-knights-nhl-authentic-pro-rink-qz.jpg?69149773",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fanda-nhl.cz/panska-ksiltovka-anaheim-ducks-nhl-team-logo-hc-cr-snapback/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fanda-nhl.cz/user/shop/orig/106473_panska-ksiltovka-anaheim-ducks-nhl-team-logo-hc-cr-snapback.jpg?68e50f54",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fanda-nhl.cz/panska-mikina-anaheim-ducks-primary-logo-graphic-crew-sweatshirt/?variantId=397538",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fanda-nhl.cz/user/shop/orig/122408-2_panska-mikina-anaheim-ducks-nhl-primary-logo-graphic-crew-sweatshirt.png?69bbe7e2",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.fanda-nhl.cz/cedule-detroit-red-wings-nhl-3d-stadium-banner/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.fanda-nhl.cz/user/shop/orig/166340_cedule-detroit-red-wings-nhl-3d-stadium-banner.jpg?6aa00fec",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Hairplanet.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.hairplanet.cz/p/redken-frizz-dismiss-uhladzujuci-kondicioner-proti-krepateniu-250-ml",
+     "img_url": "https://skvelynakup.s24.cdn-upgates.com/z/z62dfef9b92438.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.hairplanet.cz/p/color-wow-color-security-conditioner-n-t",
+     "img_url": "https://skvelynakup.s24.cdn-upgates.com/t/t67ec277954472-cw-kond.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.hairplanet.cz/p/babyliss-pro-fx3-fxx3tbe-profesionalny-konturovaci-strojcek-na-vlasy",
+     "img_url": "https://skvelynakup.s24.cdn-upgates.com/4/4641b4a8054ead-fxx3tbe.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.hairplanet.cz/p/kerastase-fusio-dose-booster-brilliance-120ml",
+     "img_url": "https://skvelynakup.s24.cdn-upgates.com/g/g6337444c33efe-b-brilli.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.hairplanet.cz/p/kerastase-nutritive-8h-magic-night-serum-vyzivne-zkraslujici-nocni-serum-cestovni-baleni-30-ml",
+     "img_url": "https://skvelynakup.s24.cdn-upgates.com/j/j6ab8cd57e4709-magic-30ml.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Shopcom.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.shopcom.cz/tvrzene-sklo-4d-winner-gorilla-glass-9h-samsung-a20s-cerne-8591194097447-d219213?g=PPL_PARCELSHOP?utm_source=heurekacz",
+     "img_url": "https://www.shopcom.cz/pic/web2/product/detail/55555555555555.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.shopcom.cz/silicone-case-for-samsung-a37-5g-peach-312342-d354431?g=PPL_PARCELSHOP?utm_source=heurekacz",
+     "img_url": "https://www.shopcom.cz/pic/web2/product/detail/p-312342.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.shopcom.cz/pa20m-show-zesilovac-zesilovac-03-2-1137-d260053?g=PPL_PARCELSHOP?utm_source=heurekacz",
+     "img_url": "https://www.shopcom.cz/pic/web2/product/detail/bs-03-2-1137.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.shopcom.cz/tvrzene-sklo-4d-winner-9h-realme-c25-y-c25-c25-s-c21-y-cerna-0591194108792-d260146?g=PPL_PARCELSHOP?utm_source=heurekacz",
+     "img_url": "https://www.shopcom.cz/pic/web2/product/detail/55555555555555.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.shopcom.cz/thunder-case-for-samsung-s24-fe-black-607701-d340335?g=PPL_PARCELSHOP?utm_source=heurekacz",
+     "img_url": "https://www.shopcom.cz/pic/web2/product/detail/p-607701.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Netestováno.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.netestovano.cz/sprej-na-intenzivni-a-hloubkovou-lecbu-vlasoveho-vlakna-no-0-intensive-bond-building-155ml-olaplex/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.netestovano.cz/user/shop/orig/7861_olaplex-no-0-intens-bond-building-hair-tr-155ml.jpg?6901d86f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.netestovano.cz/mandlovy-sprchovy-gel-237ml-desert-essence/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.netestovano.cz/user/shop/orig/10309_mandlovy-sprchovy-gel-237-ml-desert-essence.png?69ccd0ed",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.netestovano.cz/osvezujici-ocni-obklad-ocianka--50ml/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.netestovano.cz/user/shop/orig/4920_kvitok-30.png?6922146f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.netestovano.cz/stetec-na-korektor/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.netestovano.cz/user/shop/orig/3077_cobr02-concealer-brush.jpg?6901d86f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.netestovano.cz/eko-praci-parfem-money-talks-150ml-yaya-original/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.netestovano.cz/user/shop/orig/7885_money-talks-limitovany-eko-praci-parfem.png?6901d86f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "TrailStore.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.trailstore.cz/pitny-rezim/isodrinx-doza-420g---pomeranc/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.trailstore.cz/user/shop/orig/21543_isodrinx-doza-420-g-pomeranc-img-n29pom-hlavni-fd-3.jpg?6ad2e50d",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.trailstore.cz/dresy/dres-force-mtb-rules-kr--rukav--oranzovy/?variantId=67448",
+     "img_url": "https://cdn.myshoptet.com/usr/www.trailstore.cz/user/shop/orig/39917_dres-force-mtb-rules-kr-rukav-oranzovy-3xl-img-80010120083-hlavni-fd-3.jpg?6adacd56",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.trailstore.cz/sportovni-ponozky/ponozky-force-north--cerveno-modre/?variantId=46821",
+     "img_url": "https://cdn.myshoptet.com/usr/www.trailstore.cz/user/shop/orig/26619_ponozky-force-north-termo-cerv-modre-s-m-36-41-img-9011940-hlavni-fd-3.jpg?6ad97bdc",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.trailstore.cz/lyzarske-bryle/lyzarske-bryle-r2-avalanche-atg05a/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.trailstore.cz/user/shop/orig/27483_atg05a-lens.jpg?6acfc4bf",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.trailstore.cz/prilby/prilba-force-fun-stripes-detska--fluo-cerno-seda/?variantId=16511",
+     "img_url": "https://cdn.myshoptet.com/usr/www.trailstore.cz/user/shop/orig/6995-5_prilba-force-fun-stripes-detska-fluo-cerno-seda-s-img-9022456-hlavni-fd-3.jpg?6ad97bde",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Sluchátka-náušníky.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.sluchatka-nausniky.cz/sluchatka-nausniky.cz/174034-hlavovy-most-na-sluchatka-sennheiser-g4me-zero-hd380-cerny-kozeny.html",
+     "img_url": "https://www.sluchatka-nausniky.cz/photos/produkty/f/174/174034.jpg?m=1687261546",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sluchatka-nausniky.cz/sluchatka-nausniky.cz/50592-airpods-obal-karabina-motyl.html",
+     "img_url": "https://www.sluchatka-nausniky.cz/photos/produkty/f/50/50592.jpg?m=1598953580",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sluchatka-nausniky.cz/sluchatka-nausniky.cz/174134-pouzdro-pro-sluchatka-apple-airpods-max-s-automatickym-rezimem-spanku-cerne.html",
+     "img_url": "https://www.sluchatka-nausniky.cz/photos/produkty/f/174/174134.jpg?m=1687261569",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sluchatka-nausniky.cz/sluchatka-nausniky.cz/173947-hlavovy-most-na-sluchatka-steelseries-arctis-3-a-arctis-5-vzorovany-modro-oranzovy-latkovy.html",
+     "img_url": "https://www.sluchatka-nausniky.cz/photos/produkty/f/173/173947.jpg?m=1687261335",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sluchatka-nausniky.cz/sluchatka-nausniky.cz/50591-airpods-obal-karabina-eiffel-tower.html",
+     "img_url": "https://www.sluchatka-nausniky.cz/photos/produkty/f/50/50591.jpg?m=1598953580",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Bagmaster.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.bagmaster.cz/studentsky-batoh-nomad-25-a-cerno-bily.html",
+     "img_url": "https://www.bagmaster.cz/files/products_images/xlarge/n/NOMAD_25_A_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.bagmaster.cz/studentsky-batoh-bag-25-b-cerno-modry.html",
+     "img_url": "https://www.bagmaster.cz/files/products_images/xlarge/b/BAG_25_B_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.bagmaster.cz/studentsky-batoh-lincoln-26-a-cerno-bily.html",
+     "img_url": "https://www.bagmaster.cz/files/products_images/xlarge/l/LINCOLN_26_A_01.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.bagmaster.cz/studentsky-batoh-digital-24-b-cerny.html",
+     "img_url": "https://www.bagmaster.cz/files/products_images/xlarge/d/DIGITAL_24_B_01_%281%29.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.bagmaster.cz/studentsky-batoh-bag-21-b.html",
+     "img_url": "https://www.bagmaster.cz/files/products_images/xlarge/b/BAG_21B_01.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Obujtese.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.obujtese.cz/damske-polobotky-tamaris-1-24733-45-915-seda-metalicka/?variantId=294094",
+     "img_url": "https://cdn.myshoptet.com/usr/www.obujtese.cz/user/shop/orig/59413-2_59413-2-59413-2-59413-2-59413-2-damske-polobotky-tamaris-1-24733-45-915-seda-metalicka.jpg?6acac0e3",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.obujtese.cz/boty-do-vody-su21679-1-ruzova/?variantId=339263",
+     "img_url": "https://cdn.myshoptet.com/usr/www.obujtese.cz/user/shop/orig/68876_boty-do-vody-su21679-1-ruzova.jpg?6a1824bb",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.obujtese.cz/damska-kabelka-kp1097-blu-modra/?variantId=353731",
+     "img_url": "https://cdn.myshoptet.com/usr/www.obujtese.cz/user/shop/orig/71974-4_damska-kabelka-kp1097-blu-modra---hlavni-pohled.jpg?6aec7cd6",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.obujtese.cz/damske-kotnikove-boty-caprice-9-26209-43-022-cerna/?variantId=252454",
+     "img_url": "https://cdn.myshoptet.com/usr/www.obujtese.cz/user/shop/orig/59533-4_59533-4-59533-4-59533-4-damske-kotnikove-boty-caprice-9-26209-43-022-cerna.jpg?6ad08bd3",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.obujtese.cz/damske-lodicky-acord-5507-110-cerna/?variantId=264767",
+     "img_url": "https://cdn.myshoptet.com/usr/www.obujtese.cz/user/shop/orig/52841_damske-lodicky-acord-5507-110-cerna.jpg?679b53e8",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Eleven-sportswear.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.eleven-sportswear.cz/sportovni-cepice-eleven-sven-tripeak-light/?variantId=12126",
+     "img_url": "https://cdn.myshoptet.com/usr/www.eleven-sportswear.cz/user/shop/orig/4359_sportovni-cepice-sven-tripeak-light.jpg?6732f3f3",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eleven-sportswear.cz/sportovni-cepice-eddie-drift-black/?variantId=14978",
+     "img_url": "https://cdn.myshoptet.com/usr/www.eleven-sportswear.cz/user/shop/orig/5234_sportovni-cepice-eleven-eddie-drift-black.jpg?6abe3e6f",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eleven-sportswear.cz/sportovni-cepice-eleven-matty-xi-pink/?variantId=749",
+     "img_url": "https://cdn.myshoptet.com/usr/www.eleven-sportswear.cz/user/shop/orig/338_sportovni-cepice-matty-xi-pink.jpg?64f6d928",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eleven-sportswear.cz/cyklisticke-rukavice-eleven-long-horizontal-f160/?variantId=7352",
+     "img_url": "https://cdn.myshoptet.com/usr/www.eleven-sportswear.cz/user/shop/orig/2648_cyklisticke-rukavice-eleven-long-horizontal-f160.jpg?64f6d928",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eleven-sportswear.cz/ponozky-eleven-howa-two-neon/?variantId=2513",
+     "img_url": "https://cdn.myshoptet.com/usr/www.eleven-sportswear.cz/user/shop/orig/1196_ponozky-eleven-howa-two-neon.jpg?64f6d928",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Honzovy-longboardy.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.honzovy-longboardy.cz/kfd-diy-52mm-red-skateboardova-kolecka/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.honzovy-longboardy.cz/user/shop/orig/1069350_kfd-diy-52mm-red-skateboardova-kolecka.jpg?6a22cf1b",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.honzovy-longboardy.cz/blood-orange-street-raw-rounded-99a-58mm-red-skateboardova-kolecka/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.honzovy-longboardy.cz/user/shop/orig/1060098_blood-orange-street-raw-rounded-99a-58mm-red-skateboardova-kolecka.jpg?6a22cf17",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.honzovy-longboardy.cz/exway-batoh-v2-batoh-na-longboard/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.honzovy-longboardy.cz/user/shop/orig/1444175_exway-batoh-v2-batoh-na-longboard.png?6a22a466",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.honzovy-longboardy.cz/insta360-x4-cerna-nabijeci-hub/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.honzovy-longboardy.cz/user/shop/orig/1269188_insta360-x4-cerna-nabijeci-hub.jpg?6a22d00e",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.honzovy-longboardy.cz/divine-godie-neochrome-freestyle-kolobezka/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.honzovy-longboardy.cz/user/shop/orig/1144308_divine-godie-neochrome.jpg?6a22d1d1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Jabkolevně.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.jabkolevne.cz/mobilni-prislusenstvi/vlastni-design-na-cerny-kryt-na-iphone-13-pro/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.jabkolevne.cz/user/shop/orig/28798-2_28798-2-13-pro.jpg?6b0832d4",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jabkolevne.cz/adaptery/lightning-digital-av-multiport-adapter/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.jabkolevne.cz/user/shop/orig/28513-2_1t54000101-1000-1000.jpg?6a912670",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jabkolevne.cz/mobilni-prislusenstvi/vlastni-design-na-transparentni-kryt-na-iphone-16-plus/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.jabkolevne.cz/user/shop/orig/28453-2_28453-2-transparentni-kryt-iphone16.png?6b0832cd",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jabkolevne.cz/mobilni-prislusenstvi/vlastni-design-na-cerne-flipove-pouzdro-na-ipad-air-13-2024-2025-/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.jabkolevne.cz/user/shop/orig/29302_29302-361-kopie.png?6b081d87",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.jabkolevne.cz/pouzdra-na-sluchatka/ochranne-pouzdro-na-sluchatka-airpods-pro-1--gen-cerne/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.jabkolevne.cz/user/shop/orig/14440_52602-4-tech-protect-icon-hook-apple-airpods-pro-1-2-black.jpg?69cd71b0",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "iPhoneMarket.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.iphonemarket.cz/tvrzene-sklo-pro-fotoaparat-iphone-12mini/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.iphonemarket.cz/user/shop/orig/4549_3107ecd3dd31335293f78cb8a09b6799.jpg?6a7f0d41",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.iphonemarket.cz/pruhledne-pouzdro-pro-iphone-12-pro-max/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.iphonemarket.cz/user/shop/orig/888-1_xfront.png?6a7f0d33",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.iphonemarket.cz/pruhledne-pouzdro-s-magsafe-pro-iphone-13pro-max/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.iphonemarket.cz/user/shop/orig/4359_mgp1.png?6a7f0d41",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.iphonemarket.cz/pruhledne-pouzdro-pro-iphone-15-pro/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.iphonemarket.cz/user/shop/orig/5127_screenshot-2022-10-18-at-9-38-42.png?6a7f0d44",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.iphonemarket.cz/armor-jelly-case-roar-pro-iphone-14-plus-transparentni/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.iphonemarket.cz/user/shop/orig/3960_2146721b1434a2698e644b094ed90262.jpg?6a7f0d3e",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "DronPro.cz": {
+   "stav": "špatný",
+   "proc": "5 z 5 obrázků nefunguje",
+   "vzorky": [
+    {
+     "url": "https://dronpro.cz/viceuhlovy-prisavny-drzak-na-vozidlo-pro-kameru-insta360-go-ultra?utm_campaign=Heureka&utm_content=Viceuhlovy+prisavny+drzak+na+vozidlo+pro+kameru+Insta360+GO+Ultra+1INST948&utm_medium=product&utm_source=heureka.cz&utm_term=8723&var=8723",
+     "img_url": "https://dronpro.cz/data/images/38628-viceuhlovy-prisavny-drzak-na-vozidlo-pro-kameru-insta360-go-ultra.jpeg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "špatný",
+      "404"
+     ]
+    },
+    {
+     "url": "https://dronpro.cz/ochrana-narazniku-s-podvozkem-na-dron-dji-flip-cerna?utm_campaign=Heureka&utm_content=Ochrana+narazniku+s+podvozkem+na+dron+DJI+Flip+-+cerna+1DJFL45&utm_medium=product&utm_source=heureka.cz&utm_term=7545&var=7545",
+     "img_url": "https://dronpro.cz/data/images/33506-ochrana-narazniku-s-podvozkem-na-dron-dji-flip-cerna.jpeg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "špatný",
+      "404"
+     ]
+    },
+    {
+     "url": "https://dronpro.cz/pouzdro-na-dalkovy-ovladac-dji-rc-n2?utm_campaign=Heureka&utm_content=Pouzdro+na+dalkovy+ovladac+DJI+RC-N2+1DJ2914&utm_medium=product&utm_source=heureka.cz&utm_term=5657&var=5657",
+     "img_url": "https://dronpro.cz/data/images/25758-pouzdro-na-dalkovy-ovladac-dji-rc-n2-vnitrek.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "špatný",
+      "404"
+     ]
+    },
+    {
+     "url": "https://dronpro.cz/freewell-nd1000-filtr-pro-dji-mavic-4-pro?utm_campaign=Heureka&utm_content=Freewell+ND1000+filtr+pro+DJI+Mavic+4+Pro+FW-M4P-ND1000&utm_medium=product&utm_source=heureka.cz&utm_term=7937&var=7937",
+     "img_url": "https://dronpro.cz/data/images/35468-freewell-nd1000-filtr-pro-dji-mavic-4-pro.jpeg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "špatný",
+      "404"
+     ]
+    },
+    {
+     "url": "https://dronpro.cz/pgytech-pouzdro-na-pametove-karty?utm_campaign=Heureka&utm_content=Pgytech+pouzdro+na+pametove+karty+1SA1004&utm_medium=product&utm_source=heureka.cz&utm_term=3577&var=3577",
+     "img_url": "https://dronpro.cz/data/images/15351-pgytech-pouzdro-na-pametove-karty-vnitrek.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "špatný",
+      "404"
+     ]
+    }
+   ]
+  },
+  "Počítače24.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.pocitace24.cz/nove-monitory/monitor-dell-se2425hm/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.pocitace24.cz/user/shop/orig/72467_72467-snimek-obrazovky-2026-03-11-144048.png?6a3a2b15",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.pocitace24.cz/dokovaci-stanice-lenovo/lenovo-thinkpad-universal-usb-c-dock-type-40ay-90w/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.pocitace24.cz/user/shop/orig/79307-8_lenovo-thinkpad-universal-usb-c-dock-type-40ay-s-napajecim-adapterem-90w-a-usb-c-kabelem.jpg?6b006aa4",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.pocitace24.cz/dokovaci-stanice/toshiba-high-speed-port-replicator-ii--type--pa3916e-1prp-/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.pocitace24.cz/user/shop/orig/3082_3082-toshiba-high-speed-port-replicator-ii-type-pa3916e-1prp.jpg?6a3a2946",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.pocitace24.cz/podlozky-pod-mys/marvo-g35-herni-podlozka-pod-mys--barevna/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.pocitace24.cz/user/shop/orig/71081_71081-snimek-obrazovky-2026-02-02-150756.png?6a3a2b0b",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.pocitace24.cz/dokovaci-stanice/getac-dock-port-replicator-s-odock-getac-s400/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.pocitace24.cz/user/shop/orig/3385_3385-getac-dock-port-replicator-s-odock-getac-s400.jpg?6a3a2948",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Smarty.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.smarty.cz/DJI-Flip-4p208233",
+     "img_url": "https://doc.smarty.cz/pic/U48B000P01-600-600.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.smarty.cz/FIXED-2-5D-Full-Cover-tvrzene-sklo-0-33mm-Apple-iPhone-12-12-Pro-cerne-4p56052",
+     "img_url": "https://doc.smarty.cz/pic/7B5C500301-600-600.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.smarty.cz/OBAL-ME-TPU-kryt-pro-Xiaomi-Redmi-15-4G-5G-cire-4p252054",
+     "img_url": "https://doc.smarty.cz/pic/6f23bf26bf5345e087edc66b67312334-600-600.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.smarty.cz/TIGO-Office-ProView-SW125-drzak-pro-monitor-17-32--4p244465",
+     "img_url": "https://doc.smarty.cz/pic/8Q2J000K01-600-600.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.smarty.cz/Oracle-Red-Bull-Racing-PU-Leather-Red-Ring-MagSafe-kryt-pro-iPhone-13-Pro-modry-4p213384",
+     "img_url": "https://doc.smarty.cz/pic/781a788b5abb43519de92b170881888d-600-600.jpg",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "KKboty.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.kkboty.cz/lego-city-safari-park/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kkboty.cz/user/shop/orig/31718_lego-city-safari-park.jpg?6673e794",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kkboty.cz/citaj-a-nalepuj---pod-hladinou--kniha-se-samolepkami/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kkboty.cz/user/shop/orig/49042_citaj-a-nalepuj---pod-hladinou--kniha-se-samolepkami.jpg?67b515dd",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kkboty.cz/ponozky-matt-thermolite-sock-morph/?variantId=251986",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kkboty.cz/user/shop/orig/55696_coolmax-matt-sock-morph.jpg?6901e9c7",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kkboty.cz/thermos-uzaver-na-termosku-na-kolo-1300cx/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kkboty.cz/user/shop/orig/29026_thermos-uzaver-na-termosku-na-kolo-1300cx.jpg?662ba6e7",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kkboty.cz/panske-pantofle-coqui-spongebob-niagara-blue--khaki/?variantId=226753",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kkboty.cz/user/shop/orig/51778_panske-pantofle-coqui-spongebob-niagara-blue-khaki-modra.jpg?680b50d9",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Sportby.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.sportby.cz/nike-jordan-essential-ball-pump/?variantId=91217",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sportby.cz/user/shop/orig/28805_95090-nike-jordan-essential-ball-pump.jpg?6afb3516",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sportby.cz/mckinley-ricky-ii/?variantId=75362",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sportby.cz/user/shop/orig/25511_79724-mckinley-ricky-ii.png?6afb3508",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sportby.cz/mckinley-pan--zimni-holinky-rick-iv--tepla/?variantId=187455",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sportby.cz/user/shop/orig/64992-10_153556-5-mckinley-rick-iv-winter.jpg?6afb352e",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sportby.cz/mckinley-teddy-ii-2/?variantId=79112",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sportby.cz/user/shop/orig/26156_79784-mckinley-teddy-ii.png?6afb3508",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sportby.cz/mckinley-tyler-ii-aqx-10-10/?variantId=339867",
+     "img_url": "https://cdn.myshoptet.com/usr/www.sportby.cz/user/shop/orig/109122_175958-5ad789d1aa033c14116e9eb64a18eca3a82e-1687x1687.jpg?6afb3542",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Sport365.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.sport365.cz/author-pepe-cervena-operka-nohou/",
+     "img_url": "https://www.sport365.cz/pictures/products/author-operka-nohou-model-pepe-cervena-18725738.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sport365.cz/ostrovit-marine-collagen-hyaluronic-acid-vitaminc-200g/?v=2731733",
+     "img_url": "https://www.sport365.cz/pictures/products/ostrovit-marine-collagen-hyaluronic-acid-vitaminc-200g-14592916.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sport365.cz/gravity-aura-atop-25-26-black-damska-snb-obuv/?v=4406797",
+     "img_url": "https://www.sport365.cz/pictures/products/gravity-aura-atop-25-26-black-damska-snb-obuv-18841619.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sport365.cz/sedco-cinky-nakladaci-spojovaci-cement-sada-2x7-5-kg-1x15-kg/",
+     "img_url": "https://www.sport365.cz/pictures/products/sedco-cinky-nakladaci-spojovaci-cement-sada-2x7-5-kg-1x15-kg-20641306.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.sport365.cz/merco-bottle-carrier-8-cervena-sada-dvou-plastovych-nosicu-lahvi/?v=5014581",
+     "img_url": "https://www.sport365.cz/pictures/products/merco-bottle-carrier-8-sada-dvou-plastovych-nosicu-lahvi-cervena-20516655.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "GymBeam.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://gymbeam.cz/arginin-citrulin-now-foods.html#47662",
+     "img_url": "https://gymbeam.cz/media/catalog/product/0/0/0037_mainimage_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://gymbeam.cz/thermopro-the-protein-works.html#45718",
+     "img_url": "https://gymbeam.cz/media/catalog/product/t/h/thermopro_45_pla_v2.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://gymbeam.cz/gymnema-sylvestre-gymbeam.html#77737",
+     "img_url": "https://gymbeam.cz/media/catalog/product/g/y/gymnema_sylvestre_90_vegan_caps_gymbeam_2_.png",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://gymbeam.cz/sportovni-podprsenka-cut-out-black-gymbeam.html#66727",
+     "img_url": "https://gymbeam.cz/media/catalog/product/w/-/w-gymbeam-sports-bra-cut-out-black-1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://gymbeam.cz/damske-sortky-luma-baby-blue-gymbeam.html#119194",
+     "img_url": "https://gymbeam.cz/media/catalog/product/w/o/women-s-luma-shorts-baby-blue-gymbeam-1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "eyerim.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://eyerim.cz/p-494883/",
+     "img_url": "https://static.eyerim.com/content/images/product/original/695190.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eyerim.cz/p-439725/",
+     "img_url": "https://static.eyerim.com/content/images/product/original/565438.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eyerim.cz/persol-po0050s-95-31/",
+     "img_url": "https://static.eyerim.com/content/images/product/original/619512.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eyerim.cz/calvin-klein-ck24550mag-set-001/",
+     "img_url": "https://static.eyerim.com/content/images/product/original/436160.jpg",
+     "page": [
+      "pryč",
+      "404"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eyerim.cz/p-439595/",
+     "img_url": "https://static.eyerim.com/content/images/product/original/614575.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Carneo.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.carneo.cz/platebni-naramky/platebni-naramek-carneo-pay-iron-spirit---hnedy--kozeny/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.carneo.cz/user/shop/orig/1476-3_carneo-pay-iron-spirit-brown1.jpg?6a96d47b",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.carneo.cz/bezdratova-sluchatka/carneo-sluchatka-s4-mini-white/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.carneo.cz/user/shop/orig/912-4_carneo-s4-mini-bile.jpg?65c0d74b",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.carneo.cz/platebni-naramky/platebni-naramek-carneo-pay-rose-grace---ruzovy--kozeny/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.carneo.cz/user/shop/orig/1470-3_carneo-pay-rose-grace.jpg?6a96d4b0",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.carneo.cz/panske-chytre-hodinky/chytre-hodinky-carneo-gtr-expedition-titan-sand-black/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.carneo.cz/user/shop/orig/1367-6_expedition-sand-grey-black5.jpg?6964d018",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.carneo.cz/panske-chytre-hodinky/chytre-hodinky-carneo-gtr-falcon-hr--cerne/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.carneo.cz/user/shop/orig/1252_carneo-gtr-falcon-black-2.jpg?68b832c1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Electronic-star.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.electronic-star.cz/50-neue-erste-dates-karetni-hra-karetni-hra-pro-pary-50-laskyplnych-napadu-na-rande-p-10039646.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10039646/Gallery/10039646_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.electronic-star.cz/remy-digestor-90-cm-stropni-620-m-h-dalkove-ovladani-cerna-p-10031996.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10031996/Gallery/10031996_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.electronic-star.cz/flaptor-polohovateln-lavice-skl-p-c-ern-p-10030940.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10030940/Gallery/10030940_yy_0001_titel___CAPITAL_SPORTS_Flaptor_klappbare_Hantelbank",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.electronic-star.cz/otazky-pro-pary-karetni-hra-pro-pary-100-vzrusujicich-otazek-p-10039636.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10039636/Gallery/10039636_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.electronic-star.cz/beatamine-d-25-cm-10-200-w-rms-400-w-max-pa-reproduktor-oranzovy-p-10022919.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10022919/Gallery/10022919_yy_0001_titel___Malone_Beatamine_D_PA_Lautsprecher",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Klarstein.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.klarstein.cz/wonderwall-art-smart-350w-60x60cm-obrazovy-infrapanel-jezero-p-10037818.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10037818/Gallery/10037818_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.klarstein.cz/areal-525-dg-5-1-syst-m-dom-c-ho-kina-125-w-rms-optick-vstup-bt-usb-sd-aux-d-lkov-ovlada-p-10036136.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10036136/Gallery/10036136_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.klarstein.cz/wonderwall-art-smart-700w-60x120cm-obrazovy-infrapanel-zeleny-list-p-10037916.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10037916/Gallery/10037916_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.klarstein.cz/wonderwall-art-smart-700w-obrazovy-infrapanel-cerna-kvetina-p-10037921.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10037921/Gallery/10037921_yy_0001_titel___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.klarstein.cz/wonderwall-art-smart-500w-60x80cm-obrazovy-infrapanel-vlny-p-10035122.html",
+     "img_url": "https://res.cloudinary.com/chal-tec/image/upload/w_auto,f_auto,q_auto/bbg/10035122/Gallery/10035122_cz_0001_main___",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "TonerPartner.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.tonerpartner.cz/produkt-premiumcord-prodluzovaci-privod-230v-10m-5-zasuvek-bila-138942cz/",
+     "img_url": "https://www.tonerpartner.cz/userdata/products/1390/1506500_0a-6933beddc7bfd91.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tonerpartner.cz/konnoc-dx-5f-10m-petizasuvka-341410cz/",
+     "img_url": "https://www.tonerpartner.cz/userdata/products/3415/3847827-68f73b212e401.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tonerpartner.cz/produkt-as126e-horkovzdusna-kulma-babyliss-195065cz/",
+     "img_url": "https://www.tonerpartner.cz/userdata/products/1951/741012289-68426a0eaa48b.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tonerpartner.cz/lenovo-sluchatka-100-usb-mono-headset-79003cz/",
+     "img_url": "https://www.tonerpartner.cz/userdata/products/791/1538787_0a-1f1f8a99d3bfd91.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tonerpartner.cz/zagg-cases-defence-iphone-14-pro-max-pruhledny-335478cz/",
+     "img_url": "https://www.tonerpartner.cz/userdata/products/3355/ah9586000543-67c974124346f.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Eppi.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.eppi.cz/sperk/elegantni-zlaty-naramek-s-lab-grown-diamanty-sonja/49163",
+     "img_url": "https://img.eppi.cz/a9ab99a7-a776-4c9b-2728-df2b9e0e1e00/public",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eppi.cz/sperk/stribrne-visaci-nausnice-se-simulovanymi-tanzanity-a-lab-grown-diamanty-mia/49910",
+     "img_url": "https://img.eppi.cz/4f78b23c-0f4f-4e9e-6d07-3b52f00f6400/public",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eppi.cz/sperk/eternity-prsten-ze-stribra-s-rubiny-a-zirkony-ednah/36000",
+     "img_url": "https://img.eppi.cz/b287b672-f8b4-4eb0-7d2f-7aa8fb2e4d00/public",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eppi.cz/sperk/stribrny-privesek-s-vykrojenym-pismenem-alfabet/46754",
+     "img_url": "https://img.eppi.cz/c5ddf8f4-101d-46c2-cf56-9640f53deb00/public",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.eppi.cz/sperk/privesek-ve-tvaru-psa-s-gravirem-chihuahua/43726",
+     "img_url": "https://img.eppi.cz/ae79eef5-60f8-4e64-6912-d33fe8d0ef00/public",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Legenio.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.legenio.cz/lego-71025-ucelena-kolekce-16-minifigurek-serie-19/",
+     "img_url": "https://cdn.legenio.cz/images/0/5951b4212350babd/100/lego-71025-ucelena-kolekce-16-minifigurek-serie-19.jpg?hash=-2",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.legenio.cz/lego-zapisnik-s-gelovym-perem-jako-klipem-cerveny/",
+     "img_url": "https://cdn.legenio.cz/images/0/ff077689adce9c0e/100/lego-zapisnik-s-gelovym-perem-jako-klipem-cerveny.jpg?hash=-2",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.legenio.cz/lego-classic-11026-bila-podlozka-na-staveni-32-x-32-vystupku/",
+     "img_url": "https://cdn.legenio.cz/images/0/eea5883961f054f9/100/lego-classic-11026-bila-podlozka-na-staveni-32-x-32-vystupku.jpg?hash=-2",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.legenio.cz/sedm-draku-rychla-karetni-hra/",
+     "img_url": "https://cdn.legenio.cz/images/0/7469e89dec58431d/100/sedm-draku-rychla-karetni-hra.jpg?hash=-2",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.legenio.cz/dino-puzzle-stenata-secret-collection-14-skrytych-detailu-1000-dilku-p77770/",
+     "img_url": "https://cdn.legenio.cz/images/0/55fe9e536f8882e5/100/dino-puzzle-stenata-secret-collection-14-skrytych-detailu-1000-dilku.jpg?hash=-2",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Knihy.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.knihy.cz/team-of-teams-2/",
+     "img_url": "https://images.knihy.cz/550x600/000/003/214/000003214565_0.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.knihy.cz/stoleti-na-vlnach/",
+     "img_url": "https://images.knihy.cz/550x600/000/004/098/000004098935_0.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.knihy.cz/cakaren-na-smrt/",
+     "img_url": "https://images.knihy.cz/550x600/000/003/567/000003567976_0.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.knihy.cz/klub-nerozbitnych-deti/",
+     "img_url": "https://images.knihy.cz/550x600/000/002/385/000002385595_0.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.knihy.cz/kongo-severu/",
+     "img_url": "https://images.knihy.cz/550x600/000/003/750/000003750178_0.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "BeautyOnline.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.beautyonline.cz/pece-o-vlasy/vlasova-kosmetika/styling/zaklad-ucesu/rejuvenating-radiance-oil-omlazujici-rozjasnujici-olej-100-ml-p.html",
+     "img_url": "https://data.italystyle.cz/104823/www/www.beautyonline.cz/products/18/17090/source/17090_LABEL.M-Rejuvenating-Radiance-Oil-No_BG_No_Shadow-1684920520.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.beautyonline.cz/pece-o-vlasy/pristroje-a-doplnky/feny/feny-parlux/304-ionizacni-fen-parlux-ethos-2300-w-ruzova-mat-p.html",
+     "img_url": "https://data.italystyle.cz/104823/www/www.beautyonline.cz/products/23/22054/source/22054_Parlux-ETHOS-fucsia-bocchetta-edA-1713771023.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.beautyonline.cz/pece-o-vlasy/vlasova-kosmetika/regenerace-a-osetreni/11167-fma-a01816-posilujici-sprej-100ml-fortifying-lotion-p.html",
+     "img_url": "https://data.italystyle.cz/104823/www/www.beautyonline.cz/products/12/11167/source/11167_0-1641666448.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.beautyonline.cz/pece-o-vlasy/pristroje-a-doplnky/feny/feny-labor-pro/23323-l-w041-fen-infinity-2500-p.html",
+     "img_url": "https://data.italystyle.cz/104823/www/www.beautyonline.cz/products/24/23323/source/23323_WEB1-2-1731059099.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.beautyonline.cz/pece-o-vlasy/pristroje-a-doplnky/doplnky/25364-fri-pu-500cnch-texturovana-folie-country-charm-13x28-cm-500-ks-limitovana-nabidka-p.html",
+     "img_url": "https://data.italystyle.cz/104823/www/www.beautyonline.cz/products/26/25364/source/25364_Framar_Country-Charm_folie-tahaci_WEB1-1771325662.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Najáda.games": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.najada.games/produkt/conquest-the-spires-5th-anniversary-abomination-LRBUYP/",
+     "img_url": "https://d1avvq5q4v8v8k.cloudfront.net/media/products/OBWWR_medium.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.najada.games/produkt/dragon-shield-matte-sleeves-pink-100-pcs-NBSRA5/",
+     "img_url": "https://d1avvq5q4v8v8k.cloudfront.net/media/products/HOENL_large.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.najada.games/produkt/warhammer-aos-hearthguard-berzerkers-7BNZE4/",
+     "img_url": "https://d1avvq5q4v8v8k.cloudfront.net/media/products/RC34P_large_WCwtavl.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.najada.games/produkt/necromunda-delaque-gang-7WJKQG/",
+     "img_url": "https://d1avvq5q4v8v8k.cloudfront.net/media/products/4YYR6_large.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.najada.games/produkt/pathfinder-deck-of-endless-treasure-OBDWPI/",
+     "img_url": "https://d1avvq5q4v8v8k.cloudfront.net/media/products/DHNUU_large.webp",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "TLAMAgames.com": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.tlamagames.com/deskove-hry/wtf--kdo-pise/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.tlamagames.com/user/shop/orig/96991_wtf--kdo-pise.jpg?684fe220",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tlamagames.com/deskove-hry/ovocny-sad/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.tlamagames.com/user/shop/orig/33046_1004170014-ovocny-sad-cz-sk-1.jpg?65140bad",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tlamagames.com/rpg/judge-dredd-rulebook/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.tlamagames.com/user/shop/orig/16733_warlord-games-judge-dredd-rulebook.jpg?5f9ecfb1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tlamagames.com/deskove-hry/seti--kosmicke-agentury/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.tlamagames.com/user/shop/orig/106192_seti-kosmicke-agentury-krabice-3d-01.jpg?692710bf",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.tlamagames.com/deskove-hry/vodni-draci/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.tlamagames.com/user/shop/orig/93958_1307133007-haba-spolocenska-hra-pre-deti-vodni-draci-01-1.jpg?680b5b5a",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Drátek.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://dratek.cz/arduino-platforma/229071-wifi-senzor-hladiny-kapaliny-monitor-tuya-smart-life.html",
+     "img_url": "https://dratek.cz/photos/produkty/f/229/229071.jpg?m=1794818373",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://dratek.cz/zitra-doma.cz/176633-chladici-ventilator-pro-notebook.html",
+     "img_url": "https://dratek.cz/photos/produkty/f/176/176633.jpg?m=1713946702",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://dratek.cz/arduino-platforma/1567-ekg-monitoring-srdecni-frekvence-ad8232-vcetne-prislusenstvi.html",
+     "img_url": "https://dratek.cz/photos/produkty/f/1/1567.jpg?m=1502871451",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://dratek.cz/zitra-doma.cz/177402-rychlonabijecka-42w-usb-c-a-2x-usb-a.html",
+     "img_url": "https://dratek.cz/photos/produkty/f/177/177402.jpg?m=1719998767",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://dratek.cz/tv-ovladace.cz/233189-tv-drzak-13-42-cerny.html",
+     "img_url": "https://dratek.cz/photos/produkty/f/233/233189.jpg?m=1792057077",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "OutdoorMarket.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.outdoormarket.cz/panske-funkcni-triko-dlouhy-merino/sensor-merino-air-traveller-panske-triko-dl-rukav-cerna-2/?variantId=5401977",
+     "img_url": "https://cdn.myshoptet.com/usr/www.outdoormarket.cz/user/shop/orig/1090347-1_sensor-merino-air-traveller-panske-triko-dl-rukav-cerna.jpg?6904808d",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.outdoormarket.cz/panske-funkcni-triko-kratky/husky-panske-funkcni-triko-tywe-m-grey/?variantId=5718719",
+     "img_url": "https://cdn.myshoptet.com/usr/www.outdoormarket.cz/user/shop/orig/1194407_husky-panske-funkcni-triko-tywe-m--velikost-l.jpg?69531a16",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.outdoormarket.cz/damske-lyzarske-bundy/hannah-saliva-lizard-pelican/?variantId=5406429",
+     "img_url": "https://cdn.myshoptet.com/usr/www.outdoormarket.cz/user/shop/orig/1091427_hannah-saliva-lizard-pelican.jpg?6904808d",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.outdoormarket.cz/damske-funkcni-triko-kratky-merino/lasting-damske-merino-triko-malba-modre/?variantId=2146017",
+     "img_url": "https://cdn.myshoptet.com/usr/www.outdoormarket.cz/user/shop/orig/646347-1_lasting-damske-merino-triko-malba-modre.jpg?6904808d",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.outdoormarket.cz/ponozky-letni-treking/tcc-289-cervena-funkcni-ponozky/?variantId=340711",
+     "img_url": "https://cdn.myshoptet.com/usr/www.outdoormarket.cz/user/shop/orig/180571-1_lasting-tcc-289-cervena-funkcni-ponozky.jpg?6904808d",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "OK-Hračky.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.ok-hracky.cz/kovozavody-prostejov-pa-25-pawnee-1-72-ean8592018011236-skup1.php",
+     "img_url": "https://www.ok-hracky.cz/pic_zbozi/mpk_39kpm0123.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ok-hracky.cz/schmidt-puzzle-kotatka-100-dilku-ean4001504561352-skup1.php",
+     "img_url": "https://www.ok-hracky.cz/pic_zbozi/2796_3.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ok-hracky.cz/granna-pizza-ean5900221024234-skup1.php",
+     "img_url": "https://www.ok-hracky.cz/pic_zbozi/5900221024234.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ok-hracky.cz/schmidt-puzzle-kufr-dinosauri-2x60-dilku-2x100-dilku-ean4001504564957-skup1.php",
+     "img_url": "https://www.ok-hracky.cz/pic_zbozi/3861_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ok-hracky.cz/schmidt-puzzle-zvirata-afriky-60-dilku-ean4001504564544-skup1.php",
+     "img_url": "https://www.ok-hracky.cz/pic_zbozi/9164_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "C-store.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.c-store.cz/ledvinka-hagloefs-tight-hip-pack-4",
+     "img_url": "https://www.c-store.cz/fotky38463/fotos/_vyr_1947202_ledvinka-haglofs-tight-hip-pack-1-fialova-6.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.c-store.cz/mikina-d1913-helmit-usx-fullzip5",
+     "img_url": "https://www.c-store.cz/fotky38463/fotos/feed_images/_vyr_1965693_helmit_mens_fullzip_506083_060_10front1_lowres_a261-png.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.c-store.cz/w-cyklobunda-craft-core-endur-hydro-lumen2",
+     "img_url": "https://www.c-store.cz/fotky38463/fotos/feed_images/1913642-825000_F.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.c-store.cz/mikina-silvini-grado36",
+     "img_url": "https://www.c-store.cz/fotky38463/fotos/feed_images/_vyr_1947369_MJ1714-0808_01.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.c-store.cz/cyklodres-silvini-scrivia3",
+     "img_url": "https://www.c-store.cz/fotky38463/fotos/feed_images/CD1434-3070_1.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Pompo.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://pompo.cz/betty-a-my-o-jednom-ceskem-kulturnim-fenomenu_z149980/",
+     "img_url": "https://data.pompo.cz/data/tmp/102/1/268811_102.jpg?1697053268_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://pompo.cz/neodkladne-stavy-do-kapsy_z268562/",
+     "img_url": "https://data.pompo.cz/data/tmp/102/9/519529_102.jpg?1778496096_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://pompo.cz/spin-master-hatchimals-hraci-sada-duhovy-svet-lihnuti-ve-vode_z54928/",
+     "img_url": "https://data.pompo.cz/data/tmp/102/6/179306_102.jpg?1686912635_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://pompo.cz/wildcat-ohen-a-led_z231242/",
+     "img_url": "https://data.pompo.cz/data/tmp/102/0/412260_102.jpg?1747927992_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://pompo.cz/mas-narok-na-zivot-zij-jako-by-ti-zbyval-jen-rok_z264827/",
+     "img_url": "https://data.pompo.cz/data/tmp/102/2/507362_102.jpg?1774036425_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "KrásnéVůně.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.krasnevune.cz/uniq-elite/?variantId=28222",
+     "img_url": "https://www.krasnevune.cz/user/shop/orig/21049-1_uniq-parf-voda-pro-zeny-100ml--46.png?6b0406d8",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.krasnevune.cz/pure-no-256-151-parfemovana-voda-inspirovana-thierry-mugler-a-men/?variantId=5195",
+     "img_url": "https://www.krasnevune.cz/user/shop/orig/4067-3_pure-256-50-ml.jpg?6ac5cbe6",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.krasnevune.cz/uniq-empleada-miss/?variantId=27165",
+     "img_url": "https://www.krasnevune.cz/user/shop/orig/20682_miss-100ml.png?6ac5cbe6",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.krasnevune.cz/uniq-no-3003-parfemovana-voda-inspirovana-dior-oud-ispahan/?variantId=17688",
+     "img_url": "https://www.krasnevune.cz/user/shop/orig/13485_unig-3003-panska-parfemovana-voda.jpg?6ac5cbe6",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.krasnevune.cz/pure-no--7019/?variantId=18961",
+     "img_url": "https://www.krasnevune.cz/user/shop/orig/14182_pure-no-7019.png?6ac5cbe6",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Kocosbeauty.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.kocosbeauty.cz/tonery/haruharu-wonder-black-rice-hyaluronic-toner-hydratacni-pletovy-toner-s-fermentovanou-cernou-ryzi/?variantId=5340",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kocosbeauty.cz/user/shop/orig/3420_haruharu-wonder-black-rice-hyaluronic-toner---hydratacni-pletovy-toner-s-fermentovanou-cernou-ryzi.png?6abe5723",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kocosbeauty.cz/kremy/cell-by-cell-soft-silky-sunblock-spf50-pa-jemny-hydratacni-pletovy-krem-s-ochrannym-faktorem/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kocosbeauty.cz/user/shop/orig/9051-4_cell-by-cell-soft-silky-sunblock-spf50-pa----jemny-hydratacni-pletovy-krem-s-ochrannym-faktorem.png?6abe5723",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kocosbeauty.cz/sera/cos-de-baha-arbutin-5--niacinamide-5--serum-rozjasnujici-serum-s-arbutinem-a-niaciamidem/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kocosbeauty.cz/user/shop/orig/10174_an1.jpg?6abe5723",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kocosbeauty.cz/tonery/torriden-dive-in-low-molecular-hyaluronic-acid-multi-pad-hydratacni-pletove-tamponky/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kocosbeauty.cz/user/shop/orig/6170_torriden-dive-in-low-molecular-hyaluronic-acid-multi-pad---hydratacni-pletove-tamponky.png?6abe5723",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kocosbeauty.cz/cistici-masky/beauty-of-joseon-ground-rice-and-honey-glow-mask-vyzivujici-pletova-maska-s-ryzi-a-medem/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.kocosbeauty.cz/user/shop/orig/7494_beauty-of-joseon-ground-rice-and-honey-glow-mask---vyzivujici-pletova-maska-s-ryzi-a-medem.png?6abedd73",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Spartoo.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.spartoo.cz/Lacoste-DH141700IB4-x31946618.php?track_id=ehub&sx=H&size_id=282&fcsize=1&taille=EU S",
+     "img_url": "https://photos6.spartoo.cz/photos/319/31946618/31946618_1200_A.jpg",
+     "page": [
+      "chyba",
+      "InvalidURL"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.spartoo.cz/adidas-W-3S-T-x18979936.php?track_id=ehub&sx=F&size_id=285&fcsize=1&taille=EU XL",
+     "img_url": "https://photos6.spartoo.cz/photos/189/18979936/18979936_1200_A.jpg",
+     "page": [
+      "chyba",
+      "InvalidURL"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.spartoo.cz/Calvin-Klein-Jeans-K50K512037-x31749941.php?track_id=ehub&sx=H&size_id=232&fcsize=1&taille=One size",
+     "img_url": "https://photos6.spartoo.cz/photos/317/31749941/31749941_1200_A.jpg",
+     "page": [
+      "chyba",
+      "InvalidURL"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.spartoo.cz/Calvin-Klein-Jeans-Defy-Parfem-100ml-x25993095.php?track_id=ehub&sx=H&size_id=232&fcsize=1&taille= ml",
+     "img_url": "https://photos6.spartoo.cz/photos/259/25993095/25993095_1200_A.jpg",
+     "page": [
+      "chyba",
+      "InvalidURL"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.spartoo.cz/Nike-Baskets-React-Vision-maille-respirante-x29341915.php?track_id=ehub&sx=H&size_id=5&fcsize=1&taille=40",
+     "img_url": "https://photos6.spartoo.cz/photos/293/29341915/29341915_1200_A.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "MinisterstvoHraček.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.ministerstvohracek.cz/levhart-snezny/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.ministerstvohracek.cz/user/shop/orig/250560_236385-levhart-snezny.png?68fcaf23",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ministerstvohracek.cz/detsky-boxersky-set-rukavic/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.ministerstvohracek.cz/user/shop/orig/168452_de--tsky-boxersky-set-rukavic-1.jpg?600168de",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ministerstvohracek.cz/barevny-fotbalovy-mic-velikosti-5-bila/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.ministerstvohracek.cz/user/shop/orig/197604_fotbalovy-mic.jpg?6544c8e1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ministerstvohracek.cz/puzzle-kouzla-benatek-1000-dilku-trefl/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.ministerstvohracek.cz/user/shop/orig/265527_puzzle-kouzla-benatek-1000-dilku-trefl.png?6b0426fb",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.ministerstvohracek.cz/safari-ltd--figurka-mlade-brachiosaura/",
+     "img_url": "https://cdn.myshoptet.com/usr/www.ministerstvohracek.cz/user/shop/orig/255045_240870-mlade-brachiosaura.png?68fcaf64",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Kabea.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.kabea.cz/cs/damske-penezenky/damska-kozena-penezenka-cervena---bellugio-agara-new",
+     "img_url": "https://www.kabea.cz/website/var/assets/import-demix/ad-21r-217/304438-pekna-damska-kozena-penezenka-sindy-cervena.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kabea.cz/cs/damske-kozene-kabelky/damsky-kozeny-batoh-vinovy---katana-naira",
+     "img_url": "https://www.kabea.cz/website/var/assets/import-demix/82626-08/540602-damsky-kozeny-batoh-vinovy---katana-naira.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kabea.cz/cs/panske-penezenky/kozena-dokladovka-hneda---delami-8219",
+     "img_url": "https://www.kabea.cz/website/var/assets/produkty/obrazky/mismas/65671-kozena-dokladovka-hneda---delami-8219.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kabea.cz/cs/panske-tasky-a-pouzdra-na-doklady/panska-pracovni-taska-tmave-modra---coveri-kylian",
+     "img_url": "https://www.kabea.cz/website/var/assets/import-demix/cw7641/517263-panska-latkova-pracovni-taska-coveri-kupri-tmave-modra.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.kabea.cz/cs/damske-kabelky-pres-rameno/damska-kabelka-na-rameno-tmave-modra---romina-co-bags-elisa",
+     "img_url": "https://www.kabea.cz/website/var/assets/import-demix/d191/541219-trendy-damska-kozenkova-kabelka-na-rameno-sandipa-tmave-modra.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Meatfly.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.meatfly.cz/panske-tricko-meatfly-racing-spirit-black_z131051/#130401",
+     "img_url": "https://www.meatfly.cz/data/tmp/0/6/150806_0.jpg?_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.meatfly.cz/kabelka-meatfly-shea-dusty-rose_z131114/#130617",
+     "img_url": "https://www.meatfly.cz/data/tmp/0/3/152473_0.jpg?_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.meatfly.cz/slunecni-bryle-meatfly-nate-beige_z132196/#134487",
+     "img_url": "https://www.meatfly.cz/data/tmp/0/6/158286_0.jpg?_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.meatfly.cz/taska-pres-rameno-aevor-easy-ride-pouch-off-white-one-size_z133542/#137861",
+     "img_url": "https://www.meatfly.cz/data/tmp/0/6/169976_0.jpg?_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.meatfly.cz/panske-tricko-meatfly-racing-spirit-funky-blue_z131055/#130428",
+     "img_url": "https://www.meatfly.cz/data/tmp/0/4/150814_0.jpg?_1",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Vivantis.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.vivantis.cz/hodinky/swarovski-dextera-lux-5715447.html?d=72243",
+     "img_url": "https://img.vivantiscdn.net/photos/h/_orig/SV/swarovski-dextera-lux-5715447_15027565124642.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.vivantis.cz/sperky/calvin-klein-vyrazny-damsky-nahrdelnik-z-oceli-asymmetrical-elegance-35000536.html?d=72243",
+     "img_url": "https://img.vivantiscdn.net/photos/s/_orig/CK/calvin-klein-vyrazny-damsky-nahrdelnik-z-oceli-35000536_14967789070016.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.vivantis.cz/hodinky/swarovski-matrix-tennis-chrono-5702851.html?d=72243",
+     "img_url": "https://img.vivantiscdn.net/photos/h/_orig/SV/swarovski-matrix-tennis-chrono-5702851_15011358090138.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.vivantis.cz/parfemy/hugo-boss-boss-no-6-bottled-night-edt.html?c=pHG294100&d=72243",
+     "img_url": "https://img.vivantiscdn.net/photos/p/_orig/HG/hugo-boss-boss-no-6-night-toaletni-voda-s-rozprasovacem_14085032141623.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.vivantis.cz/sperky/hugo-boss-nezny-ocelovy-naramek-s-krystaly-live-precious-1580756.html?d=72243",
+     "img_url": "https://img.vivantiscdn.net/photos/s/_orig/HB/hugo-boss-nezny-ocelovy-naramek-s-krystaly-live-precious-1580756_15008865093533.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Answear.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://answear.cz/p/hodinky-diesel-panske-zlata-barva-dz4685-1585603?channable=07af4c66726f6e74656e645f69640039394b4b2d414b4d3435465f474c44ba&utm_campaign=&utm_content=&utm_source=CJ&utm_medium=affiliate&utm_term=&ref=Channable",
+     "img_url": "https://img2.ans-media.com/i/855x1290/AA00-AKM45F-GLD_F1.webp?v=1754405551",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://answear.cz/p/koi-footwear-sandaly-na-sloupku-dbp52-platform-heel-bile-dbp52-platform-heel-1720204?channable=07af4c66726f6e74656e645f696400505059322d4f42443259595f303058dd&utm_campaign=&utm_content=&utm_source=CJ&utm_medium=affiliate&utm_term=&ref=Channable",
+     "img_url": "https://img2.ans-media.com/i/855x1290/SS26-OBD2YY-00X_F1.avif?v=1778143805",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://answear.cz/p/wheat-sandaly-detske-kozene-bile-wf614-01-1804971?channable=00249d66726f6e74656e645f696400505059322d4f424b3131345f303058c2&utm_campaign=&utm_content=&utm_source=CJ&utm_medium=affiliate&utm_term=&ref=Channable",
+     "img_url": "https://img2.ans-media.com/i/855x1290/SS26-OBK114-00X_F1.webp?v=1773904966",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://answear.cz/p/helly-hansen-perova-bunda-panska-village-down-jacket-cerna-54493-1682298?channable=07af4c66726f6e74656e645f696400394259412d4b554d31424c5f393958f7&utm_campaign=&utm_content=&utm_source=CJ&utm_medium=affiliate&utm_term=&ref=Channable",
+     "img_url": "https://img2.ans-media.com/i/855x1290/AW25-KUM1BL-99X_F1.avif?v=1776568362",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://answear.cz/p/sukne-samsoe-samsoe-saagnete-bezova-barva-maxi-f25200059-1544123?channable=00249d66726f6e74656e645f696400394259412d5344443031535f3031584f&utm_campaign=&utm_content=&utm_source=CJ&utm_medium=affiliate&utm_term=&ref=Channable",
+     "img_url": "https://img2.ans-media.com/i/855x1290/AW25-SDD01S-01X_F1.webp?v=1748584405",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Husky": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.huskycz.cz/panske-outdoorove-bundy-nanola-m-s25-xxl-beige-grey",
+     "img_url": "https://www.huskycz.cz/temp/img/0c/a8/44/NANOLA-M-BEIGE-w1600-h1600-0ca844bdd3316ac0160c177d1a509fb9.jpg",
+     "page": [
+      "chyba",
+      "TimeoutError"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.huskycz.cz/xultra360s26-eu-39-1-3-milieu-urban-chic-clearly-aqua",
+     "img_url": "https://www.huskycz.cz/temp/img/ec/f1/a1/L47739500-5-GHO-X-ULTRA-360-WGreen-Milieu-Urban-Chic-Clearly-Aqua.png-w1600-h1600-ecf1a1bcafd836eb0e617acaf3bf1fca.jpeg",
+     "page": [
+      "chyba",
+      "TimeoutError"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.huskycz.cz/damske-outdoor-bundy-nomi-l-s26-xl-blue",
+     "img_url": "https://www.huskycz.cz/temp/img/86/d8/8e/NOMI-L-blue-front-w1600-h1600-86d88e5d92acd804b193454b9ad0e41c.png",
+     "page": [
+      "chyba",
+      "TimeoutError"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.huskycz.cz/karimatky-economy-foal-1-2-cm-tm-zelena",
+     "img_url": "https://www.huskycz.cz/temp/img/5f/48/9b/FOAL-1-2-DETAIL-1-02-w1600-h1600-5f489beedf0dc17ef7f3dc2e362d09f9.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.huskycz.cz/xultra360midgtxw25-eu-43-1-3-phantom-desert-tan-rum-raisin",
+     "img_url": "https://www.huskycz.cz/temp/img/d9/39/2f/L47743300-5-GHO-X-ULTRA-360-MID-GTXPhantom-Desert-Tan-Rum-Raisin.png.cq5dam-w1600-h1600-d9392f23dc489004c532b67b3e6ad7df.jpeg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "eObuv.cz": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://eobuv.cz/p/kabelka-eva-minge-eo-allie-lda8224-bordo-5906751330098?utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://img.eobuwie.cloud/eob_product_1800w_1800h(5/d/6/0/5d60c9521ec69a024f808e34d6941a100ec63e74_21_5906751330098_PJ.jpg,jpg)/kabelka-eva-minge-eo-allie-lda8224-bordo-5906751330098.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eobuv.cz/p/kozacky-tommy-hilfiger-th-buckle-leather-knee-boot-fw0fw09572-cerna-0000306194380?utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://img.eobuwie.cloud/eob_product_1800w_1800h(0/6/f/f/06ff1a5692ac9194fbc370dfadb12534aabbfbb6_21_8721441656442.jpg,jpg)/kozacky-tommy-hilfiger-th-buckle-leather-knee-boot-fw0fw09572-cerna-0000306194380.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eobuv.cz/p/kotnikova-obuv-josef-seibel-giuseppe-10-ma491-tmavomodra-0000305449443?utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://img.eobuwie.cloud/eob_product_1800w_1800h(c/a/6/7/ca67be01b5b46ed7010655ddd479fcc875d5bedd_20_4062838770445.jpg,jpg)/kotnikova-obuv-josef-seibel-giuseppe-10-ma491-tmavomodra-0000305449443.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eobuv.cz/p/sneakersy-guess-fmfkat-fab12-cerna-0000306262508?utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://img.eobuwie.cloud/eob_product_1800w_1800h(f/2/f/8/f2f8df7c76acad12df3f0a438741895dcfc08c33_20_7618419684488_AM_M.jpg,jpg)/sneakersy-guess-fmfkat-fab12-cerna-0000306262508.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://eobuv.cz/p/sneakersy-dc-shoes-eo-mp40-853shc2-hneda-5907964281108?utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://img.eobuwie.cloud/eob_product_1800w_1800h(3/6/8/3/36832477d55c6fe9ae7b76d6812a773093307b3f_21_5907964281108_M_AI.jpg,jpg)/sneakersy-dc-shoes-eo-mp40-853shc2-hneda-5907964281108.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Myprotein": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://www.myprotein.cz/p/sports-clothing/mp-damska-tempo-bezesva-sportovni-podprsenka-se-rasenim-vpredu-cerna/16919920/?switchcurrency=CZK&shippingcountry=CZ&variation=16920401&utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://s4.thcdn.com/productimg/1600/1600/16919920-1475296619787174.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.myprotein.cz/p/sports-nutrition/cla/12456734/?switchcurrency=CZK&shippingcountry=CZ&variation=14882264&utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://s4.thcdn.com/productimg/1600/1600/12456734-1675001967090899.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.myprotein.cz/p/sports-clothing/mp-panske-adapt-tricko-mist/17789972/?switchcurrency=CZK&shippingcountry=CZ&variation=17789983&utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://s4.thcdn.com/productimg/1600/1600/17789972-1345379360422133.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.myprotein.cz/p/sports-clothing/mp-panska-tkana-treninkove-bunda-ultra-se-zipem-zarive-modra/17651288/?switchcurrency=CZK&shippingcountry=CZ&variation=17651625&utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://s4.thcdn.com/productimg/1600/1600/17651288-1225356521567318.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://www.myprotein.cz/p/sports-nutrition/zcela-prirodni-arasidove-maslo/10530743/?switchcurrency=CZK&shippingcountry=CZ&variation=11194403&utm_source=supdrop&utm_medium=referral&utm_campaign=sup",
+     "img_url": "https://s4.thcdn.com/productimg/1600/1600/10530745-7185294796234102.jpg",
+     "page": [
+      "ok",
+      ""
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  },
+  "Allegro": {
+   "stav": "ok",
+   "proc": "",
+   "vzorky": [
+    {
+     "url": "https://allegro.cz/nabidka/aga-multifunkcni-hrazda-s-expandery-ds663-16517148870",
+     "img_url": "https://a.allegroimg.com/original/11a055/86a56d464770b9e3d34c87d93804",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://allegro.cz/nabidka/kratasy-2v1-vanish-elite-sede-md-under-armour-aw26-18940969363",
+     "img_url": "https://a.allegroimg.com/original/114627/1423c170498c8fe66bcfeb04dbe8",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://allegro.cz/nabidka/damske-sportovni-boty-regular-cerne-under-armour-tenisky-aw26-41-18943221521",
+     "img_url": "https://a.allegroimg.com/original/115c35/4522ae71405a9550b0172fca84a2",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://allegro.cz/nabidka/detska-lyzarska-helma-se-stitem-rossignol-whoopee-visor-impacts-blue-s-m-19130834733",
+     "img_url": "https://a.allegroimg.com/original/113513/1430a5b64f7da55f274878e95068",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    },
+    {
+     "url": "https://allegro.cz/nabidka/bunda-s-kapuci-hh-w-crew-2-0-azurova-34448-645-vel-s-17367480959",
+     "img_url": "https://a.allegroimg.com/original/112a8f/f6923c1941caa17acc2102b90df8",
+     "page": [
+      "nelze",
+      "403"
+     ],
+     "img": [
+      "ok",
+      ""
+     ]
+    }
+   ]
+  }
+ }
+}
